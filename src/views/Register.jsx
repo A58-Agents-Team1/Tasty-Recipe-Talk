@@ -52,11 +52,16 @@ export default function Register() {
     return (
         <div>
             <h1>Register</h1>
-            <label htmlFor="firstName">First Name:</label><input value={form.firstName} onChange={updateForm('firstName')} type="text" name="firstName" id="firstName" /><br />
-            <label htmlFor="lastName">Last Name:</label><input value={form.lastName} onChange={updateForm('lastName')} type="text" name="lastName" id="lastName" /><br />
-            <label htmlFor="userName">User Name:</label><input value={form.userName} onChange={updateForm('userName')} type="text" name="userName" id="userName" /><br />
-            <label htmlFor="email">Email:</label><input value={form.email} onChange={updateForm('email')} type="text" name="email" id="email" /><br />
-            <label htmlFor="password">Password:</label><input value={form.password} onChange={updateForm('password')} type="password" name="password" id="password" /><br /><br />
+            <label htmlFor="firstName">First Name:</label>
+            <input value={form.firstName} onChange={updateForm('firstName')} type="text" name="firstName" id="firstName" /><br /><br />
+            <label htmlFor="lastName">Last Name:</label>
+            <input value={form.lastName} onChange={updateForm('lastName')} type="text" name="lastName" id="lastName" /><br /><br />
+            <label htmlFor="userName">User Name:</label>
+            <input value={form.userName} onChange={updateForm('userName')} type="text" name="userName" id="userName" /><br /><br />
+            <label htmlFor="email">Email:</label>
+            <input value={form.email} onChange={updateForm('email')} type="text" name="email" id="email" /><br /><br />
+            <label htmlFor="password">Password:</label>
+            <input value={form.password} onChange={updateForm('password')} type="password" name="password" id="password" /><br /><br />
             <button onClick={register}>Register</button>
         </div>
     )
