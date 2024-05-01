@@ -1,7 +1,7 @@
 export default function Footer() {
     return (
         <footer>
-            <p>&copy; Tasty Recipes</p>
+            <p title="Footer">🌭 All rights reserved for Tasty Recipe Talk 🌭</p>
         </footer>
     )
 }
