@@ -5,11 +5,11 @@ import PropTypes from "prop-types"
 
 export default function Layout({ children }) {
     return (
-        <>
+        <div style={{ background: "grey" }}>
             <NavBar />
             {children}
             <Footer />
-        </>
+        </ div>
     )
 }
 
