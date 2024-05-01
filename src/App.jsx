@@ -5,7 +5,7 @@ import Login from "./views/Login"
 import Register from "./views/Register"
 import NotFound from "./views/NotFound"
 import { useState } from "react"
-import AppContext from "./context/AppContext"
+import { AppContext } from "./context/AppContext"
 
 function App() {
   const [appState, setAppState] = useState({

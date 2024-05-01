@@ -3,7 +3,7 @@ import { registerUser } from "../services/auth.service";
 import { createUserHandle, getUserByHandle } from "../services/users.service";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import AppContext from "../context/AppContext";
+import { AppContext } from "../context/AppContext";
 
 
 export default function Register() {
