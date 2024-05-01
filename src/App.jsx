@@ -1,12 +1,14 @@
 import { Routes, Route } from "react-router-dom"
+import { useEffect, useState } from "react"
+import { AppContext } from "./context/AppContext"
+import { getUserData } from "./services/users.service"
+import {useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from './config/firebase-config.js';
 import Layout from "./hoc/Layout"
 import Home from "./views/Home"
 import Login from "./views/Login"
 import Register from "./views/Register"
 import NotFound from "./views/NotFound"
-import { useEffect, useState } from "react"
-import { AppContext } from "./context/AppContext"
-import { getUserData } from "./services/users.service"
 
 function App() {
 
@@ -14,6 +16,12 @@ function App() {
     user: null,
     userData: null,
   });
+
+  const [user] = useAuthState(auth);
+
+  if (appState.user !== user) {
+    setAppState({ ...appState, user });
+  }
 
   useEffect(() => {
     if (!appState.user) return;
