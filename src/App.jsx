@@ -4,14 +4,27 @@ import Home from "./views/Home"
 import Login from "./views/Login"
 import Register from "./views/Register"
 import NotFound from "./views/NotFound"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { AppContext } from "./context/AppContext"
+import { getUserData } from "./services/users.service"
 
 function App() {
+
   const [appState, setAppState] = useState({
     user: null,
     userData: null,
   });
+
+  useEffect(() => {
+    if (!appState.user) return;
+
+    getUserData(appState.user.uid)
+      .then(snapshot => {
+        //console.log(snapshot.val()); // { Peter: {...} }
+        const userData = Object.values(snapshot.val())[0];
+        setAppState({...appState, userData});
+      });
+  }, [appState.user])
 
   return (
     <>

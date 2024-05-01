@@ -5,7 +5,7 @@ import { logoutUser } from "../services/auth.service";
 
 export default function NavBar() {
 
-    const { user, setAppState } = useContext(AppContext);
+    const { user, userData, setAppState } = useContext(AppContext);
 
     const logout = async() => {
         await logoutUser();
@@ -18,6 +18,7 @@ export default function NavBar() {
                 { user 
             ? (
                 <>
+                {`Welcome, ${userData ? userData.handle : 'Loading'}`}
                     <button onClick={logout}>LogOut</button>
                 </>
             )
