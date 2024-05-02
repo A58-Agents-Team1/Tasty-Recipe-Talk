@@ -16,10 +16,10 @@ export default function NavBar() {
       <NavLink to='/'>Home</NavLink>
       {user ? (
         <>
-          {`Welcome, ${userData ? userData.handle : 'Loading'}`}
           <NavLink to='/create-post'>Create post</NavLink>
           <NavLink to='/all-posts'>All recipes</NavLink>
-          <button onClick={logout}>LogOut</button>
+          <button onClick={logout}>LogOut</button><br />
+          {`Welcome, ${userData ? userData.handle : 'Loading'}`}
         </>
       ) : (
         <>
