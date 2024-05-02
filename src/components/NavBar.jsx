@@ -18,6 +18,7 @@ export default function NavBar() {
         <>
           {`Welcome, ${userData ? userData.handle : 'Loading'}`}
           <NavLink to='/create-post'>Create post</NavLink>
+          <NavLink to='/all-posts'>All recipes</NavLink>
           <button onClick={logout}>LogOut</button>
         </>
       ) : (

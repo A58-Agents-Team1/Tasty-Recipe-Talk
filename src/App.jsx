@@ -10,6 +10,7 @@ import Login from "./views/Login.jsx"
 import Register from "./views/Register.jsx"
 import NotFound from "./views/NotFound.jsx"
 import { CreatePost }  from "./views/CreatePost.jsx";
+import  AllPosts  from "./views/AllPosts.jsx";
 
 function App() {
 
@@ -45,6 +46,7 @@ function App() {
             <Route path='/register' element={<Register />} />
             <Route path='*' element={<NotFound />} />
             <Route path="/create-post" element={<CreatePost />} />
+            <Route path="/all-posts" element={<AllPosts />} />
           </Routes>
         </Layout>
       </AppContext.Provider>
