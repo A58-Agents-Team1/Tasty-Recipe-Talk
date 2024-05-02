@@ -9,6 +9,7 @@ import Home from "./views/Home.jsx"
 import Login from "./views/Login.jsx"
 import Register from "./views/Register.jsx"
 import NotFound from "./views/NotFound.jsx"
+import { CreatePost }  from "./views/CreatePost.jsx";
 
 function App() {
 
@@ -43,6 +44,7 @@ function App() {
             <Route path='/login' element={<Login />} />
             <Route path='/register' element={<Register />} />
             <Route path='*' element={<NotFound />} />
+            <Route path="/create-post" element={<CreatePost />} />
           </Routes>
         </Layout>
       </AppContext.Provider>
