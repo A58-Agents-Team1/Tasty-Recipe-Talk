@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
-import { AppContext } from "../context/AppContext";
-import { loginUser } from "../services/auth.service";
+import { AppContext } from "../context/AppContext.jsx";
+import { loginUser } from "../services/auth.service.js";
 
 export default function Login() {
     const { user, setAppState } = useContext(AppContext);

@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { registerUser } from "../services/auth.service";
-import { createUserHandle, getUserByHandle } from "../services/users.service";
+import { registerUser } from "../services/auth.service.js";
+import { createUserHandle, getUserByHandle } from "../services/users.service.js";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
+import { AppContext } from "../context/AppContext.jsx";
 
 
 export default function Register() {

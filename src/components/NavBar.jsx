@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { NavLink } from "react-router-dom"
-import { AppContext } from "../context/AppContext";
-import { logoutUser } from "../services/auth.service";
+import { AppContext } from "../context/AppContext.jsx";
+import { logoutUser } from "../services/auth.service.js";
 
 export default function NavBar() {
 

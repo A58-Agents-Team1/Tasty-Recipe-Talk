@@ -1,14 +1,14 @@
 import { Routes, Route } from "react-router-dom"
 import { useEffect, useState } from "react"
-import { AppContext } from "./context/AppContext"
-import { getUserData } from "./services/users.service"
+import { AppContext } from "./context/AppContext.jsx"
+import { getUserData } from "./services/users.service.js"
 import {useAuthState } from 'react-firebase-hooks/auth';
 import { auth } from './config/firebase-config.js';
-import Layout from "./hoc/Layout"
-import Home from "./views/Home"
-import Login from "./views/Login"
-import Register from "./views/Register"
-import NotFound from "./views/NotFound"
+import Layout from "./hoc/Layout.jsx"
+import Home from "./views/Home.jsx"
+import Login from "./views/Login.jsx"
+import Register from "./views/Register.jsx"
+import NotFound from "./views/NotFound.jsx"
 
 function App() {
 
