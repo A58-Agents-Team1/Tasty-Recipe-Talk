@@ -2,11 +2,12 @@ import { useContext, useEffect, useState } from "react"
 import { useLocation, useNavigate } from "react-router-dom";
 import { AppContext } from "../context/AppContext.jsx";
 import { loginUser } from "../services/auth.service.js";
+import { NavLink } from "react-router-dom";
 
 export default function Login() {
     const { user, setAppState } = useContext(AppContext);
-    const [form, setForm] = useState({
-        email: '',
+    const [form, setForm] = useState({ 
+        email: '', 
         password: '',
     });
     const navigate = useNavigate();
@@ -39,6 +40,9 @@ export default function Login() {
             <label htmlFor="password">Password: </label>
             <input value={form.password} onChange={updateForm('password')} type="password" name="password" id="password" /> <br /> <br /><br />
             <button onClick={login}>Login</button>
+
+            <p>Don`t have an account ?</p>
+            <NavLink to='/register'>Register</NavLink>
         </div>
     )
 }
