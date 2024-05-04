@@ -1,8 +1,8 @@
-import { useContext } from "react";
-import { NavLink } from "react-router-dom";
-import { AppContext } from "../context/AppContext.jsx";
-import { logoutUser } from "../services/auth.service.js";
-import logo from "/logo.png";
+import { useContext } from 'react';
+import { NavLink } from 'react-router-dom';
+import { AppContext } from '../context/AppContext.jsx';
+import { logoutUser } from '../services/auth.service.js';
+import logo from '/logo.png';
 import {
   Avatar,
   Breadcrumb,
@@ -13,10 +13,9 @@ import {
   Flex,
   HStack,
   Heading,
-  Spacer,
   Spinner,
   Text,
-} from "@chakra-ui/react";
+} from '@chakra-ui/react';
 
 export default function NavBar() {
   const { user, userData, setAppState } = useContext(AppContext);
@@ -29,53 +28,82 @@ export default function NavBar() {
   return (
     <Flex
       as='nav'
-      p='10px'
       alignItems='center'
-      borderBottom='2px solid'
+      borderBottom='1px solid'
+      borderColor={'gray.600'}
+      p='1rem'
       mb='1rem'
+      width='100%'
+      bg='gray.500'
+      color={'white'}
+      justifyContent={'space-between'}
     >
       <Heading>
         <NavLink to='/'>
-          <Avatar size='lg' name='Tasty Recipe Talk' src={logo}></Avatar>
+          <Avatar
+            size='lg'
+            name='Tasty Recipe Talk'
+            src={logo}
+            ignoreFallback={true}
+          ></Avatar>
         </NavLink>
       </Heading>
-      <Spacer />
       {user ? (
         <>
           <HStack spacing='20px'>
             <Breadcrumb>
               <BreadcrumbItem>
-                <BreadcrumbLink as={NavLink} to='/create-post'>
+                <BreadcrumbLink
+                  as={NavLink}
+                  to='/create-post'
+                >
                   Create post
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem>
-                <BreadcrumbLink as={NavLink} to='/all-posts'>
+                <BreadcrumbLink
+                  as={NavLink}
+                  to='/all-posts'
+                >
                   All recipes
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem>
-                <BreadcrumbLink as={NavLink} to='blocked-accounts'>
+                <BreadcrumbLink
+                  as={NavLink}
+                  to='blocked-accounts'
+                >
                   Blocked Account
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem>
-                <BreadcrumbLink as={NavLink} to='/about'>
+                <BreadcrumbLink
+                  as={NavLink}
+                  to='/about'
+                >
                   About
                 </BreadcrumbLink>
               </BreadcrumbItem>
               <BreadcrumbItem>
-                <BreadcrumbLink as={NavLink} to='/my-profile'>
+                <BreadcrumbLink
+                  as={NavLink}
+                  to='/my-profile'
+                >
                   My Profile
                 </BreadcrumbLink>
               </BreadcrumbItem>
             </Breadcrumb>
           </HStack>
-          <Spacer />
           <HStack spacing='20px'>
             <Text as='div'>{userData ? userData.handle : <Spinner />}</Text>
-            <Avatar size='sm' name={userData ? userData.handle : ""} />
-            <Button colorScheme='green' onClick={logout}>
+            <Avatar
+              size='sm'
+              name={userData ? userData.handle : ''}
+            />
+            <Button
+              colorScheme='green'
+              onClick={logout}
+            >
               Logout
             </Button>
           </HStack>

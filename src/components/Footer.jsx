@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
-import { getAllPosts, getAllUsers } from "../services/users.service";
-import { Breadcrumb, BreadcrumbItem, Flex, Text } from "@chakra-ui/react";
+import { useEffect, useState } from 'react';
+import { getAllPosts, getAllUsers } from '../services/users.service';
+import { Breadcrumb, BreadcrumbItem, Flex, Text } from '@chakra-ui/react';
 export default function Footer() {
   const [countUser, setCountUser] = useState();
   const [countPosts, setCountPosts] = useState();
@@ -8,19 +8,23 @@ export default function Footer() {
   useEffect(() => {
     getAllUsers().then((data) => setCountUser(data));
     getAllPosts().then((data) => setCountPosts(data));
-  }, []);
+  }, [countUser, countPosts]);
 
   return (
     <Flex
       as='footer'
-      position='fixed'
+      position='static'
       bottom='0'
-      width='100%'
-      p='5'
-      mt='4'
-      bg='gray.500'
-      justifyContent='center'
+      mt='auto'
+      p='10px'
       alignItems='center'
+      justify='end'
+      width='100%'
+      height={{ base: '10vh', md: '10vh' }}
+      borderTop='2px solid'
+      borderColor={'gray.600'}
+      bg='gray.500'
+      color={'white'}
     >
       <Breadcrumb as='div'>
         <BreadcrumbItem>
