@@ -20,6 +20,7 @@ export const createUserHandle = (handle, uid, email, firstName, lastName) => {
     email,
     firstName,
     lastName,
+    userRole: 'user',
     createdOn: new Date(),
   });
 };
