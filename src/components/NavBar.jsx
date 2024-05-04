@@ -26,7 +26,13 @@ export default function NavBar() {
   };
 
   return (
-    <Flex as="nav" p="10px" alignItems="center">
+    <Flex
+      as="nav"
+      p="10px"
+      alignItems="center"
+      borderBottom="2px solid"
+      mb="1rem"
+    >
       <Heading>
         <NavLink to="/">
           <Avatar size="lg" name="Tasty Recipe Talk" src={logo}></Avatar>
