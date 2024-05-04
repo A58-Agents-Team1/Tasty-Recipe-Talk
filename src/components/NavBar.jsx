@@ -77,16 +77,6 @@ export default function NavBar() {
               <BreadcrumbItem>
                 <BreadcrumbLink
                   as={NavLink}
-                  to='blocked-accounts'
-                  _active={{ color: 'red' }}
-                  _activeLink={{ color: 'gold' }}
-                >
-                  Blocked Account
-                </BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbItem>
-                <BreadcrumbLink
-                  as={NavLink}
                   to='/about'
                   _active={{ color: 'red' }}
                   _activeLink={{ color: 'gold' }}
@@ -94,6 +84,18 @@ export default function NavBar() {
                   About
                 </BreadcrumbLink>
               </BreadcrumbItem>
+              {userData?.userRole === 'admin' && (
+                <BreadcrumbItem>
+                  <BreadcrumbLink
+                    as={NavLink}
+                    to='blocked-accounts'
+                    _active={{ color: 'red' }}
+                    _activeLink={{ color: 'gold' }}
+                  >
+                    Blocked Account
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              )}
               <BreadcrumbItem>
                 <BreadcrumbLink
                   as={NavLink}
@@ -123,12 +125,12 @@ export default function NavBar() {
       ) : (
         <HStack spacing='20px'>
           <ButtonGroup>
-            <Button colorScheme='green'>
-              <NavLink to='/login'>Login</NavLink>
-            </Button>
-            <Button colorScheme='orange'>
-              <NavLink to='/register'>Register</NavLink>
-            </Button>
+            <NavLink to='/login'>
+              <Button colorScheme='green'> Login</Button>
+            </NavLink>
+            <NavLink to='/register'>
+              <Button colorScheme='orange'>Register</Button>
+            </NavLink>
           </ButtonGroup>
         </HStack>
       )}
