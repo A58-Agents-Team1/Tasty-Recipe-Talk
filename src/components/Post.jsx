@@ -7,12 +7,13 @@ import {
   Text,
   Button,
   Stack,
-} from "@chakra-ui/react";
-import PropTypes from "prop-types";
-import { useContext } from "react";
-import { AppContext } from "../context/AppContext";
-import { likePost, dislikePost } from "../services/posts.service";
-import { AlertDialogExample } from "./Alerts";
+  ButtonGroup,
+} from '@chakra-ui/react';
+import PropTypes from 'prop-types';
+import { useContext } from 'react';
+import { AppContext } from '../context/AppContext';
+import { likePost, dislikePost } from '../services/posts.service';
+import { AlertDialogExample } from './Alerts';
 import { Link } from 'react-router-dom';
 
 export default function Post({ post }) {
@@ -21,35 +22,55 @@ export default function Post({ post }) {
   const dislike = () => dislikePost(post.id, userData.handle);
 
   return (
-    <div className="single-post">
+    <div className='single-post'>
       <Card
-        direction={{ base: "column", sm: "row" }}
-        overflow="hidden"
-        variant="outline"
+        direction={{ base: 'column', sm: 'row' }}
+        overflow='hidden'
+        variant='outline'
         mt={3}
+        shadow={{ base: 'md', sm: 'xl' }}
       >
         <Image
-          objectFit="cover"
-          maxW={{ base: "100%", sm: "200px" }}
-          src="https://www.eatingwell.com/thmb/LH-H61DAD-1Q3AgeN89BkrWKNEk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Chicken-piccata-casserole-3x2-167-f44730f489cc4b9493547de1c76a3b93.jpg"
-          alt="Caffe Latte"
+          objectFit='cover'
+          maxW={{ base: '100%', sm: '200px' }}
+          src='https://www.eatingwell.com/thmb/LH-H61DAD-1Q3AgeN89BkrWKNEk=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/Chicken-piccata-casserole-3x2-167-f44730f489cc4b9493547de1c76a3b93.jpg'
+          alt='Card image'
         />
 
-        <Stack>
+        <Stack
+          width='100%'
+          p={2}
+        >
           <CardBody>
-            <Heading size="md">{post.title}</Heading>
-
-            <Text py="2">{post.description}</Text>
+            <Heading size='lg'>{post.title}</Heading>
+            <Text py='2'>{post.description}</Text>
           </CardBody>
+          <CardFooter
+            width='100%'
+            justify={{ base: 'center', sm: 'end' }}
+          >
+            <ButtonGroup
+              spacing={2}
+              alignItems='center'
+            >
+              <Text>
+                {post.likedBy.length === 0
+                  ? 'No likes yet'
+                  : post.likedBy.length === 1
+                  ? 'Liked by 1 person'
+                  : `Liked by ${post.likedBy.length} people`}
+              </Text>
 
-          <CardFooter>
-          <Button><Link to={`/posts/${post.id}`}>View Recipe</Link></Button>
-            {post?.likedBy.includes(userData?.handle) ? (
-              <Button onClick={dislike}>Dislike</Button>
-            ) : (
-              <Button onClick={like}>Like</Button>
-            )}
-            <AlertDialogExample postId={post.id} />
+              {post?.likedBy.includes(userData?.handle) ? (
+                <Button onClick={dislike}>Dislike</Button>
+              ) : (
+                <Button onClick={like}>Like</Button>
+              )}
+              <Button>
+                <Link to={`/posts/${post.id}`}>View Recipe</Link>
+              </Button>
+              <AlertDialogExample postId={post.id} />
+            </ButtonGroup>
           </CardFooter>
         </Stack>
       </Card>
