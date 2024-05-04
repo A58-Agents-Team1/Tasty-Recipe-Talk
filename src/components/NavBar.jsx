@@ -1,7 +1,21 @@
-import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
-import { AppContext } from '../context/AppContext.jsx';
-import { logoutUser } from '../services/auth.service.js';
+import { useContext } from "react";
+import { NavLink } from "react-router-dom";
+import { AppContext } from "../context/AppContext.jsx";
+import { logoutUser } from "../services/auth.service.js";
+import logo from "../../public/logo.png";
+import {
+  Avatar,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Button,
+  ButtonGroup,
+  Flex,
+  HStack,
+  Heading,
+  Spacer,
+  Text,
+} from "@chakra-ui/react";
 
 export default function NavBar() {
   const { user, userData, setAppState } = useContext(AppContext);
@@ -12,23 +26,60 @@ export default function NavBar() {
   };
 
   return (
-    <nav>
-      <NavLink to='/'>Home |</NavLink>
+    <Flex as="nav" p="10px" alignItems="center">
+      <Heading>
+        <NavLink to="/">
+          <Avatar size="lg" name="Tasty Recipe Talk" src={logo}></Avatar>
+        </NavLink>
+      </Heading>
+      <Spacer />
       {user ? (
         <>
-          <NavLink to='/create-post'>Create post |</NavLink>
-          <NavLink to='/all-posts'>All recipes |</NavLink>
-          <NavLink to='blocked-accounts'>Blocked Account |</NavLink>
-          <NavLink to='/about'>About |</NavLink>
-          <button onClick={logout}>LogOut</button><br />
-          {`Welcome, ${userData ? userData.handle : 'Loading'}`}
+          <HStack spacing="20px">
+            <Breadcrumb>
+              <BreadcrumbItem>
+                <BreadcrumbLink as={NavLink} to="/create-post">
+                  Create post
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbItem>
+                <BreadcrumbLink as={NavLink} to="/all-posts">
+                  All recipes
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbItem>
+                <BreadcrumbLink as={NavLink} to="blocked-accounts">
+                  Blocked Account
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+              <BreadcrumbItem>
+                <BreadcrumbLink as={NavLink} to="/about">
+                  About
+                </BreadcrumbLink>
+              </BreadcrumbItem>
+            </Breadcrumb>
+          </HStack>
+          <Spacer />
+          <HStack spacing="20px">
+            <Text>{userData ? userData.handle : "Loading"}</Text>
+            <Avatar size="sm" name={userData ? userData.handle : "Loading"} />
+            <Button colorScheme="green" onClick={logout}>
+              LogOut
+            </Button>
+          </HStack>
         </>
       ) : (
-        <>
-          <NavLink to='/login'>Login |</NavLink>
-          <NavLink to='/register'>Register</NavLink>
-        </>
+        <HStack spacing="20px">
+          <ButtonGroup>
+            <Button colorScheme="green">
+              <NavLink to="/login">Login</NavLink>
+            </Button>
+            <Button colorScheme="orange">
+              <NavLink to="/register">Register</NavLink>
+            </Button>
+          </ButtonGroup>
+        </HStack>
       )}
-    </nav>
+    </Flex>
   );
 }

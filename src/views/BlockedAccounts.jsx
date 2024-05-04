@@ -1,8 +1,10 @@
+import { Heading, Text } from "@chakra-ui/react";
+
 export default function BlockedAccounts() {
-    return (
-        <div>
-        <h1>Blocked People</h1>
-        <p>Here you can see the people you have blocked.</p>
-        </div>
-    )
+  return (
+    <div>
+      <Heading>Blocked People</Heading>
+      <Text>Here you can see the people you have blocked.</Text>
+    </div>
+  );
 }

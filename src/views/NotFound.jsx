@@ -1,7 +1,9 @@
+import { Heading } from "@chakra-ui/react";
+
 export default function NotFound() {
-    return (
-        <div>
-            <h1>404 Page Not Found</h1>
-        </div>
-    );
+  return (
+    <div>
+      <Heading>404 Page Not Found</Heading>
+    </div>
+  );
 }
