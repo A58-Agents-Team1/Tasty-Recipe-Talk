@@ -29,6 +29,19 @@ export const getAllPosts = async (search) => {
     .filter((post) => post.title.toLowerCase().includes(search.toLowerCase()));
 };
 
+export const getPostById = async(id) => {
+  const snapshot = await get(ref(db, `posts/${id}`));
+
+  if (!snapshot.val()) throw new Error('Post with this id does not exist!');
+
+  return {
+      ...snapshot.val(),
+      id,
+      likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
+      createdOn: new Date(snapshot.val().createdOn).toString(),
+  }
+};
+
 export const likePost = async (postId, handle) => {
   const updateVal = {};
   updateVal[`users/${handle}/likedPosts/${postId}`] = true;
