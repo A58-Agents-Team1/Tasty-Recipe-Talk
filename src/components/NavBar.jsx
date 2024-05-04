@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext.jsx';
 import { logoutUser } from '../services/auth.service.js';
 import logo from '/logo.png';
@@ -19,10 +19,12 @@ import {
 
 export default function NavBar() {
   const { user, userData, setAppState } = useContext(AppContext);
+  const navigate = useNavigate();
 
   const logout = async () => {
     await logoutUser();
     setAppState({ user: null, userData: null });
+    navigate('/');
   };
 
   return (
