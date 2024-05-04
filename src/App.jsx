@@ -14,6 +14,7 @@ import  AllPosts  from "./views/AllPosts.jsx";
 import About from "./views/About.jsx";
 import BlockedAccounts from "./views/BlockedAccounts.jsx";
 import ProfilInfo from "./views/ProfilInfo.jsx";
+import FullViewRecipe from "./views/FullViewRecipe.jsx";
 
 function App() {
 
@@ -50,6 +51,7 @@ function App() {
             <Route path='*' element={<NotFound />} />
             <Route path='/create-post' element={<CreatePost />} />
             <Route path='/all-posts' element={<AllPosts />} />
+            <Route path="/posts/:id" element={<FullViewRecipe />}/>
             <Route path='/about' element={<About />}/>
             <Route path='/blocked-accounts' element={<BlockedAccounts />}/>
             <Route path='/my-profil' element={<ProfilInfo />}/>

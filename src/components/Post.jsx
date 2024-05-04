@@ -1,6 +1,5 @@
 import {
   Card,
-  CardHeader,
   CardBody,
   CardFooter,
   Image,
@@ -10,12 +9,11 @@ import {
   Stack,
 } from "@chakra-ui/react";
 import PropTypes from "prop-types";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
-import { Link } from "react-router-dom";
 import { likePost, dislikePost } from "../services/posts.service";
 import { AlertDialogExample } from "./Alerts";
-import { deletePost } from "../services/users.service";
+import { Link } from 'react-router-dom';
 
 export default function Post({ post }) {
   const { userData } = useContext(AppContext);
@@ -45,9 +43,7 @@ export default function Post({ post }) {
           </CardBody>
 
           <CardFooter>
-            <Button variant="solid" colorScheme="blue">
-              View recipe
-            </Button>
+          <Button><Link to={`/posts/${post.id}`}>View Recipe</Link></Button>
             {post?.likedBy.includes(userData?.handle) ? (
               <Button onClick={dislike}>Dislike</Button>
             ) : (
