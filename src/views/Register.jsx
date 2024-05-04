@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext.jsx";
 import { NavLink } from "react-router-dom";
-import { useToast, Button } from "@chakra-ui/react";
+import { useToast, Button, Heading } from "@chakra-ui/react";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -74,7 +74,7 @@ export default function Register() {
 
   return (
     <div>
-      <h1>Register</h1>
+      <Heading>Register</Heading>
       <label htmlFor="firstName">First Name:</label>
       <input
         value={form.firstName}
@@ -126,7 +126,7 @@ export default function Register() {
       <br />
       <br />
       <Button onClick={register}>Register</Button>
-      <NavLink to="/login">Have an account</NavLink>
+      <Button><NavLink to="/login">Have an account</NavLink></Button>
     </div>
   );
 }

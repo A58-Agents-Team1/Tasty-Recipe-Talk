@@ -4,6 +4,7 @@ import { AppContext } from "../context/AppContext.jsx";
 import { loginUser } from "../services/auth.service.js";
 import { NavLink } from "react-router-dom";
 import { Heading, Text } from "@chakra-ui/react";
+import { Button, ButtonGroup } from '@chakra-ui/react';
 
 export default function Login() {
   const { user, setAppState } = useContext(AppContext);
@@ -54,9 +55,9 @@ export default function Login() {
       />{" "}
       <br /> <br />
       <br />
-      <button onClick={login}>Login</button>
+      <Button onClick={login}>Login</Button>
       <Text>Don`t have an account ?</Text>
-      <NavLink to="/register">Register</NavLink>
+      <Button><NavLink to="/register">Register</NavLink></Button>
     </div>
   );
 }
