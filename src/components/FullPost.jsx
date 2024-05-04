@@ -2,6 +2,7 @@ import { Card, CardBody, CardFooter, Image, Heading, Text, Button, Stack,} from 
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { likePost, dislikePost } from "../services/posts.service";
+import { NavLink } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export default function FullPost({ post }) {
@@ -37,6 +38,7 @@ export default function FullPost({ post }) {
                         ) : (
                             <Button onClick={like}>Like</Button>
                         )}
+                        <Button><NavLink to={'/all-posts'}>Back</NavLink></Button>
                     </CardFooter>
                 </Stack>
             </Card>
