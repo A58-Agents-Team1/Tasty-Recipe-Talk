@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext.jsx";
 import { NavLink } from "react-router-dom";
-import { Heading } from "@chakra-ui/react";
+import { useToast, Button } from "@chakra-ui/react";
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -21,6 +21,8 @@ export default function Register() {
 
   const { user, setAppState } = useContext(AppContext);
   const navigate = useNavigate();
+  const toast = useToast();
+
   useEffect(() => {
     if (user) {
       navigate("/");
@@ -52,6 +54,7 @@ export default function Register() {
       );
       setAppState({ user: credential.user, userData: null });
       navigate("/");
+      showToast(); // Call function to show toast
     } catch (error) {
       if (error.message.includes("auth/email-already-in-use")) {
         console.log("User has already been registered!");
@@ -59,9 +62,19 @@ export default function Register() {
     }
   };
 
+  const showToast = () => {
+    toast({
+      title: "Account created.",
+      description: "We've created your account for you.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
+  };
+
   return (
     <div>
-      <Heading>Register</Heading>
+      <h1>Register</h1>
       <label htmlFor="firstName">First Name:</label>
       <input
         value={form.firstName}
@@ -112,8 +125,7 @@ export default function Register() {
       />
       <br />
       <br />
-      <button onClick={register}>Register |</button>
-
+      <Button onClick={register}>Register</Button>
       <NavLink to="/login">Have an account</NavLink>
     </div>
   );
