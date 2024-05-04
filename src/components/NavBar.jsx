@@ -58,6 +58,8 @@ export default function NavBar() {
                 <BreadcrumbLink
                   as={NavLink}
                   to='/create-post'
+                  _active={{ color: 'red' }}
+                  _activeLink={{ color: 'gold' }}
                 >
                   Create post
                 </BreadcrumbLink>
@@ -66,6 +68,8 @@ export default function NavBar() {
                 <BreadcrumbLink
                   as={NavLink}
                   to='/all-posts'
+                  _active={{ color: 'red' }}
+                  _activeLink={{ color: 'gold' }}
                 >
                   All recipes
                 </BreadcrumbLink>
@@ -74,6 +78,8 @@ export default function NavBar() {
                 <BreadcrumbLink
                   as={NavLink}
                   to='blocked-accounts'
+                  _active={{ color: 'red' }}
+                  _activeLink={{ color: 'gold' }}
                 >
                   Blocked Account
                 </BreadcrumbLink>
@@ -82,6 +88,8 @@ export default function NavBar() {
                 <BreadcrumbLink
                   as={NavLink}
                   to='/about'
+                  _active={{ color: 'red' }}
+                  _activeLink={{ color: 'gold' }}
                 >
                   About
                 </BreadcrumbLink>
@@ -90,6 +98,8 @@ export default function NavBar() {
                 <BreadcrumbLink
                   as={NavLink}
                   to='/my-profile'
+                  _active={{ color: 'red' }}
+                  _activeLink={{ color: 'gold' }}
                 >
                   My Profile
                 </BreadcrumbLink>
