@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 
 export default function Layout({ children }) {
     return (
-        <div style={{ background: "aqua" }}>
+        <div style={{ background: "#BCBCBC" }}>
             <NavBar />
             {children}
             <Footer />
