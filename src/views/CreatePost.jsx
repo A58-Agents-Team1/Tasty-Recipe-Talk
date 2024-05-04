@@ -21,6 +21,7 @@ export const CreatePost = () => {
       description: "",
       recipe: "",
     });
+    alert('Post created successfully!');
   };
   return (
     <div>
