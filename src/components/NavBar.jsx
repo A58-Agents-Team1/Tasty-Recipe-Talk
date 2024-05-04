@@ -20,7 +20,8 @@ export default function NavBar() {
           <NavLink to='/all-posts'>All recipes |</NavLink>
           <NavLink to='blocked-accounts'>Blocked Account |</NavLink>
           <NavLink to='/about'>About |</NavLink>
-          <button onClick={logout}>LogOut</button><br />
+          <button onClick={logout}>LogOut |</button>
+          <NavLink to='/my-profil'>Profil</NavLink><br />
           {`Welcome, ${userData ? userData.handle : 'Loading'}`}
         </>
       ) : (
