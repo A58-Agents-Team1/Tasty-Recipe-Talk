@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   Button,
   AlertDialog,
@@ -6,29 +6,29 @@ import {
   AlertDialogContent,
   AlertDialogBody,
   useDisclosure,
-    AlertDialogHeader,
-  AlertDialogFooter
-} from '@chakra-ui/react';
-import { DeleteIcon } from '@chakra-ui/icons';
-import { deletePost } from '../services/users.service';
-import { useNavigate } from 'react-router-dom';
+  AlertDialogHeader,
+  AlertDialogFooter,
+} from "@chakra-ui/react";
+import { DeleteIcon } from "@chakra-ui/icons";
+import { deletePost } from "../services/users.service";
+import { useNavigate } from "react-router-dom";
 
+export function AlertDialogExample({ postId }) {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+  const navigate = useNavigate();
 
+  const cancelRef = React.useRef();
 
-export function AlertDialogExample({postId}) {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const navigate = useNavigate();
-    
-    const cancelRef = React.useRef();
+  function handleDelete() {
+    deletePost(postId);
+    onClose();
+  }
 
-    function handleDelete() {
-        deletePost(postId);
-        onClose();
-    }
-    
   return (
     <>
-      <DeleteIcon  mt={5} onClick={onOpen} />
+      <Button colorScheme='red' onClick={onOpen}>
+        <DeleteIcon />
+      </Button>
 
       <AlertDialog
         isOpen={isOpen}
@@ -38,7 +38,7 @@ export function AlertDialogExample({postId}) {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-              Delete Customer
+              Delete Recipe Post
             </AlertDialogHeader>
 
             <AlertDialogBody>
