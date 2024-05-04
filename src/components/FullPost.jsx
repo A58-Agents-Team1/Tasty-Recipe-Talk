@@ -1,4 +1,4 @@
-import { Card, CardBody, CardFooter, Image, Heading, Text, Button, Stack,} from "@chakra-ui/react";
+import { Card, CardBody, CardFooter, Image, Heading, Text, Button, Stack, } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 import { likePost, dislikePost } from "../services/posts.service";
@@ -27,16 +27,22 @@ export default function FullPost({ post }) {
 
                 <Stack>
                     <CardBody>
-                        <Heading size="md">{post.title}</Heading>
-
-                        <Text py="2">{post.description}</Text>
+                        <Heading size="md">{`Title: ${post.title}`}</Heading>
+                        <Text py="2">{`Description: ${post.description}`}</Text><br />
+                        <Text>{`Recipe: ${post.recipe}`}</Text><br />
+                        <Text>
+                            {post.likedBy.length === 0
+                                ? 'No likes yet'
+                                : `Liked by: ${post.likedBy}`}
+                        </Text><br />
+                        <Text>{`Author: ${post.author}`}</Text>
                     </CardBody>
 
                     <CardFooter>
                         {post?.likedBy.includes(userData?.handle) ? (
-                            <Button onClick={dislike}>Dislike</Button>
+                            <Button onClick={dislike} style={{ marginRight: '10px'}} >Dislike</Button>
                         ) : (
-                            <Button onClick={like}>Like</Button>
+                            <Button onClick={like} style={{ marginRight: '10px'}}>Like</Button>
                         )}
                         <Button><NavLink to={'/all-posts'}>Back</NavLink></Button>
                     </CardFooter>

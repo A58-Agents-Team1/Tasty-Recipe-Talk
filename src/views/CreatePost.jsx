@@ -1,7 +1,7 @@
 import { useContext, useState } from "react";
 import { addPost } from "../services/posts.service";
 import { AppContext } from "../context/AppContext";
-import { Heading } from "@chakra-ui/react";
+import { useToast, Heading } from "@chakra-ui/react";
 
 export const CreatePost = () => {
   const [post, setPost] = useState({
@@ -9,11 +9,24 @@ export const CreatePost = () => {
     description: "",
     recipe: "",
   });
+
   const { userData } = useContext(AppContext);
+  const toast = useToast();
 
   const updatePost = (value, key) => {
     setPost({ ...post, [key]: value });
   };
+
+  const showToast = () => {
+    toast({
+      title: "Post are created.",
+      description: "You are created post sucssesfuly.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+    });
+  };
+
   const createPost = async () => {
     await addPost(userData.handle, post.title, post.description, post.recipe);
     setPost({
@@ -21,8 +34,9 @@ export const CreatePost = () => {
       description: "",
       recipe: "",
     });
-    alert('Post created successfully!');
+    showToast();
   };
+
   return (
     <div>
       <Heading>Create a recipe!</Heading>

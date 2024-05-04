@@ -4,7 +4,7 @@ import { AppContext } from "../context/AppContext.jsx";
 import { loginUser } from "../services/auth.service.js";
 import { NavLink } from "react-router-dom";
 import { Heading, Text } from "@chakra-ui/react";
-import { Button, ButtonGroup } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react';
 
 export default function Login() {
   const { user, setAppState } = useContext(AppContext);

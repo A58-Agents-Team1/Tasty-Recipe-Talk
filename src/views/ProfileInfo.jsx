@@ -6,10 +6,10 @@ export default function ProfileInfo() {
 
   return (
     <div>
-      <p>Username: {userData.handle}</p>
-      <p>Email: {userData.email}</p>
       <p>First Name: {userData.firstName}</p>
       <p>Last Name: {userData.lastName}</p>
+      <p>Username: {userData.handle}</p>
+      <p>Email: {userData.email}</p>
     </div>
   );
 }
