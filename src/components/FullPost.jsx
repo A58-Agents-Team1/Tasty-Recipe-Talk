@@ -40,10 +40,12 @@ export default function FullPost({ post }) {
 
                     <CardFooter>
                         {post?.likedBy.includes(userData?.handle) ? (
-                            <Button onClick={dislike} style={{ marginRight: '10px'}} >Dislike</Button>
+                            <Button onClick={dislike} style={{ marginRight: '10px' }} >Dislike</Button>
                         ) : (
-                            <Button onClick={like} style={{ marginRight: '10px'}}>Like</Button>
+                            <Button onClick={like} style={{ marginRight: '10px' }}>Like</Button>
                         )}
+                        <Button style={{ marginRight: '10px' }} >Add Comment</Button>
+                        {userData.handle === post.author && <Button style={{ marginRight: '10px' }} >Edit Post</Button>}
                         <Button><NavLink to={'/all-posts'}>Back</NavLink></Button>
                     </CardFooter>
                 </Stack>

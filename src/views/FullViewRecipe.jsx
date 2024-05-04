@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { ref, onValue } from 'firebase/database';
 import { db } from "../config/firebase-config";
 import FullPost from "../components/FullPost";
+import { Heading } from "@chakra-ui/react";
 
 export default function FullViewRecipe() {
     const [ post, setPost ] = useState(null);
@@ -21,7 +22,7 @@ export default function FullViewRecipe() {
 
     return (
         <div>
-            <h1>FullViewRecipe</h1>
+            <Heading align="center">Full Post Review</Heading>
             {post && <FullPost post={post} />}
         </div>
     );
