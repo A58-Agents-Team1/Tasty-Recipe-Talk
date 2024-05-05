@@ -1,22 +1,12 @@
-import React from "react";
-import {
-  Button,
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogBody,
-  useDisclosure,
-  AlertDialogHeader,
-  AlertDialogFooter,
-} from "@chakra-ui/react";
+import { Button, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogBody, useDisclosure, AlertDialogHeader, AlertDialogFooter, Alert } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { deletePost } from "../services/users.service";
-import { useNavigate } from "react-router-dom";
+import React from "react";
+import PropTypes from "prop-types";
 
 export function AlertDialogExample({ postId }) {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
 
   function handleDelete() {
@@ -42,7 +32,7 @@ export function AlertDialogExample({ postId }) {
             </AlertDialogHeader>
 
             <AlertDialogBody>
-              Are you sure? You can't undo this action afterwards.
+              Are you sure? You can`t undo this action afterwards.
             </AlertDialogBody>
 
             <AlertDialogFooter>
@@ -59,3 +49,7 @@ export function AlertDialogExample({ postId }) {
     </>
   );
 }
+
+AlertDialogExample.propTypes = {
+  postId: PropTypes.string,
+};
