@@ -43,12 +43,14 @@ export default function Post({ post }) {
         >
           <CardBody>
             <Heading size='lg'>{post.title}</Heading>
-            <Text py='2'>{post.description}</Text>
+            <Text py='2'>{post.content}</Text>
           </CardBody>
           <CardFooter
             width='100%'
-            justify={{ base: 'center', sm: 'end' }}
+            justify='space-between'
+            fontWeight={600}
           >
+            <Text align='center'>Created By: {post.author}</Text>
             <ButtonGroup
               spacing={2}
               alignItems='center'
