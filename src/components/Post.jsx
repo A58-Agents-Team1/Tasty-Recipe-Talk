@@ -85,7 +85,7 @@ Post.propTypes = {
     id: PropTypes.string,
     author: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
     recipe: PropTypes.string.isRequired,
     createdOn: PropTypes.string,
     likedBy: PropTypes.array,
