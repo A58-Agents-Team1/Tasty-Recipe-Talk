@@ -1,7 +1,7 @@
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import PropTypes from 'prop-types';
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 export default function Layout({ children }) {
   return (
