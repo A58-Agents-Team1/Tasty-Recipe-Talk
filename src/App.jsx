@@ -35,7 +35,7 @@ function App() {
       const userData = Object.values(snapshot.val())[0];
       setAppState({ ...appState, userData });
     });
-  }, [appState.user]);
+  }, [appState]);
 
   return (
     <>
