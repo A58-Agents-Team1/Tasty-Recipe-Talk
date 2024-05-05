@@ -29,6 +29,10 @@ export const getUserData = (uid) => {
   return get(query(ref(db, 'users'), orderByChild('uid'), equalTo(uid)));
 };
 
+export const editUserProfile = (uid, data) => {
+  return set(ref(db, `users/${uid}`), data);
+};
+
 export const getAllUsers = async () => {
   const result = await get(ref(db, 'users'));
   return result.size;
