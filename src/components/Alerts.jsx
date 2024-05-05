@@ -1,11 +1,19 @@
-import { Button, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogBody, useDisclosure, AlertDialogHeader, AlertDialogFooter, Alert } from "@chakra-ui/react";
-import { DeleteIcon } from "@chakra-ui/icons";
-import { deletePost } from "../services/users.service";
-import React from "react";
-import PropTypes from "prop-types";
+import {
+  Button,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogBody,
+  useDisclosure,
+  AlertDialogHeader,
+  AlertDialogFooter,
+} from '@chakra-ui/react';
+import { DeleteIcon } from '@chakra-ui/icons';
+import { deletePost } from '../services/users.service';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 export function AlertDialogExample({ postId }) {
-
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
 
@@ -16,7 +24,10 @@ export function AlertDialogExample({ postId }) {
 
   return (
     <>
-      <Button colorScheme='red' onClick={onOpen}>
+      <Button
+        colorScheme='red'
+        onClick={onOpen}
+      >
         <DeleteIcon />
       </Button>
 
@@ -27,7 +38,10 @@ export function AlertDialogExample({ postId }) {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <AlertDialogHeader
+              fontSize='lg'
+              fontWeight='bold'
+            >
               Delete Recipe Post
             </AlertDialogHeader>
 
@@ -36,10 +50,17 @@ export function AlertDialogExample({ postId }) {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
+              <Button
+                ref={cancelRef}
+                onClick={onClose}
+              >
                 Cancel
               </Button>
-              <Button colorScheme='red' onClick={handleDelete} ml={3}>
+              <Button
+                colorScheme='red'
+                onClick={handleDelete}
+                ml={3}
+              >
                 Delete
               </Button>
             </AlertDialogFooter>
