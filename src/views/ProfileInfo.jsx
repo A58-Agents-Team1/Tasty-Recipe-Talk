@@ -11,7 +11,7 @@ export default function ProfileInfo() {
     if (!userData) {
       navigate('/');
     }
-  }, []);
+  }, [navigate, userData]);
   return (
     <div>
       <p>First Name: {userData?.firstName}</p>
