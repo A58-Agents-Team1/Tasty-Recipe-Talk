@@ -19,8 +19,7 @@ export default function Layout({ children }) {
         borderRadius='md'
         bg='gray.300'
         p='1rem'
-        mt='1rem'
-        mb='auto'
+        my='1rem'
         mx='2rem'
         shadow='2xl'
         minH={{ base: '80vh', md: '100%' }}
