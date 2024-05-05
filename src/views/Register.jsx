@@ -36,7 +36,7 @@ export default function Register() {
     if (user) {
       navigate('/');
     }
-  }, [user]);
+  }, [user, navigate]);
 
   const updateForm = (props) => (e) => {
     setForm({
@@ -122,7 +122,6 @@ export default function Register() {
       showToastSuccess();
       navigate('/');
     } catch (error) {
-      console.log(error.message);
       if (error.message.includes('child failed: path')) {
         showToastError(`User Name can't contain ".", "#", "$", "[", or "]"!`);
       }
