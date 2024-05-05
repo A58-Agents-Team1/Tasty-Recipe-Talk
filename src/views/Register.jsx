@@ -45,17 +45,17 @@ export default function Register() {
   const showToastEmailFailed = () => {
     toast({
       title: 'Error Account Not Created.',
-      description: 'User has already been registered!',
+      description: 'User with this email has already been registered!',
       status: 'error',
       duration: 5000,
       isClosable: true,
     });
   };
 
-  const showToastUserNameFailed = () => {
+  const showToastUserNameFailed = (message) => {
     toast({
       title: 'Error Account Not Created.',
-      description: 'User with this username already exists!',
+      description: message,
       status: 'error',
       duration: 5000,
       isClosable: true,
@@ -67,21 +67,27 @@ export default function Register() {
     return re.test(email);
 }
 
-  const validateForm = () => {
+  const validateForm = async () => {
+    const user = await getUserByHandle(form.userName);
+
     if(form.firstName.length < 4 || form.firstName.length > 15) {
-      return alert('First name must be between 4 and 15 characters long');
+      return showToastUserNameFailed('First name must be between 4 and 15 characters long');
     }
 
     if(form.lastName.length < 4 || form.lastName.length > 15) {
-      return alert('Last name must be between 4 and 15 characters long');
+      return showToastUserNameFailed('Last name must be between 4 and 15 characters long');
+    }
+
+    if (user.exists()) {
+      return showToastUserNameFailed('User with this username already exists!');
     }
 
     if(!validateEmail(form.email)) {
-      return alert('Invalid email format');
+      return showToastUserNameFailed('Invalid email format');
     }
 
     if(form.password.length < 6 || form.password.length > 15) { 
-      return alert('Password must be between 6 and 15 characters long');
+      return showToastUserNameFailed('Password must be between 6 and 15 characters long');
     }
 
   };
@@ -89,12 +95,6 @@ export default function Register() {
   const register = async () => {
     try {
       validateForm();
-      
-      const user = await getUserByHandle(form.userName);
-      if (user.exists()) {
-        return showToastUserNameFailed();
-      }
-
       const credential = await registerUser(form.email, form.password);
       await createUserHandle(
         form.userName,
