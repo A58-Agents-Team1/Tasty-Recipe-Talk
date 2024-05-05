@@ -1,11 +1,23 @@
 import { useEffect, useState } from 'react';
 import { registerUser } from '../services/auth.service.js';
-import { createUserHandle, getUserByHandle } from '../services/users.service.js';
+import {
+  createUserHandle,
+  getUserByHandle,
+} from '../services/users.service.js';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext.jsx';
 import { NavLink } from 'react-router-dom';
-import { useToast, Button, Heading, FormControl, FormLabel, Input, Flex, Box } from '@chakra-ui/react';
+import {
+  useToast,
+  Button,
+  Heading,
+  FormControl,
+  FormLabel,
+  Input,
+  Flex,
+  Box,
+} from '@chakra-ui/react';
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -42,17 +54,8 @@ export default function Register() {
       isClosable: true,
     });
   };
-  const showToastEmailFailed = () => {
-    toast({
-      title: 'Error Account Not Created.',
-      description: 'User with this email has already been registered!',
-      status: 'error',
-      duration: 5000,
-      isClosable: true,
-    });
-  };
 
-  const showToastUserNameFailed = (message) => {
+  const showToastError = (message) => {
     toast({
       title: 'Error Account Not Created.',
       description: message,
@@ -65,36 +68,48 @@ export default function Register() {
   const validateEmail = (email) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);
-}
+  };
 
   const validateForm = async () => {
-    const user = await getUserByHandle(form.userName);
+    const userName = await getUserByHandle(form.userName);
 
-    if(form.firstName.length < 4 || form.firstName.length > 15) {
-      return showToastUserNameFailed('First name must be between 4 and 15 characters long');
+    if (
+      form.firstName === '' ||
+      form.lastName === '' ||
+      form.userName === '' ||
+      form.email === '' ||
+      form.password === ''
+    ) {
+      throw new Error('auth/invalid-form');
     }
 
-    if(form.lastName.length < 4 || form.lastName.length > 15) {
-      return showToastUserNameFailed('Last name must be between 4 and 15 characters long');
+    if (form.firstName.length < 4 || form.firstName.length > 15) {
+      throw new Error('auth/first-name-too-short');
     }
 
-    if (user.exists()) {
-      return showToastUserNameFailed('User with this username already exists!');
+    if (form.lastName.length < 4 || form.lastName.length > 15) {
+      throw new Error('auth/last-name-too-short');
     }
 
-    if(!validateEmail(form.email)) {
-      return showToastUserNameFailed('Invalid email format');
+    if (form.userName.length < 3 || form.userName.length > 15) {
+      throw new Error('auth/username-too-short');
+    }
+    if (userName.exists()) {
+      throw new Error('auth/username-already-in-use');
     }
 
-    if(form.password.length < 6 || form.password.length > 15) { 
-      return showToastUserNameFailed('Password must be between 6 and 15 characters long');
+    if (!validateEmail(form.email)) {
+      throw new Error('auth/invalid-email');
     }
 
+    if (form.password.length < 6 || form.password.length > 15) {
+      throw new Error('auth/weak-password');
+    }
   };
 
   const register = async () => {
     try {
-      validateForm();
+      await validateForm();
       const credential = await registerUser(form.email, form.password);
       await createUserHandle(
         form.userName,
@@ -107,8 +122,45 @@ export default function Register() {
       showToastSuccess();
       navigate('/');
     } catch (error) {
+      console.log(error.message);
+      if (error.message.includes('child failed: path')) {
+        showToastError(`User Name can't contain ".", "#", "$", "[", or "]"!`);
+      }
+      if (error.message.includes('auth/first-name-too-short')) {
+        showToastError('First name must be between 4 and 15 characters long!');
+      }
+      if (error.message.includes('auth/last-name-too-short')) {
+        showToastError('Last name must be between 4 and 15 characters long!');
+      }
+      if (error.message.includes('auth/username-too-short')) {
+        showToastError(
+          'User Name name must be between 3 and 15 characters long!'
+        );
+      }
+
+      if (error.message.includes('auth/invalid-email')) {
+        showToastError('Invalid email format!');
+      }
       if (error.message.includes('auth/email-already-in-use')) {
-        showToastEmailFailed();
+        showToastError('User with this email has already been registered!');
+      }
+      if (error.message.includes('auth/weak-password')) {
+        showToastError('Password must be between 6 and 15 characters long!');
+      }
+      if (error.message.includes('auth/invalid-form')) {
+        showToastError('Please fill out all fields!');
+      }
+      if (error.message.includes('auth/operation-not-allowed')) {
+        showToastError('Email/password accounts are not enabled!');
+      }
+      if (error.message.includes('auth/username-already-in-use')) {
+        showToastError('User with this username already exists!');
+      }
+      if (error.message.includes('auth/user-not-found')) {
+        showToastError('User with this username does not exist!');
+      }
+      if (error.message.includes('auth/wrong-password')) {
+        showToastError('Invalid password!');
       }
     }
   };
@@ -122,7 +174,7 @@ export default function Register() {
         gap={4}
         p={4}
       >
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel htmlFor='firstName'>First Name:</FormLabel>
           <Input
             value={form.firstName}
@@ -142,7 +194,7 @@ export default function Register() {
             shadow={'md'}
           />
         </FormControl>
-        <FormControl>
+        <FormControl isRequired>
           <FormLabel htmlFor='lastName'>Last Name:</FormLabel>
           <Input
             value={form.lastName}
