@@ -1,13 +1,13 @@
-import { useContext, useState } from "react";
-import { addPost } from "../services/posts.service";
-import { AppContext } from "../context/AppContext";
-import { useToast, Heading } from "@chakra-ui/react";
+import { useContext, useState } from 'react';
+import { addPost } from '../services/posts.service';
+import { AppContext } from '../context/AppContext';
+import { useToast, Heading } from '@chakra-ui/react';
 
 export const CreatePost = () => {
   const [post, setPost] = useState({
-    title: "",
-    description: "",
-    recipe: "",
+    title: '',
+    description: '',
+    recipe: '',
   });
 
   const { userData } = useContext(AppContext);
@@ -19,20 +19,20 @@ export const CreatePost = () => {
 
   const showToast = () => {
     toast({
-      title: "Post are created.",
-      description: "You are created post sucssesfuly.",
-      status: "success",
+      title: 'Post are created.',
+      description: 'You are created post sucssesfuly.',
+      status: 'success',
       duration: 5000,
       isClosable: true,
     });
   };
 
   const createPost = async () => {
-    await addPost(userData.handle, post.title, post.description, post.recipe);
+    await addPost(userData.handle, post.title, post.content, post.recipe);
     setPost({
-      title: "",
-      description: "",
-      recipe: "",
+      title: '',
+      content: '',
+      recipe: '',
     });
     showToast();
   };
@@ -40,36 +40,36 @@ export const CreatePost = () => {
   return (
     <div>
       <Heading>Create a recipe!</Heading>
-      <label htmlFor="input-title">Title:</label>
+      <label htmlFor='input-title'>Title:</label>
       <br />
       <input
-        type="text"
+        type='text'
         value={post.title}
-        onChange={(e) => updatePost(e.target.value, "title")}
-        name="title"
-        id="title"
+        onChange={(e) => updatePost(e.target.value, 'title')}
+        name='title'
+        id='title'
       />
       <br />
-      <label htmlFor="input-description">Short description</label>
+      <label htmlFor='input-description'>Short description</label>
       <br />
       <textarea
-        name="input-description"
-        id="input-description"
-        cols="50"
-        rows="5"
-        value={post.description}
-        onChange={(e) => updatePost(e.target.value, "description")}
+        name='input-description'
+        id='input-description'
+        cols='50'
+        rows='5'
+        value={post.content}
+        onChange={(e) => updatePost(e.target.value, 'description')}
       ></textarea>
       <br />
-      <label htmlFor="input-recipe">Recipe:</label>
+      <label htmlFor='input-recipe'>Recipe:</label>
       <br />
       <textarea
-        name="input-recipe"
-        id="input-recipe"
-        cols="50"
-        rows="7"
+        name='input-recipe'
+        id='input-recipe'
+        cols='50'
+        rows='7'
         value={post.recipe}
-        onChange={(e) => updatePost(e.target.value, "recipe")}
+        onChange={(e) => updatePost(e.target.value, 'recipe')}
       ></textarea>
       <br />
       <button onClick={createPost}>Create post</button>
