@@ -1,23 +1,11 @@
 import { useEffect, useState } from 'react';
 import { registerUser } from '../services/auth.service.js';
-import {
-  createUserHandle,
-  getUserByHandle,
-} from '../services/users.service.js';
-import { Form, useNavigate } from 'react-router-dom';
+import { createUserHandle, getUserByHandle } from '../services/users.service.js';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext.jsx';
 import { NavLink } from 'react-router-dom';
-import {
-  useToast,
-  Button,
-  Heading,
-  FormControl,
-  FormLabel,
-  Input,
-  Flex,
-  Box,
-} from '@chakra-ui/react';
+import { useToast, Button, Heading, FormControl, FormLabel, Input, Flex, Box } from '@chakra-ui/react';
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -74,12 +62,39 @@ export default function Register() {
     });
   };
 
+  const validateEmail = (email) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
+  const validateForm = () => {
+    if(form.firstName.length < 4 || form.firstName.length > 15) {
+      return alert('First name must be between 4 and 15 characters long');
+    }
+
+    if(form.lastName.length < 4 || form.lastName.length > 15) {
+      return alert('Last name must be between 4 and 15 characters long');
+    }
+
+    if(!validateEmail(form.email)) {
+      return alert('Invalid email format');
+    }
+
+    if(form.password.length < 6 || form.password.length > 15) { 
+      return alert('Password must be between 6 and 15 characters long');
+    }
+
+  };
+
   const register = async () => {
     try {
+      validateForm();
+      
       const user = await getUserByHandle(form.userName);
       if (user.exists()) {
         return showToastUserNameFailed();
       }
+
       const credential = await registerUser(form.email, form.password);
       await createUserHandle(
         form.userName,
