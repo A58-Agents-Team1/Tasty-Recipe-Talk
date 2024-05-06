@@ -15,8 +15,6 @@ import { AppContext } from '../context/AppContext';
 import { likePost, dislikePost } from '../services/posts.service';
 import { AlertDialogExample } from './Alerts';
 import { Link } from 'react-router-dom';
-import Admin from '../views/Admin';
-import { Profile } from '../views/Profile';
 import { CanDelete } from '../hoc/Authenticated';
 
 export default function Post({ post }) {
@@ -75,7 +73,7 @@ export default function Post({ post }) {
                 <Link to={`/posts/${post.id}`}>View Recipe</Link>
               </Button>
               <CanDelete>
-              <AlertDialogExample postId={post.id} />
+                <AlertDialogExample postId={post.id} />
               </CanDelete>
             </ButtonGroup>
           </CardFooter>
