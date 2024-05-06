@@ -14,6 +14,7 @@ import {
   Input,
   Flex,
   Box,
+  Text
 } from '@chakra-ui/react';
 import {
   validateEmail,
@@ -131,14 +132,9 @@ export default function Register() {
   };
 
   return (
-    <Box width={{ base: '90%', md: '100%' }}>
-      <Heading>Register</Heading>
-      <Box
-        display='grid'
-        gridTemplateColumns='repeat(1, 1fr)'
-        gap={4}
-        p={4}
-      >
+    <Box width={{ base: '90%', md: '30%' }}>
+      <Heading textAlign={'center'}>Register</Heading>
+      <Box display='grid' gridTemplateColumns='repeat(1, 1fr)' gap={4} p={4}>
         <FormControl isRequired>
           <FormLabel htmlFor='firstName'>First Name:</FormLabel>
           <Input
@@ -238,23 +234,20 @@ export default function Register() {
             bg={'gray.200'}
             shadow={'md'}
           />
-        </FormControl>
+        </FormControl><br />
       </Box>
-      <Flex
-        justify='center'
-        align='center'
-        gap={4}
-      >
-        <Button
-          colorScheme='blue'
-          onClick={register}
-        >
-          Create
-        </Button>
-        <Button colorScheme='green'>
-          <NavLink to='/login'>Login</NavLink>
-        </Button>
+      <Flex justify='center' align='center' gap={4}>
       </Flex>
+
+      <Flex direction="column" alignItems="center">
+      <Button colorScheme='orange' width="92%"  onClick={register}>Register</Button>
+        <Flex alignItems="center" style={{ fontSize: '19px' }}>
+          <Text marginRight={2} >Have an account?</Text>
+          <NavLink to='/login' style={{ fontWeight: 'bold' }}>Login</NavLink>
+        </Flex>
+      </Flex>
+
+
     </Box>
   );
 }
