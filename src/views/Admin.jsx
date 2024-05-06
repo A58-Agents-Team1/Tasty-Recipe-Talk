@@ -88,6 +88,7 @@ export default function Admin() {
             <p>First name : {user.firstName}</p>
             <p>last name : {user.lastName}</p>
             <p>Email : {user.email}</p>
+            <p>Blocked : {user.isBlocked ? 'Yes' : 'No'}</p>
             {user.isBlocked ? (
               <Button onClick={() => unblockAcc(user.handle)}>
                 Unblock user
