@@ -8,7 +8,7 @@ import { IsBlocked } from "../hoc/Authenticated";
 export const CreatePost = () => {
   const [post, setPost] = useState({
     title: '',
-    description: '',
+    content: '',
     recipe: '',
   });
 
@@ -42,15 +42,15 @@ export const CreatePost = () => {
         id='title'
       />
       <br />
-      <label htmlFor='input-description'>Short description</label>
+      <label htmlFor='input-content'>Short description</label>
       <br />
       <textarea
-        name='input-description'
-        id='input-description'
+        name='input-content'
+        id='input-content'
         cols='50'
         rows='5'
         value={post.content}
-        onChange={(e) => updatePost(e.target.value, 'description')}
+        onChange={(e) => updatePost(e.target.value, 'content')}
       ></textarea>
       <br />
       <label htmlFor='input-recipe'>Recipe:</label>
