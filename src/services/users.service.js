@@ -8,6 +8,7 @@ import {
   remove,
 } from 'firebase/database';
 import { db } from '../config/firebase-config.js';
+import { update } from 'firebase/database';
 
 export const getUserByHandle = (handle) => {
   return get(ref(db, `users/${handle}`));
@@ -47,4 +48,42 @@ export const deletePost = (postId) => {
   } catch (error) {
     console.error('Error deleting post:', error.message);
   }
+};
+
+export const getUsersByEmail = async (email) => {
+  const pureEmail = email.split('.').join('').split('.').join('');
+  const snapshot = await get(ref(db, 'users'));
+  const users = [];
+  snapshot.forEach((acc) => {
+    const user = acc.val();
+
+    if (user.email.includes(pureEmail)) {
+      users.push(user);
+    }
+  });
+  return users;
+};
+
+export const getUsersByName = async (name) => {
+  const snapshot = await get(ref(db, 'users'));
+  const users = [];
+  snapshot.forEach((acc) => {
+    const user = acc.val();
+    if (user.firstName.includes(name)) {
+      users.push(user);
+    }
+  });
+  return users;
+};
+
+export const blockAccount = async (handle) => {
+  return update(ref(db, `users/${handle}`), {
+    isBlocked: true,
+  });
+};
+
+export const unblockAccount = async (handle) => {
+  return update(ref(db, `users/${handle}`), {
+    isBlocked: false,
+  });
 };
