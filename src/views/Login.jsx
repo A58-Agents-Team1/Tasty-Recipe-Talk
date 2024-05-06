@@ -3,9 +3,12 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext.jsx';
 import { loginUser } from '../services/auth.service.js';
 import { NavLink } from 'react-router-dom';
-import { Button, Heading, FormLabel, Input, Flex, Text, Box } from '@chakra-ui/react';
+import { Button, Heading, FormLabel, Input, Flex, Text, Box, useToast } from '@chakra-ui/react';
+import { showToastErrorLogin } from '../components/Alerts.jsx';
+import { validateEmail, validatePassword } from '../common/user.validation.js';
 
 export default function Login() {
+
   const { user, setAppState } = useContext(AppContext);
   const [form, setForm] = useState({
     email: '',
@@ -13,6 +16,7 @@ export default function Login() {
   });
   const navigate = useNavigate();
   const location = useLocation();
+  const toast = useToast();
 
   useEffect(() => {
     if (user) {
@@ -20,10 +24,45 @@ export default function Login() {
     }
   }, [user, location.state?.from.pathname, navigate]);
 
+  const validateForm = async () => {
+    if (
+      form.email === '' ||
+      form.password === ''
+    ) {
+      throw new Error('auth/invalid-form');
+    }
+
+    validateEmail(form.email);
+
+    validatePassword(form.password);
+  };
+
   const login = async () => {
-    const { user } = await loginUser(form.email, form.password);
-    setAppState({ user, userData: null });
-    navigate(location.state?.from.pathname || '/');
+    try {
+      await validateForm();
+      const { user } = await loginUser(form.email, form.password);
+      setAppState({ user, userData: null });
+      navigate(location.state?.from.pathname || '/');
+    } catch (error) {
+      if (error.message.includes('auth/invalid-email')) {
+        showToastErrorLogin('Invalid email format!',toast);
+      }
+      if (error.message.includes('auth/weak-password')) {
+        showToastErrorLogin('Password must be between 6 and 15 characters long!',toast);
+      }
+      if (error.message.includes('auth/invalid-form')) {
+        showToastErrorLogin('Please fill out all fields!',toast);
+      }
+      if (error.message.includes('auth/operation-not-allowed')) {
+        showToastErrorLogin('Email/password accounts are not enabled!',toast);
+      }
+      if (error.message.includes('auth/wrong-password')) {
+        showToastErrorLogin('Invalid password!',toast);
+      }
+      if (error.message.includes('auth/invalid-credential')) {
+        showToastErrorLogin('Wrong password!',toast);
+      }
+    }
   };
 
   const updateForm = (prop) => (e) => {

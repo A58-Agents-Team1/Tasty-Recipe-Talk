@@ -92,6 +92,16 @@ export   const showToastError = (message,toast) => {
   });
 };
 
+export   const showToastErrorLogin = (message,toast) => {
+  toast({
+    title: 'Error Login in Account.',
+    description: message,
+    status: 'error',
+    duration: 5000,
+    isClosable: true,
+  });
+};
+
 
 AlertDialogExample.propTypes = {
   postId: PropTypes.string,
