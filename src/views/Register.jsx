@@ -22,6 +22,7 @@ import {
   validatePassword,
   validateUserNameAsync,
 } from '../common/user.validation.js';
+import { showToast, showToastError} from '../components/Alerts.jsx';
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -46,26 +47,6 @@ export default function Register() {
     setForm({
       ...form,
       [props]: e.target.value,
-    });
-  };
-
-  const showToastSuccess = () => {
-    toast({
-      title: 'Account created.',
-      description: "We've created your account for you.",
-      status: 'success',
-      duration: 5000,
-      isClosable: true,
-    });
-  };
-
-  const showToastError = (message) => {
-    toast({
-      title: 'Error Account Not Created.',
-      description: message,
-      status: 'error',
-      duration: 5000,
-      isClosable: true,
     });
   };
 
@@ -103,48 +84,48 @@ export default function Register() {
         form.lastName
       );
       setAppState({ user: credential.user, userData: null });
-      showToastSuccess();
+      showToast("Account created!","We`ve created an account for you!",toast)
       navigate('/');
     } catch (error) {
       if (error.message.includes('child failed: path')) {
-        showToastError(`User Name can't contain ".", "#", "$", "[", or "]"!`);
+        showToastError(`User Name can't contain ".", "#", "$", "[", or "]"!`,toast);
       }
       if (error.message.includes('auth/first-name-too-short')) {
-        showToastError('First name must be between 4 and 15 characters long!');
+        showToastError('First name must be between 4 and 15 characters long!',toast);
       }
       if (error.message.includes('auth/last-name-too-short')) {
-        showToastError('Last name must be between 4 and 15 characters long!');
+        showToastError('Last name must be between 4 and 15 characters long!',toast);
       }
       if (error.message.includes('auth/username-too-short')) {
         showToastError(
-          'User Name name must be between 3 and 15 characters long!'
+          'User Name name must be between 3 and 15 characters long!',toast
         );
       }
 
       if (error.message.includes('auth/invalid-email')) {
-        showToastError('Invalid email format!');
+        showToastError('Invalid email format!',toast);
       }
       if (error.message.includes('auth/email-already-in-use')) {
-        showToastError('User with this email has already been registered!');
+        showToastError('User with this email has already been registered!',toast);
       }
 
       if (error.message.includes('auth/weak-password')) {
-        showToastError('Password must be between 6 and 15 characters long!');
+        showToastError('Password must be between 6 and 15 characters long!',toast);
       }
       if (error.message.includes('auth/invalid-form')) {
-        showToastError('Please fill out all fields!');
+        showToastError('Please fill out all fields!',toast);
       }
       if (error.message.includes('auth/operation-not-allowed')) {
-        showToastError('Email/password accounts are not enabled!');
+        showToastError('Email/password accounts are not enabled!',toast);
       }
       if (error.message.includes('auth/username-already-in-use')) {
-        showToastError('User with this username already exists!');
+        showToastError('User with this username already exists!',toast);
       }
       if (error.message.includes('auth/user-not-found')) {
-        showToastError('User with this username does not exist!');
+        showToastError('User with this username does not exist!',toast);
       }
       if (error.message.includes('auth/wrong-password')) {
-        showToastError('Invalid password!');
+        showToastError('Invalid password!',toast);
       }
     }
   };
