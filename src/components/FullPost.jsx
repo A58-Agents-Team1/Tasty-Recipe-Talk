@@ -66,7 +66,9 @@ export default function FullPost({ post }) {
                 Like
               </Button>
             )}
-            <Button style={{ marginRight: '10px' }}>Add Comment</Button>
+            {!userData.isBlocked && (
+              <Button style={{ marginRight: '10px' }}>Add Comment</Button>
+            )}
             {userData.handle === post.author && (
               <Button style={{ marginRight: '10px' }}>Edit Post</Button>
             )}
