@@ -14,6 +14,18 @@ export const getUserByHandle = (handle) => {
   return get(ref(db, `users/${handle}`));
 };
 
+export const getAllUsersByIsBlocked = async (isBlocked) => {
+  const snapshot = await get(ref(db, 'users'));
+  const users = [];
+  snapshot.forEach((acc) => {
+    const user = acc.val();
+    if (user.isBlocked === isBlocked) {
+      users.push(user);
+    }
+  });
+  return users;
+};
+
 export const createUserHandle = (handle, uid, email, firstName, lastName) => {
   return set(ref(db, `users/${handle}`), {
     uid,
