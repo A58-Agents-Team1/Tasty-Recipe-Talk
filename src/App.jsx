@@ -13,7 +13,6 @@ import NotFound from './views/NotFound.jsx';
 import AllPosts from './views/AllPosts.jsx';
 import About from './views/About.jsx';
 import BlockedAccounts from './views/BlockedAccounts.jsx';
-import ProfileInfo from './views/Admin.jsx';
 import FullViewRecipe from './views/FullViewRecipe.jsx';
 import { Profile } from './views/Profile.jsx';
 import Admin from './views/Admin.jsx';
@@ -37,7 +36,7 @@ function App() {
       const userData = Object.values(snapshot.val())[0];
       setAppState({ ...appState, userData });
     });
-  }, [appState]);
+  }, [appState.user]);
 
   return (
     <>
@@ -82,9 +81,11 @@ function App() {
             />
             <Route
               path='/my-profile'
-              element={<Profile>
-                <Admin />
-              </Profile>}
+              element={
+                <Profile>
+                  <Admin />
+                </Profile>
+              }
             />
           </Routes>
         </Layout>
