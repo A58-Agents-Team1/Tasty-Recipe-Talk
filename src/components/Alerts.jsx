@@ -8,6 +8,7 @@ export function AlertDialogExample({ postId }) {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
+  
 
   function handleDelete() {
     deletePost(postId);
@@ -49,6 +50,27 @@ export function AlertDialogExample({ postId }) {
     </>
   );
 }
+
+export const showToast = (title, description,toast) => {
+  toast({
+    title: title,
+    description: description,
+    status: "success",
+    duration: 4000,
+    isClosable: true,
+  });
+};
+
+export   const showToastError = (message,toast) => {
+  toast({
+    title: 'Error Account Not Created.',
+    description: message,
+    status: 'error',
+    duration: 5000,
+    isClosable: true,
+  });
+};
+
 
 AlertDialogExample.propTypes = {
   postId: PropTypes.string,
