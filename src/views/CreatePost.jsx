@@ -2,6 +2,8 @@ import { useContext, useState } from "react";
 import { addPost } from "../services/posts.service";
 import { AppContext } from "../context/AppContext";
 import { useToast, Heading } from "@chakra-ui/react";
+import { showToast } from "../components/Alerts";
+import { IsBlocked } from "../hoc/Authenticated";
 
 export const CreatePost = () => {
   const [post, setPost] = useState({
@@ -17,16 +19,6 @@ export const CreatePost = () => {
     setPost({ ...post, [key]: value });
   };
 
-  const showToast = () => {
-    toast({
-      title: "Post are created.",
-      description: "You are created post sucssesfuly.",
-      status: "success",
-      duration: 5000,
-      isClosable: true,
-    });
-  };
-
   const createPost = async () => {
     await addPost(userData.handle, post.title, post.description, post.recipe);
     setPost({
@@ -34,7 +26,7 @@ export const CreatePost = () => {
       description: "",
       recipe: "",
     });
-    showToast();
+    showToast("Post created.","You created a post successfully.",toast)
   };
 
   return (
@@ -72,7 +64,9 @@ export const CreatePost = () => {
         onChange={(e) => updatePost(e.target.value, "recipe")}
       ></textarea>
       <br />
+      <IsBlocked>
       <button onClick={createPost}>Create post</button>
+      </IsBlocked>
     </div>
   );
 };
