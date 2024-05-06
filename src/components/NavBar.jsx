@@ -60,16 +60,18 @@ export default function NavBar() {
         <>
           <HStack>
             <Breadcrumb>
-              <BreadcrumbItem>
-                <BreadcrumbLink
-                  as={NavLink}
-                  to='/create-post'
-                  _active={{ color: 'red' }}
-                  _activeLink={{ color: 'gold' }}
-                >
-                  Create post
-                </BreadcrumbLink>
-              </BreadcrumbItem>
+              {!userData?.isBlocked && (
+                <BreadcrumbItem>
+                  <BreadcrumbLink
+                    as={NavLink}
+                    to='/create-post'
+                    _active={{ color: 'red' }}
+                    _activeLink={{ color: 'gold' }}
+                  >
+                    Create post
+                  </BreadcrumbLink>
+                </BreadcrumbItem>
+              )}
               <BreadcrumbItem>
                 <BreadcrumbLink
                   as={NavLink}
@@ -90,18 +92,6 @@ export default function NavBar() {
                   About
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              {userData?.userRole === 'admin' && (
-                <BreadcrumbItem>
-                  <BreadcrumbLink
-                    as={NavLink}
-                    to='blocked-accounts'
-                    _active={{ color: 'red' }}
-                    _activeLink={{ color: 'gold' }}
-                  >
-                    Blocked Account
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-              )}
             </Breadcrumb>
           </HStack>
 
@@ -129,6 +119,17 @@ export default function NavBar() {
                   >
                     My Profile
                   </MenuItem>
+                  {userData?.userRole === 'admin' && (
+                    <MenuItem
+                      bg='gray.400'
+                      as={NavLink}
+                      to='/blocked-accounts'
+                      _active={{ color: 'red' }}
+                      _activeLink={{ color: 'gold' }}
+                    >
+                      Blocked Account
+                    </MenuItem>
+                  )}
                   <MenuItem
                     bg='gray.400'
                     color={'red'}
