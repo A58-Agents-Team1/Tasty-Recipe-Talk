@@ -13,8 +13,10 @@ import NotFound from './views/NotFound.jsx';
 import AllPosts from './views/AllPosts.jsx';
 import About from './views/About.jsx';
 import BlockedAccounts from './views/BlockedAccounts.jsx';
-import ProfileInfo from './views/ProfileInfo.jsx';
+import ProfileInfo from './views/Admin.jsx';
 import FullViewRecipe from './views/FullViewRecipe.jsx';
+import { Profile } from './views/Profile.jsx';
+import Admin from './views/Admin.jsx';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -80,7 +82,9 @@ function App() {
             />
             <Route
               path='/my-profile'
-              element={<ProfileInfo />}
+              element={<Profile>
+                <Admin />
+              </Profile>}
             />
           </Routes>
         </Layout>
