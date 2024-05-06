@@ -23,6 +23,25 @@ export default function Authenticated({ children }) {
     )
 }
 
+export const IsBlocked = ({ children }) => {
+    const { userData } = useContext(AppContext);
+    if (userData.isBlocked) {
+        return <p>Your account is blocked!</p>
+    }
+    return (
+        <>
+            {children}
+        </>
+    )
+}
+
+export const CanDelete = ({ children }) => {
+    const { userData } = useContext(AppContext);
+    if (userData.userRole === 'admin') {
+        return <>{children}</>;
+      }
+}
+
 Authenticated.propTypes = {
     children: PropTypes.any.isRequired,
 }
