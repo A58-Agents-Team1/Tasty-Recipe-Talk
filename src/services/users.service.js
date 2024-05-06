@@ -21,6 +21,7 @@ export const createUserHandle = (handle, uid, email, firstName, lastName) => {
     email,
     firstName,
     lastName,
+    isBlocked: false,
     userRole: 'user',
     createdOn: new Date(),
   });
