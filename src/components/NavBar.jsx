@@ -123,6 +123,17 @@ export default function NavBar() {
                     <MenuItem
                       bg='gray.400'
                       as={NavLink}
+                      to='/find-user'
+                      _active={{ color: 'red' }}
+                      _activeLink={{ color: 'gold' }}
+                    >
+                      Find User
+                    </MenuItem>
+                  )}
+                  {userData?.userRole === 'admin' && (
+                    <MenuItem
+                      bg='gray.400'
+                      as={NavLink}
                       to='/blocked-accounts'
                       _active={{ color: 'red' }}
                       _activeLink={{ color: 'gold' }}
