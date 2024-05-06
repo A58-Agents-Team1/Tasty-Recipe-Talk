@@ -1,7 +1,7 @@
 import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import PropTypes from 'prop-types';
-import { Box, Flex } from '@chakra-ui/react';
+import { Flex } from '@chakra-ui/react';
 
 export default function Layout({ children }) {
   return (
@@ -19,8 +19,7 @@ export default function Layout({ children }) {
         borderRadius='md'
         bg='gray.300'
         p='1rem'
-        mt='1rem'
-        mb='auto'
+        my='1rem'
         mx='2rem'
         shadow='2xl'
         minH={{ base: '80vh', md: '100%' }}

@@ -1,9 +1,6 @@
 import { useEffect, useState } from 'react';
 import { registerUser } from '../services/auth.service.js';
-import {
-  createUserHandle,
-  getUserByHandle,
-} from '../services/users.service.js';
+import { createUserHandle } from '../services/users.service.js';
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext.jsx';
@@ -18,6 +15,13 @@ import {
   Flex,
   Box,
 } from '@chakra-ui/react';
+import {
+  validateEmail,
+  validateFirstName,
+  validateLastName,
+  validatePassword,
+  validateUserNameAsync,
+} from '../common/user.validation.js';
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -36,7 +40,7 @@ export default function Register() {
     if (user) {
       navigate('/');
     }
-  }, [user]);
+  }, [user, navigate]);
 
   const updateForm = (props) => (e) => {
     setForm({
@@ -65,14 +69,7 @@ export default function Register() {
     });
   };
 
-  const validateEmail = (email) => {
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-  };
-
   const validateForm = async () => {
-    const userName = await getUserByHandle(form.userName);
-
     if (
       form.firstName === '' ||
       form.lastName === '' ||
@@ -83,28 +80,15 @@ export default function Register() {
       throw new Error('auth/invalid-form');
     }
 
-    if (form.firstName.length < 4 || form.firstName.length > 15) {
-      throw new Error('auth/first-name-too-short');
-    }
+    validateFirstName(form.firstName);
 
-    if (form.lastName.length < 4 || form.lastName.length > 15) {
-      throw new Error('auth/last-name-too-short');
-    }
+    validateLastName(form.lastName);
 
-    if (form.userName.length < 3 || form.userName.length > 15) {
-      throw new Error('auth/username-too-short');
-    }
-    if (userName.exists()) {
-      throw new Error('auth/username-already-in-use');
-    }
+    await validateUserNameAsync(form.userName);
 
-    if (!validateEmail(form.email)) {
-      throw new Error('auth/invalid-email');
-    }
+    validateEmail(form.email);
 
-    if (form.password.length < 6 || form.password.length > 15) {
-      throw new Error('auth/weak-password');
-    }
+    validatePassword(form.password);
   };
 
   const register = async () => {
@@ -122,7 +106,6 @@ export default function Register() {
       showToastSuccess();
       navigate('/');
     } catch (error) {
-      console.log(error.message);
       if (error.message.includes('child failed: path')) {
         showToastError(`User Name can't contain ".", "#", "$", "[", or "]"!`);
       }
@@ -144,6 +127,7 @@ export default function Register() {
       if (error.message.includes('auth/email-already-in-use')) {
         showToastError('User with this email has already been registered!');
       }
+
       if (error.message.includes('auth/weak-password')) {
         showToastError('Password must be between 6 and 15 characters long!');
       }

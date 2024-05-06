@@ -13,9 +13,14 @@ import {
   Flex,
   HStack,
   Heading,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
   Spinner,
   Text,
 } from '@chakra-ui/react';
+import { SettingsIcon } from '@chakra-ui/icons';
 
 export default function NavBar() {
   const { user, userData, setAppState } = useContext(AppContext);
@@ -30,15 +35,16 @@ export default function NavBar() {
   return (
     <Flex
       as='nav'
+      justify='space-between'
       alignItems='center'
       borderBottom='1px solid'
       borderColor={'gray.600'}
+      borderRadius='md'
       p='1rem'
       mb='1rem'
-      width='100%'
+      shadow='2xl'
       bg='gray.500'
       color={'white'}
-      justifyContent={'space-between'}
     >
       <Heading>
         <NavLink to='/'>
@@ -52,7 +58,7 @@ export default function NavBar() {
       </Heading>
       {user ? (
         <>
-          <HStack spacing='20px'>
+          <HStack>
             <Breadcrumb>
               <BreadcrumbItem>
                 <BreadcrumbLink
@@ -96,30 +102,43 @@ export default function NavBar() {
                   </BreadcrumbLink>
                 </BreadcrumbItem>
               )}
-              <BreadcrumbItem>
-                <BreadcrumbLink
-                  as={NavLink}
-                  to='/my-profile'
-                  _active={{ color: 'red' }}
-                  _activeLink={{ color: 'gold' }}
-                >
-                  My Profile
-                </BreadcrumbLink>
-              </BreadcrumbItem>
             </Breadcrumb>
           </HStack>
+
           <HStack spacing='20px'>
-            <Text as='div'>{userData ? userData.handle : <Spinner />}</Text>
-            <Avatar
-              size='sm'
-              name={userData ? userData.handle : ''}
-            />
-            <Button
-              colorScheme='green'
-              onClick={logout}
-            >
-              Logout
-            </Button>
+            <Menu>
+              <>
+                <Text as='div'>{userData ? userData.handle : <Spinner />}</Text>
+                <Avatar
+                  size='sm'
+                  name={userData ? userData.handle : ''}
+                />
+                <MenuButton>
+                  <SettingsIcon />
+                </MenuButton>
+                <MenuList
+                  color='white'
+                  bg='gray.400'
+                >
+                  <MenuItem
+                    bg='gray.400'
+                    as={NavLink}
+                    to='/my-profile'
+                    _active={{ color: 'red' }}
+                    _activeLink={{ color: 'gold' }}
+                  >
+                    My Profile
+                  </MenuItem>
+                  <MenuItem
+                    bg='gray.400'
+                    color={'red'}
+                    onClick={logout}
+                  >
+                    Logout
+                  </MenuItem>
+                </MenuList>
+              </>
+            </Menu>
           </HStack>
         </>
       ) : (

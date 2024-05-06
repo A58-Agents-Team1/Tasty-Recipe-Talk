@@ -1,11 +1,11 @@
 import { ref, push, update, get } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
-export const addPost = async (author, title, description, recipe) => {
+export const addPost = async (author, title, content, recipe) => {
   const post = {
     author,
     title,
-    description,
+    content,
     recipe,
     createdOn: Date.now(),
   };
@@ -29,16 +29,16 @@ export const getAllPosts = async (search) => {
     .filter((post) => post.title.toLowerCase().includes(search.toLowerCase()));
 };
 
-export const getPostById = async(id) => {
+export const getPostById = async (id) => {
   const snapshot = await get(ref(db, `posts/${id}`));
 
   if (!snapshot.val()) throw new Error('Post with this id does not exist!');
 
   return {
-      ...snapshot.val(),
-      id,
-      likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
-      createdOn: new Date(snapshot.val().createdOn).toString(),
+    ...snapshot.val(),
+    id,
+    likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
+    createdOn: new Date(snapshot.val().createdOn).toString(),
   }
 };
 
