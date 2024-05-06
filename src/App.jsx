@@ -14,8 +14,8 @@ import AllPosts from './views/AllPosts.jsx';
 import About from './views/About.jsx';
 import BlockedAccounts from './views/BlockedAccounts.jsx';
 import FullViewRecipe from './views/FullViewRecipe.jsx';
-import { Profile } from './views/Profile.jsx';
-import Admin from './views/Admin.jsx';
+import FindUser from './views/FindUser.jsx';
+import Profile from './views/Profile.jsx';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -81,11 +81,11 @@ function App() {
             />
             <Route
               path='/my-profile'
-              element={
-                <Profile>
-                  <Admin />
-                </Profile>
-              }
+              element={<Profile />}
+            />
+            <Route
+              path='/find-user'
+              element={<FindUser />}
             />
           </Routes>
         </Layout>
