@@ -52,6 +52,7 @@ export default function Post({ post }) {
             fontWeight={600}
           >
             <Text align='center'>Created By: {post.author}</Text>
+            {userData && (
             <ButtonGroup
               spacing={2}
               alignItems='center'
@@ -76,6 +77,7 @@ export default function Post({ post }) {
                 <AlertDialogExample postId={post.id} />
               </CanDelete>
             </ButtonGroup>
+          )}
           </CardFooter>
         </Stack>
       </Card>
