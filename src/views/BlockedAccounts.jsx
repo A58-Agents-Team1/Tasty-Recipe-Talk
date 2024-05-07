@@ -19,18 +19,19 @@ export default function BlockedAccounts() {
       <Heading>Blocked People</Heading>
       <Text>Here you can see the people you have blocked.</Text>
       {allBlockedUsers ? (
-        <div>
+        <>
           {allBlockedUsers.map((user) => (
-            <div key={user.id}>
+            <>
               <br />
-              <p>First Name: {user.firstName}</p>
-              <p>Last Name: {user.lastName}</p>
-              <p>Username: {user.handle}</p>
-              <p>Email: {user.email}</p>
-              <br />
-            </div>
+              <div key={user.id}>
+                <p>First Name: {user.firstName}</p>
+                <p>Last Name: {user.lastName}</p>
+                <p>Username: {user.handle}</p>
+                <p>Email: {user.email}</p>
+              </div>
+            </>
           ))}
-        </div>
+        </>
       ) : (
         <Text>No blocked users</Text>
       )}
