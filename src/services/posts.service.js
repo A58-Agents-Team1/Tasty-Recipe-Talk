@@ -10,7 +10,7 @@ export const addPost = async (author, title, content, recipe) => {
     createdOn: Date.now(),
   };
   const result = await push(ref(db, 'posts'), post);
-  console.log(result.key);
+  return result.key;
 };
 
 export const getAllPosts = async (search) => {
