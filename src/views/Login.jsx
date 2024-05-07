@@ -119,16 +119,6 @@ export default function Login() {
   return (
     <Box width={{ base: '90%', md: '30%' }}>
       <Heading textAlign={'center'}>Login</Heading>
-      <FormLabel htmlFor='isChecked'>
-        {userNameOrEmail ? 'Login with Email' : 'Login with Username'}
-        <Switch
-          id='isChecked'
-          colorScheme='green'
-          _selected={{ bg: 'green.500', color: 'white' }}
-          value={userNameOrEmail}
-          onChange={() => setUserNameOrEmail(!userNameOrEmail)}
-        />
-      </FormLabel>
       <br />
       {userNameOrEmail ? (
         <>
@@ -195,7 +185,16 @@ export default function Login() {
       />
       <br />
       <br />
-
+      <FormLabel htmlFor='isChecked' textAlign={'center'}>
+        {userNameOrEmail ? 'Login with Email' : 'Login with Username'}
+        <Switch
+          id='isChecked'
+          colorScheme='green'
+          _selected={{ bg: 'green.500', color: 'white' }}
+          value={userNameOrEmail}
+          onChange={() => setUserNameOrEmail(!userNameOrEmail)}
+        />
+      </FormLabel>
       <Flex
         direction='column'
         alignItems='center'
