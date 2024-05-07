@@ -52,9 +52,15 @@ export default function AllPosts() {
         id="search"
       />
       <br />
-      {posts.map((post) => (
-        <Post key={post.id} post={post} />
-      ))}
+      {
+        posts ? (
+          posts.map((post) => (
+            <Post key={post.id} post={post} />
+          ))
+        ) : (
+          <p>No posts found</p>
+        )
+      }
     </div>
   );
 }
