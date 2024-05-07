@@ -24,7 +24,7 @@ export default function Post({ post }) {
   const dislike = () => dislikePost(post.id, userData.handle);
   const [url, setUrl] = useState("");
   const getUrl = async () => {
-   const result =  await getUploadedPhoto(post.title).then((data) => setUrl(data));
+  const result =  await getUploadedPhoto(post.title).then((data) => setUrl(data));
     return result; 
   }
   getUrl();

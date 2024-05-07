@@ -108,3 +108,7 @@ export const unblockAccount = async (handle) => {
 export const updateUser = async (handle, data) => {
   return await update(ref(db, `users/${handle}`), data);
 };
+
+export const updatePost = async (handle, data) => {
+  return await update(ref(db, `posts/${handle}`), data);
+};
