@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { Heading, Input, FormLabel, Button } from '@chakra-ui/react';
+import { Heading, Input, FormLabel, Button, useToast } from '@chakra-ui/react';
 import { updateUser } from '../services/users.service';
+import { showToastError } from '../components/Alerts';
 
 const Profile = () => {
   const { userData } = useContext(AppContext);
   const navigate = useNavigate();
+  const toast = useToast();
   const [editEnable, setEditEnable] = useState(true);
   const [form, setForm] = useState({
     firstName: userData.firstName,
@@ -29,7 +31,7 @@ const Profile = () => {
       await updateUser(userData.handle, form);
       setEditEnable(!editEnable);
     } catch (e) {
-      console.log(e.message);
+      showToastError('Error updating profile', e.message, toast);
     }
   };
 

@@ -9,7 +9,7 @@ import {
   unblockAccount,
 } from '../services/users.service';
 import { Button, useToast } from '@chakra-ui/react';
-import { showToast } from '../components/Alerts';
+import { showToast, showToastError } from '../components/Alerts';
 
 export default function FindUser() {
   const { userData } = useContext(AppContext);
@@ -54,20 +54,18 @@ export default function FindUser() {
   const blockAcc = (inputData) => {
     try {
       blockAccount(inputData);
-      console.log('yes');
       showToast('Account block.', 'Account blocked successfully', toast);
     } catch (error) {
-      console.log(error.message);
+      showToastError('Error blocking account', error.message, toast);
     }
   };
 
   const unblockAcc = (inputData) => {
     try {
       unblockAccount(inputData);
-      console.log('yes');
       showToast('Account unblock.', 'Account unblocked successfully', toast);
     } catch (error) {
-      console.log(error.message);
+      showToastError('Error unblocking account', error.message, toast);
     }
   };
 

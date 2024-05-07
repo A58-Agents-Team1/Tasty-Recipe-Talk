@@ -59,7 +59,6 @@ export default function Login() {
       setAppState({ user, userData: null });
       navigate(location.state?.from.pathname || '/');
     } catch (error) {
-      console.log(error.message);
       if (error.message.includes('auth/invalid-email')) {
         showToastError(ERR_TOAST_EMAIL_LOGIN, 'Invalid email format!', toast);
       }
