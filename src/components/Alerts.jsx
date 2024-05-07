@@ -1,13 +1,4 @@
-import {
-  Button,
-  AlertDialog,
-  AlertDialogOverlay,
-  AlertDialogContent,
-  AlertDialogBody,
-  useDisclosure,
-  AlertDialogHeader,
-  AlertDialogFooter,
-} from '@chakra-ui/react';
+import { Button, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogBody, useDisclosure, AlertDialogHeader, AlertDialogFooter } from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { deletePost } from '../services/users.service';
 import React from 'react';
@@ -16,7 +7,6 @@ import PropTypes from 'prop-types';
 export function AlertDialogExample({ postId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = React.useRef();
-  
 
   function handleDelete() {
     deletePost(postId);
@@ -25,10 +15,7 @@ export function AlertDialogExample({ postId }) {
 
   return (
     <>
-      <Button
-        colorScheme='red'
-        onClick={onOpen}
-      >
+      <Button colorScheme='red' onClick={onOpen}>
         <DeleteIcon />
       </Button>
 
@@ -82,26 +69,15 @@ export const showToast = (title, description,toast) => {
   });
 };
 
-export   const showToastError = (message,toast) => {
+export const showToastError = (title, message,toast) => {
   toast({
-    title: 'Error Account Not Created.',
+    title: title,
     description: message,
     status: 'error',
     duration: 5000,
     isClosable: true,
   });
 };
-
-export   const showToastErrorLogin = (message,toast) => {
-  toast({
-    title: 'Error Login in Account.',
-    description: message,
-    status: 'error',
-    duration: 5000,
-    isClosable: true,
-  });
-};
-
 
 AlertDialogExample.propTypes = {
   postId: PropTypes.string,

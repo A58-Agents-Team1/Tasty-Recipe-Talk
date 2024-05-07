@@ -1,26 +1,10 @@
+import { Avatar, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, ButtonGroup, Flex, HStack, Heading, Menu, MenuButton, MenuItem, MenuList, Spinner, Text } from '@chakra-ui/react';
 import { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext.jsx';
 import { logoutUser } from '../services/auth.service.js';
-import logo from '/logo.png';
-import {
-  Avatar,
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbLink,
-  Button,
-  ButtonGroup,
-  Flex,
-  HStack,
-  Heading,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-  Spinner,
-  Text,
-} from '@chakra-ui/react';
 import { SettingsIcon } from '@chakra-ui/icons';
+import logo from '/logo.png';
 
 export default function NavBar() {
   const { user, userData, setAppState } = useContext(AppContext);
@@ -103,8 +87,8 @@ export default function NavBar() {
                   size='sm'
                   name={userData ? userData.handle : ''}
                 />
-                <MenuButton>
-                  <SettingsIcon />
+                <MenuButton title="Profile Settings">
+                  <SettingsIcon/>
                 </MenuButton>
                 <MenuList
                   color='white'
