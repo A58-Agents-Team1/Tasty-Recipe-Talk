@@ -85,26 +85,33 @@ export default function FindUser() {
         name='search'
         id='search'
       />
-      <br />
-      <br />
-      {search &&
-        users.map((user) => (
-          <div key={user.uid}>
-            <h1>Results</h1>
-            <p>Username : {user?.handle}</p>
-            <p>First name : {user.firstName}</p>
-            <p>last name : {user.lastName}</p>
-            <p>Email : {user.email}</p>
-            <p>Blocked : {user.isBlocked ? 'Yes' : 'No'}</p>
-            {user.isBlocked ? (
-              <Button onClick={() => unblockAcc(user?.handle)}>
-                Unblock user
-              </Button>
-            ) : (
-              <Button onClick={() => blockAcc(user?.handle)}>Block user</Button>
-            )}
-          </div>
-        ))}
+      <>
+        <br />
+        <br />
+        {search &&
+          users.map((user) => (
+            <>
+              <div key={user.uid}>
+                <h1>Results</h1>
+                <p>Username : {user?.handle}</p>
+                <p>First name : {user.firstName}</p>
+                <p>last name : {user.lastName}</p>
+                <p>Email : {user.email}</p>
+                <p>Blocked : {user.isBlocked ? 'Yes' : 'No'}</p>
+                {user.isBlocked ? (
+                  <Button onClick={() => unblockAcc(user?.handle)}>
+                    Unblock user
+                  </Button>
+                ) : (
+                  <Button onClick={() => blockAcc(user?.handle)}>
+                    Block user
+                  </Button>
+                )}
+              </div>
+              <br />
+            </>
+          ))}
+      </>
     </div>
   );
 }
