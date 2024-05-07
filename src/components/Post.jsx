@@ -28,7 +28,7 @@ export default function Post({ post }) {
     return result; 
   }
   getUrl();
-  console.log(url);
+
   return (
     <div className='single-post'>
       <Card
