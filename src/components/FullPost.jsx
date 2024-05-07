@@ -8,7 +8,7 @@ import {
   Button,
   Stack,
 } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AppContext } from '../context/AppContext';
 import { likePost, dislikePost } from '../services/posts.service';
 import { NavLink } from 'react-router-dom';
@@ -20,12 +20,15 @@ export default function FullPost({ post }) {
   const { userData } = useContext(AppContext);
   const like = () => likePost(post.id, userData.handle);
   const dislike = () => dislikePost(post.id, userData.handle);
-  const [url, setUrl] = useState("");
-  const getUrl = async () => {
-   const result =  await getUploadedPhoto(post.title).then((data) => setUrl(data));
-    return result; 
-  }
-  getUrl();
+  const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    const getUrl = async () => {
+      const result = await getUploadedPhoto(post.id);
+      setUrl(result);
+    };
+    getUrl();
+  }, [post.id]);
 
   return (
     <div className='single-post'>
