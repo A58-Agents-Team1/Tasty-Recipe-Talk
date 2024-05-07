@@ -13,3 +13,9 @@ export const MAX_USERNAME_LENGTH = 15;
 export const MIN_PASSWORD_LENGTH = 6;
 
 export const MAX_PASSWORD_LENGTH = 15;
+
+export const ERR_TOAST_EMAIL_LOGIN = 'Error Login in Account With Email.';
+
+export const ERR_TOAST_USERNAME_LOGIN = 'Error Login in Account With Username.';
+
+export const ERR_TOAST_ACCOUNT_NOT_CREATED = 'Error Account Not Created.';
