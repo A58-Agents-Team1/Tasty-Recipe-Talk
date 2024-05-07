@@ -1,12 +1,12 @@
 import { useContext, useState } from 'react';
-import { addPost, } from '../services/posts.service';
+import { addPost } from '../services/posts.service';
 import { AppContext } from '../context/AppContext';
 import { useToast, Heading } from '@chakra-ui/react';
-import { showToast } from '../components/Alerts';
+import { showToast, showToastError } from '../components/Alerts';
 import { IsBlocked } from '../hoc/Authenticated';
 import { uploadPhoto } from '../config/firebase-config';
-
-
+import { validateImage, validatePost } from '../common/post.validation';
+import { useNavigate } from 'react-router-dom';
 
 export const CreatePost = () => {
   const [post, setPost] = useState({
@@ -18,26 +18,42 @@ export const CreatePost = () => {
   const { userData } = useContext(AppContext);
   const toast = useToast();
   const [imageUpload, setImageUpload] = useState(null);
-
+  const navigate = useNavigate();
   const updatePost = (value, key) => {
     setPost({ ...post, [key]: value });
   };
 
   const createPost = async () => {
-    await addPost(userData.handle, post.title, post.content, post.recipe);
-    setPost({
-      title: '',
-      content: '',
-      recipe: '',
-    });
-    showToast('Post created.', 'You created a post successfully.', toast);
-  };
+    try {
+      validatePost(post);
+      validateImage(imageUpload);
+      const postKey = await addPost(
+        userData.handle,
+        post.title,
+        post.content,
+        post.recipe
+      );
 
-  const uploadImage = () => {
-   if (imageUpload == null) {
-     return;
+      await uploadPhoto(imageUpload, postKey);
+
+      setPost({
+        title: '',
+        content: '',
+        recipe: '',
+      });
+
+      showToast('Post created.', 'You created a post successfully.', toast);
+
+      navigate(`/posts/${postKey}`);
+    } catch (error) {
+      if (error.message === 'auth/empty-fields') {
+        showToastError('Error', 'Please fill in all fields.', toast);
+      }
+
+      if (error.message === 'auth/no-image') {
+        showToastError('Error', 'Please upload an image.', toast);
+      }
     }
-    uploadPhoto(imageUpload,post.title);
   };
 
   return (
@@ -75,14 +91,20 @@ export const CreatePost = () => {
         onChange={(e) => updatePost(e.target.value, 'recipe')}
       ></textarea>
       <br />
+      <label htmlFor='image'>Upload Image: </label>
+      <input
+        type='file'
+        id='image'
+        name='image'
+        accept='image/*'
+        onChange={(event) => {
+          setImageUpload(event.target.files[0]);
+        }}
+      />
+      <br />
       <IsBlocked>
         <button onClick={createPost}>Create post</button>
       </IsBlocked>
-      <input
-        type='file'
-        onChange={(event) => { setImageUpload(event.target.files[0]); }}
-      />
-      <button onClick={uploadImage}>Upload</button>
     </div>
   );
 };
