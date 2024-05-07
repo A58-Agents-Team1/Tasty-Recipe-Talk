@@ -2,14 +2,15 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
 import { Heading, Input, FormLabel, Button } from '@chakra-ui/react';
+import { updateUser } from '../services/users.service';
 
 const Profile = () => {
   const { userData } = useContext(AppContext);
   const navigate = useNavigate();
   const [editEnable, setEditEnable] = useState(true);
   const [form, setForm] = useState({
-    firstName: '',
-    lastName: '',
+    firstName: userData.firstName,
+    lastName: userData.lastName,
   });
 
   const updateForm = (props) => (e) => {
@@ -25,6 +26,7 @@ const Profile = () => {
 
   const editProfile = async () => {
     try {
+      await updateUser(userData.handle, form);
       setEditEnable(!editEnable);
     } catch (e) {
       console.log(e.message);
