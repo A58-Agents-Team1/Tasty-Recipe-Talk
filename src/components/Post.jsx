@@ -10,7 +10,7 @@ import {
   ButtonGroup,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { likePost, dislikePost } from '../services/posts.service';
 import { AlertDialogExample } from './Alerts';
@@ -22,12 +22,15 @@ export default function Post({ post }) {
   const { userData } = useContext(AppContext);
   const like = () => likePost(post.id, userData.handle);
   const dislike = () => dislikePost(post.id, userData.handle);
-  const [url, setUrl] = useState("");
-  const getUrl = async () => {
-  const result =  await getUploadedPhoto(post.title).then((data) => setUrl(data));
-    return result; 
-  }
-  getUrl();
+  const [url, setUrl] = useState('');
+
+  useEffect(() => {
+    const getUrl = async () => {
+      const result = await getUploadedPhoto(post.id);
+      setUrl(result);
+    };
+    getUrl();
+  }, [post.id]);
 
   return (
     <div className='single-post'>
@@ -37,7 +40,6 @@ export default function Post({ post }) {
         variant='outline'
         mt={3}
         shadow={{ base: 'md', sm: 'xl' }}
-        
       >
         <Image
           objectFit='cover'
@@ -61,31 +63,31 @@ export default function Post({ post }) {
           >
             <Text align='center'>Created By: {post.author}</Text>
             {userData && (
-            <ButtonGroup
-              spacing={2}
-              alignItems='center'
-            >
-              <Text>
-                {post.likedBy.length === 0
-                  ? 'No likes yet'
-                  : post.likedBy.length === 1
-                  ? 'Liked by 1 person'
-                  : `Liked by ${post.likedBy.length} people`}
-              </Text>
+              <ButtonGroup
+                spacing={2}
+                alignItems='center'
+              >
+                <Text>
+                  {post.likedBy.length === 0
+                    ? 'No likes yet'
+                    : post.likedBy.length === 1
+                    ? 'Liked by 1 person'
+                    : `Liked by ${post.likedBy.length} people`}
+                </Text>
 
-              {post?.likedBy.includes(userData?.handle) ? (
-                <Button onClick={dislike}>Dislike</Button>
-              ) : (
-                <Button onClick={like}>Like</Button>
-              )}
-              <Button>
-                <Link to={`/posts/${post.id}`}>View Recipe</Link>
-              </Button>
-              <CanDelete>
-                <AlertDialogExample postId={post.id} />
-              </CanDelete>
-            </ButtonGroup>
-          )}
+                {post?.likedBy.includes(userData?.handle) ? (
+                  <Button onClick={dislike}>Dislike</Button>
+                ) : (
+                  <Button onClick={like}>Like</Button>
+                )}
+                <Button>
+                  <Link to={`/posts/${post.id}`}>View Recipe</Link>
+                </Button>
+                <CanDelete>
+                  <AlertDialogExample postId={post.id} />
+                </CanDelete>
+              </ButtonGroup>
+            )}
           </CardFooter>
         </Stack>
       </Card>
