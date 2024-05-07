@@ -3,28 +3,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext.jsx';
 import { loginUser } from '../services/auth.service.js';
 import { NavLink } from 'react-router-dom';
-import {
-  Button,
-  Heading,
-  FormLabel,
-  Input,
-  Flex,
-  Text,
-  Box,
-  useToast,
-  Switch,
-} from '@chakra-ui/react';
-import { showToastErrorLogin } from '../components/Alerts.jsx';
-import {
-  validateEmail,
-  validatePassword,
-  validateUserNameAsync,
-} from '../common/user.validation.js';
+import { Button, Heading, FormLabel, Input, Flex, Text, Box, useToast, Switch } from '@chakra-ui/react';
+import { showToastError } from '../components/Alerts.jsx';
+import { validateEmail, validatePassword } from '../common/user.validation.js';
 import { getUserByHandle } from '../services/users.service.js';
-import {
-  MAX_USERNAME_LENGTH,
-  MIN_USERNAME_LENGTH,
-} from '../common/constants.js';
+import { ERR_TOAST_EMAIL_LOGIN, ERR_TOAST_USERNAME_LOGIN, MAX_USERNAME_LENGTH, MIN_USERNAME_LENGTH } from '../common/constants.js';
 
 export default function Login() {
   const { user, setAppState } = useContext(AppContext);
@@ -45,7 +28,7 @@ export default function Login() {
     }
   }, [user, location.state?.from.pathname, navigate]);
 
-  const validateForm = async () => {
+  const validateEmailLoginForm = async () => {
     if (form.email === '' || form.password === '') {
       throw new Error('auth/invalid-form');
     }
@@ -54,14 +37,14 @@ export default function Login() {
 
     validatePassword(form.password);
   };
-  const validateFormUser = async () => {
+  const validateUserNameLoginForm = async () => {
     if (form.userName === '' || form.password === '') {
       throw new Error('auth/invalid-form');
     }
 
     if (
-      userName.length < MIN_USERNAME_LENGTH ||
-      userName.length > MAX_USERNAME_LENGTH
+      form.userName.length < MIN_USERNAME_LENGTH ||
+      form.userName.length > MAX_USERNAME_LENGTH
     ) {
       throw new Error('auth/username-too-short');
     }
@@ -69,65 +52,59 @@ export default function Login() {
     validatePassword(form.password);
   };
 
-  const login = async () => {
+  const loginWithEmail = async () => {
     try {
-      await validateForm();
+      await validateEmailLoginForm();
       const { user } = await loginUser(form.email, form.password);
       setAppState({ user, userData: null });
       navigate(location.state?.from.pathname || '/');
     } catch (error) {
+      console.log(error.message);
       if (error.message.includes('auth/invalid-email')) {
-        showToastErrorLogin('Invalid email format!', toast);
-      }
-      if (error.message.includes('auth/weak-password')) {
-        showToastErrorLogin(
-          'Password must be between 6 and 15 characters long!',
-          toast
-        );
+        showToastError(ERR_TOAST_EMAIL_LOGIN, 'Invalid email format!', toast);
       }
       if (error.message.includes('auth/invalid-form')) {
-        showToastErrorLogin('Please fill out all fields!', toast);
+        showToastError(ERR_TOAST_EMAIL_LOGIN, 'Please fill out all fields!', toast);
       }
-      if (error.message.includes('auth/operation-not-allowed')) {
-        showToastErrorLogin('Email/password accounts are not enabled!', toast);
-      }
-      if (error.message.includes('auth/wrong-password')) {
-        showToastErrorLogin('Invalid password!', toast);
+
+
+      if (error.message.includes('auth/weak-password')) {
+        showToastError(ERR_TOAST_EMAIL_LOGIN, 'Password must be between 6 and 15 characters long!', toast);
       }
       if (error.message.includes('auth/invalid-credential')) {
-        showToastErrorLogin('Wrong password!', toast);
+        showToastError(ERR_TOAST_EMAIL_LOGIN, 'Wrong Email or Password!', toast);
+      }
+      if (error.message.includes('auth/too-many-requests')) {
+        showToastError(ERR_TOAST_EMAIL_LOGIN, 'Access to this account has been temporarily disabled due to many failed login attempts.', toast);
       }
     }
   };
 
-  const loginUserName = async () => {
+  const loginWithUserName = async () => {
     try {
-      const emails = await (await getUserByHandle(form.userName)).val().email;
-      await validateFormUser();
-      const { user } = await loginUser(emails, form.password);
+      const emails = (await getUserByHandle(form.userName)).val();
+      await validateUserNameLoginForm();
+      if(emails === null) {
+        throw new Error('auth/invalid-username');
+      }
+      const { user } = await loginUser(emails.email, form.password);
       setAppState({ user, userData: null });
       navigate(location.state?.from.pathname || '/');
     } catch (error) {
-      if (error.message.includes('auth/invalid-email')) {
-        showToastErrorLogin('Invalid email format!', toast);
+      if (error.message.includes('auth/invalid-form')) {
+        showToastError(ERR_TOAST_USERNAME_LOGIN, 'Please fill out all fields!', toast);
+      }
+      if (error.message.includes('auth/invalid-username')) {
+        showToastError(ERR_TOAST_USERNAME_LOGIN, 'Account with this username don`t exist!', toast);
       }
       if (error.message.includes('auth/weak-password')) {
-        showToastErrorLogin(
-          'Password must be between 6 and 15 characters long!',
-          toast
-        );
-      }
-      if (error.message.includes('auth/invalid-form')) {
-        showToastErrorLogin('Please fill out all fields!', toast);
-      }
-      if (error.message.includes('auth/operation-not-allowed')) {
-        showToastErrorLogin('Email/password accounts are not enabled!', toast);
-      }
-      if (error.message.includes('auth/wrong-password')) {
-        showToastErrorLogin('Invalid password!', toast);
+        showToastError(ERR_TOAST_USERNAME_LOGIN, 'Password must be between 6 and 15 characters long!', toast);
       }
       if (error.message.includes('auth/invalid-credential')) {
-        showToastErrorLogin('Wrong password!', toast);
+        showToastError(ERR_TOAST_USERNAME_LOGIN, 'Wrong password!', toast);
+      }
+      if (error.message.includes('auth/too-many-requests')) {
+        showToastError(ERR_TOAST_USERNAME_LOGIN, 'Access to this account has been temporarily disabled due to many failed login attempts.', toast);
       }
     }
   };
@@ -225,7 +202,7 @@ export default function Login() {
       >
         {userNameOrEmail ? (
           <Button
-            onClick={login}
+            onClick={loginWithEmail}
             width='100%'
             colorScheme='green'
           >
@@ -233,7 +210,7 @@ export default function Login() {
           </Button>
         ) : (
           <Button
-            onClick={loginUserName}
+            onClick={loginWithUserName}
             width='100%'
             colorScheme='green'
           >
