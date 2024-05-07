@@ -21,6 +21,10 @@ import {
   validateUserNameAsync,
 } from '../common/user.validation.js';
 import { getUserByHandle } from '../services/users.service.js';
+import {
+  MAX_USERNAME_LENGTH,
+  MIN_USERNAME_LENGTH,
+} from '../common/constants.js';
 
 export default function Login() {
   const { user, setAppState } = useContext(AppContext);
@@ -55,7 +59,12 @@ export default function Login() {
       throw new Error('auth/invalid-form');
     }
 
-    await validateUserNameAsync(form.userName);
+    if (
+      userName.length < MIN_USERNAME_LENGTH ||
+      userName.length > MAX_USERNAME_LENGTH
+    ) {
+      throw new Error('auth/username-too-short');
+    }
 
     validatePassword(form.password);
   };
@@ -94,7 +103,7 @@ export default function Login() {
   const loginUserName = async () => {
     try {
       const emails = await (await getUserByHandle(form.userName)).val().email;
-      // await validateFormUser();
+      await validateFormUser();
       const { user } = await loginUser(emails, form.password);
       setAppState({ user, userData: null });
       navigate(location.state?.from.pathname || '/');
