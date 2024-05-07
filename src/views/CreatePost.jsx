@@ -1,9 +1,12 @@
-import { useContext, useState } from "react";
-import { addPost } from "../services/posts.service";
-import { AppContext } from "../context/AppContext";
-import { useToast, Heading } from "@chakra-ui/react";
-import { showToast } from "../components/Alerts";
-import { IsBlocked } from "../hoc/Authenticated";
+import { useContext, useState } from 'react';
+import { addPost, } from '../services/posts.service';
+import { AppContext } from '../context/AppContext';
+import { useToast, Heading } from '@chakra-ui/react';
+import { showToast } from '../components/Alerts';
+import { IsBlocked } from '../hoc/Authenticated';
+import { uploadPhoto } from '../config/firebase-config';
+
+
 
 export const CreatePost = () => {
   const [post, setPost] = useState({
@@ -14,6 +17,7 @@ export const CreatePost = () => {
 
   const { userData } = useContext(AppContext);
   const toast = useToast();
+  const [imageUpload, setImageUpload] = useState(null);
 
   const updatePost = (value, key) => {
     setPost({ ...post, [key]: value });
@@ -26,7 +30,14 @@ export const CreatePost = () => {
       content: '',
       recipe: '',
     });
-    showToast("Post created.","You created a post successfully.",toast)
+    showToast('Post created.', 'You created a post successfully.', toast);
+  };
+
+  const uploadImage = () => {
+   if (imageUpload == null) {
+     return;
+    }
+    uploadPhoto(imageUpload,post.title);
   };
 
   return (
@@ -65,8 +76,13 @@ export const CreatePost = () => {
       ></textarea>
       <br />
       <IsBlocked>
-      <button onClick={createPost}>Create post</button>
+        <button onClick={createPost}>Create post</button>
       </IsBlocked>
+      <input
+        type='file'
+        onChange={(event) => { setImageUpload(event.target.files[0]); }}
+      />
+      <button onClick={uploadImage}>Upload</button>
     </div>
   );
 };

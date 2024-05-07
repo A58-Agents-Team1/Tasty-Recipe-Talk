@@ -39,7 +39,7 @@ export const getPostById = async (id) => {
     id,
     likedBy: snapshot.val().likedBy ? Object.keys(snapshot.val().likedBy) : [],
     createdOn: new Date(snapshot.val().createdOn).toString(),
-  }
+  };
 };
 
 export const likePost = async (postId, handle) => {
