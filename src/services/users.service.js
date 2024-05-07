@@ -94,13 +94,17 @@ export const getUsersByName = async (name) => {
 };
 
 export const blockAccount = async (handle) => {
-  return update(ref(db, `users/${handle}`), {
+  return await update(ref(db, `users/${handle}`), {
     isBlocked: true,
   });
 };
 
 export const unblockAccount = async (handle) => {
-  return update(ref(db, `users/${handle}`), {
+  return await update(ref(db, `users/${handle}`), {
     isBlocked: false,
   });
+};
+
+export const updateUser = async (handle, data) => {
+  return await update(ref(db, `users/${handle}`), data);
 };
