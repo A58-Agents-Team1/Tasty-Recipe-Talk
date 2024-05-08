@@ -1,4 +1,20 @@
-import { Avatar, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Button, ButtonGroup, Flex, HStack, Heading, Menu, MenuButton, MenuItem, MenuList, Spinner, Text } from '@chakra-ui/react';
+import {
+  Avatar,
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  Button,
+  ButtonGroup,
+  Flex,
+  HStack,
+  Heading,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  Spinner,
+  Text,
+} from '@chakra-ui/react';
 import { useContext } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext.jsx';
@@ -31,7 +47,7 @@ export default function NavBar() {
       color={'white'}
     >
       <Heading>
-        <NavLink to='/'>
+        <NavLink to='/giphy-kitchen'>
           <Avatar
             size='lg'
             name='Tasty Recipe Talk'
@@ -44,6 +60,16 @@ export default function NavBar() {
         <>
           <HStack>
             <Breadcrumb>
+              <BreadcrumbItem>
+                <BreadcrumbLink
+                  as={NavLink}
+                  to='/'
+                  _active={{ color: 'red' }}
+                  _activeLink={{ color: 'gold' }}
+                >
+                  Home
+                </BreadcrumbLink>
+              </BreadcrumbItem>
               {!userData?.isBlocked && (
                 <BreadcrumbItem>
                   <BreadcrumbLink
@@ -83,17 +109,11 @@ export default function NavBar() {
             <Menu>
               <>
                 <Text as='div'>{userData ? userData.handle : <Spinner />}</Text>
-                <Avatar
-                  size='sm'
-                  name={userData ? userData.handle : ''}
-                />
-                <MenuButton title="Profile Settings">
-                  <SettingsIcon/>
+                <Avatar size='sm' name={userData ? userData.handle : ''} />
+                <MenuButton title='Profile Settings'>
+                  <SettingsIcon />
                 </MenuButton>
-                <MenuList
-                  color='white'
-                  bg='gray.400'
-                >
+                <MenuList color='white' bg='gray.400'>
                   <MenuItem
                     bg='gray.400'
                     as={NavLink}
@@ -125,11 +145,7 @@ export default function NavBar() {
                       Blocked Account
                     </MenuItem>
                   )}
-                  <MenuItem
-                    bg='gray.400'
-                    color={'red'}
-                    onClick={logout}
-                  >
+                  <MenuItem bg='gray.400' color={'red'} onClick={logout}>
                     Logout
                   </MenuItem>
                 </MenuList>
@@ -138,16 +154,40 @@ export default function NavBar() {
           </HStack>
         </>
       ) : (
-        <HStack spacing='20px'>
-          <ButtonGroup>
-            <NavLink to='/login'>
-              <Button colorScheme='green'> Login</Button>
-            </NavLink>
-            <NavLink to='/register'>
-              <Button colorScheme='orange'>Register</Button>
-            </NavLink>
-          </ButtonGroup>
-        </HStack>
+        <>
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                as={NavLink}
+                to='/'
+                _active={{ color: 'red' }}
+                _activeLink={{ color: 'gold' }}
+              >
+                Home
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbItem>
+              <BreadcrumbLink
+                as={NavLink}
+                to='/about'
+                _active={{ color: 'red' }}
+                _activeLink={{ color: 'gold' }}
+              >
+                About
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </Breadcrumb>
+          <HStack spacing='20px'>
+            <ButtonGroup>
+              <NavLink to='/login'>
+                <Button colorScheme='green'> Login</Button>
+              </NavLink>
+              <NavLink to='/register'>
+                <Button colorScheme='orange'>Register</Button>
+              </NavLink>
+            </ButtonGroup>
+          </HStack>
+        </>
       )}
     </Flex>
   );

@@ -16,6 +16,7 @@ import BlockedAccounts from './views/BlockedAccounts.jsx';
 import FullViewRecipe from './views/FullViewRecipe.jsx';
 import FindUser from './views/FindUser.jsx';
 import Profile from './views/Profile.jsx';
+import Giphy from './views/Giphy.jsx';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -86,6 +87,10 @@ function App() {
             <Route
               path='/find-user'
               element={<FindUser />}
+            />
+            <Route
+              path='/giphy-kitchen'
+              element={<Giphy />}
             />
           </Routes>
         </Layout>

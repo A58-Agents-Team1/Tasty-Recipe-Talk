@@ -19,3 +19,7 @@ export const ERR_TOAST_EMAIL_LOGIN = 'Error Login in Account With Email.';
 export const ERR_TOAST_USERNAME_LOGIN = 'Error Login in Account With Username.';
 
 export const ERR_TOAST_ACCOUNT_NOT_CREATED = 'Error Account Not Created.';
+
+export const GET_GIPHY_URL = 'https://api.giphy.com/v1/gifs/';
+
+export const API_KEY = 'OyZseUHicn2pRWrbxKzvl5yv79KPNTfi';

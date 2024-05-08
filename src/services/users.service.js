@@ -9,6 +9,7 @@ import {
 } from 'firebase/database';
 import { db } from '../config/firebase-config.js';
 import { update } from 'firebase/database';
+import { API_KEY, GET_GIPHY_URL } from '../common/constants.js';
 
 export const getUserByHandle = (handle) => {
   return get(ref(db, `users/${handle}`));
@@ -111,4 +112,22 @@ export const updateUser = async (handle, data) => {
 
 export const updatePost = async (handle, data) => {
   return await update(ref(db, `posts/${handle}`), data);
+};
+
+export const getTrendyGifAsync = async () => {
+  try {
+    const data = await fetch(
+      `${GET_GIPHY_URL}search?api_key=${API_KEY}&limit=12&rating=g&q=cooking`
+    );
+    const getTrendyGif = await data.json();
+
+    if (!getTrendyGif.data) {
+      alert('Error getting trendy gifs');
+      throw new Error(getTrendyGif.meta.msg);
+    }
+
+    return getTrendyGif;
+  } catch (e) {
+    console.log(e.message);
+  }
 };
