@@ -8,7 +8,7 @@ export default function Home() {
 
   useEffect(() => {
     getAllPosts('').then(setPosts);
-  }, []);
+  }, [posts]);
 
   return (
     <Box
@@ -45,7 +45,10 @@ export default function Home() {
         </Text>
         <Text>Here you can see the five latest posts:</Text>
       </Box>
-      <Grid gap={'20px'} templateColumns={'repeat(2, 1fr)'}>
+      <Grid
+        gap={'20px'}
+        templateColumns={'repeat(2, 1fr)'}
+      >
         {posts &&
           posts.slice(0, 4).map((post) => (
             <GridItem key={post.id}>
