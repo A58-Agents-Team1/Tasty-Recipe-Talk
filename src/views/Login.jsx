@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext.jsx';
 import { loginUser } from '../services/auth.service.js';
 import { NavLink } from 'react-router-dom';
@@ -42,14 +42,13 @@ export default function Login() {
   });
 
   const navigate = useNavigate();
-  const location = useLocation();
   const toast = useToast();
 
   useEffect(() => {
     if (user) {
-      navigate(location.state?.from.pathname || '/');
+      navigate('/');
     }
-  }, [user, location.state?.from.pathname, navigate]);
+  }, [user]);
 
   const validateEmailLoginForm = async () => {
     if (form.email === '' || form.password === '') {
@@ -80,7 +79,7 @@ export default function Login() {
       await validateEmailLoginForm();
       const { user } = await loginUser(form.email, form.password);
       setAppState({ user, userData: null });
-      navigate(location.state?.from.pathname || '/');
+      navigate('/');
     } catch (error) {
       if (error.message.includes('auth/invalid-email')) {
         showToastError(ERR_TOAST_EMAIL_LOGIN, 'Invalid email format!', toast);
@@ -126,7 +125,7 @@ export default function Login() {
       }
       const { user } = await loginUser(emails.email, form.password);
       setAppState({ user, userData: null });
-      navigate(location.state?.from.pathname || '/');
+      navigate('/');
     } catch (error) {
       if (error.message.includes('auth/invalid-form')) {
         showToastError(
