@@ -1,7 +1,7 @@
 import { useContext, useState } from 'react';
 import { addPost } from '../services/posts.service';
 import { AppContext } from '../context/AppContext';
-import { useToast, Heading } from '@chakra-ui/react';
+import { useToast, Heading, Box, Textarea, Input, Button } from '@chakra-ui/react';
 import { showToast, showToastError } from '../components/Alerts';
 import { IsBlocked } from '../hoc/Authenticated';
 import { uploadPhoto } from '../config/firebase-config';
@@ -57,54 +57,40 @@ export const CreatePost = () => {
   };
 
   return (
-    <div>
-      <Heading>Create a recipe!</Heading>
-      <label htmlFor='input-title'>Title:</label>
-      <br />
-      <input
-        type='text'
+    <Box p={6} maxW="500px" mx="auto">
+      <Heading mb={4}>Create a recipe!</Heading>
+      <Input
+        mb={4}
+        placeholder="Title"
         value={post.title}
+        backgroundColor={"white"}
         onChange={(e) => updatePost(e.target.value, 'title')}
-        name='title'
-        id='title'
       />
-      <br />
-      <label htmlFor='input-content'>Short description</label>
-      <br />
-      <textarea
-        name='input-content'
-        id='input-content'
-        cols='50'
-        rows='5'
+      <Textarea
+        mb={4}
+        placeholder="Short description"
         value={post.content}
+        backgroundColor={"white"}
         onChange={(e) => updatePost(e.target.value, 'content')}
-      ></textarea>
-      <br />
-      <label htmlFor='input-recipe'>Recipe:</label>
-      <br />
-      <textarea
-        name='input-recipe'
-        id='input-recipe'
-        cols='50'
-        rows='7'
+      />
+      <Textarea
+        mb={4}
+        placeholder="Recipe"
         value={post.recipe}
+        backgroundColor={"white"}
         onChange={(e) => updatePost(e.target.value, 'recipe')}
-      ></textarea>
-      <br />
-      <label htmlFor='image'>Upload Image: </label>
+      />
       <input
-        type='file'
-        id='image'
-        name='image'
-        accept='image/*'
+        type="file"
+        mb={4}
+        accept="image/*"
         onChange={(event) => {
           setImageUpload(event.target.files[0]);
         }}
       />
-      <br />
       <IsBlocked>
-        <button onClick={createPost}>Create post</button>
+        <Button colorScheme="teal" onClick={createPost}>Create post</Button>
       </IsBlocked>
-    </div>
+    </Box>
   );
 };
