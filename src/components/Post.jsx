@@ -21,6 +21,7 @@ export default function Post({ post }) {
   const like = () => likePost(post.id, userData.handle);
   const dislike = () => dislikePost(post.id, userData.handle);
   const [url, setUrl] = useState('');
+  const [isHovered, setIsHovered] = useState(false);
 
   useEffect(() => {
     const getUrl = async () => {
@@ -44,6 +45,12 @@ export default function Post({ post }) {
           maxW={{ base: '100%', sm: '200px' }}
           src={url}
           alt='Card image'
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          style={{
+            transition: 'transform 0.3s ease',
+            transform: isHovered ? 'scale(1.1)' : 'scale(1)',
+          }}
         />
 
         <Stack width='100%' p={2}>
