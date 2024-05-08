@@ -81,16 +81,17 @@ export default function Home() {
         </Text>
         <Text>Here you can see the five latest posts:</Text>
       </Box>
-      <Grid
-        gap={'20px'}
-        templateColumns={'repeat(2, 1fr)'}
-      >
+      <Grid gap={'20px'} templateColumns={'repeat(2, 1fr)'}>
         {posts &&
-          posts.slice(0, 4).map((post) => (
-            <GridItem key={post.id}>
-              <Post post={post} />
-            </GridItem>
-          ))}
+          posts
+            .slice() // Create a copy of the posts array to avoid mutating the original array
+            .sort((a, b) => b.likedBy.length - a.likedBy.length) // Sort the posts by likedBy.length in descending order
+            .slice(0, 4) // Take the first 4 sorted posts
+            .map((post) => (
+              <GridItem key={post.id}>
+                <Post post={post} />
+              </GridItem>
+            ))}
       </Grid>
     </Flex>
   );
