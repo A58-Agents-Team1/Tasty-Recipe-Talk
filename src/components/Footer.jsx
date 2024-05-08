@@ -26,7 +26,7 @@ export default function Footer() {
       borderColor='green.600'
       borderRadius='lg'
       shadow='2xl'
-      bg='green.700'
+      bgGradient={'linear(to-r,green.400, green.700, green.500)'}
       color={'white'}
     >
       <Breadcrumb as='div'>

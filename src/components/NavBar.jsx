@@ -44,7 +44,7 @@ export default function NavBar() {
       my='1rem'
       mx='2rem'
       shadow='2xl'
-      bg='green.700'
+      bgGradient={'linear(to-r,green.400, green.700, green.500)'}
       color={'white'}
     >
       <Heading>

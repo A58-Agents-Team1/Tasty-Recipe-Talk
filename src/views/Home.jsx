@@ -39,7 +39,7 @@ export default function Home() {
         alignItems={'center'}
         marginBottom={'20px'}
         borderRadius={'10px'}
-        bg={'green.600'}
+        bgGradient={'linear(to-r,green.400, green.700, green.500)'}
         w='100%'
         shadow={'2xl'}
         p={'1rem '}

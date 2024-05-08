@@ -22,7 +22,7 @@ export default function Layout({ children }) {
         justify='center'
         borderColor='gray.600'
         borderRadius='md'
-        bg='gray.300'
+        bgGradient={'linear(to-r,green.400, green.700, green.500)'}
         p='1rem'
         my='1rem'
         mx='2rem'
