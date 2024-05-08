@@ -1,15 +1,27 @@
-import { Button, AlertDialog, AlertDialogOverlay, AlertDialogContent, AlertDialogBody, useDisclosure, AlertDialogHeader, AlertDialogFooter } from '@chakra-ui/react';
+import {
+  Button,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogBody,
+  useDisclosure,
+  AlertDialogHeader,
+  AlertDialogFooter,
+} from '@chakra-ui/react';
 import { DeleteIcon } from '@chakra-ui/icons';
 import { deletePost } from '../services/users.service';
-import React from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
+import { useNavigate } from 'react-router-dom';
 
 export function AlertDialogExample({ postId }) {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const cancelRef = React.useRef();
+  const cancelRef = useRef();
+  const navigate = useNavigate();
 
   function handleDelete() {
     deletePost(postId);
+    navigate('/', { replace: true });
     onClose();
   }
 
@@ -26,10 +38,7 @@ export function AlertDialogExample({ postId }) {
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader
-              fontSize='lg'
-              fontWeight='bold'
-            >
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
               Delete Recipe Post
             </AlertDialogHeader>
 
@@ -38,17 +47,10 @@ export function AlertDialogExample({ postId }) {
             </AlertDialogBody>
 
             <AlertDialogFooter>
-              <Button
-                ref={cancelRef}
-                onClick={onClose}
-              >
+              <Button ref={cancelRef} onClick={onClose}>
                 Cancel
               </Button>
-              <Button
-                colorScheme='red'
-                onClick={handleDelete}
-                ml={3}
-              >
+              <Button colorScheme='red' onClick={handleDelete} ml={3}>
                 Delete
               </Button>
             </AlertDialogFooter>
@@ -59,17 +61,17 @@ export function AlertDialogExample({ postId }) {
   );
 }
 
-export const showToast = (title, description,toast) => {
+export const showToast = (title, description, toast) => {
   toast({
     title: title,
     description: description,
-    status: "success",
+    status: 'success',
     duration: 4000,
     isClosable: true,
   });
 };
 
-export const showToastError = (title, message,toast) => {
+export const showToastError = (title, message, toast) => {
   toast({
     title: title,
     description: message,
