@@ -2,15 +2,20 @@ import NavBar from '../components/NavBar.jsx';
 import Footer from '../components/Footer.jsx';
 import PropTypes from 'prop-types';
 import { Flex } from '@chakra-ui/react';
+import background from '../../public/background.jpg';
 
 export default function Layout({ children }) {
   return (
     <Flex
       direction='column'
-      bg='gray.400'
       minHeight='100vh'
       height='100%'
       width='100%'
+      background={`url(${background})`}
+      backgroundSize='cover'
+      backgroundPosition='center'
+      backgroundRepeat='no-repeat'
+      blur='400px'
     >
       <NavBar />
       <Flex
