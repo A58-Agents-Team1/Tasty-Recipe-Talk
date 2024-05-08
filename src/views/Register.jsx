@@ -14,7 +14,10 @@ import {
   Input,
   Flex,
   Box,
-  Text
+  Text,
+  InputGroup,
+  Icon,
+  InputRightElement,
 } from '@chakra-ui/react';
 import {
   validateEmail,
@@ -23,8 +26,9 @@ import {
   validatePassword,
   validateUserNameAsync,
 } from '../common/user.validation.js';
-import { showToast, showToastError} from '../components/Alerts.jsx';
+import { showToast, showToastError } from '../components/Alerts.jsx';
 import { ERR_TOAST_ACCOUNT_NOT_CREATED } from '../common/constants.js';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 
 export default function Register() {
   const [form, setForm] = useState({
@@ -36,6 +40,10 @@ export default function Register() {
   });
 
   const { user, setAppState } = useContext(AppContext);
+  const [show, setShow] = useState(false);
+
+  const handleClick = () => setShow(!show);
+
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -86,44 +94,92 @@ export default function Register() {
         form.lastName
       );
       setAppState({ user: credential.user, userData: null });
-      showToast("Account created!","We`ve created an account for you!",toast)
+      showToast('Account created!', 'We`ve created an account for you!', toast);
       navigate('/');
     } catch (error) {
       if (error.message.includes('child failed: path')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, `User Name can't contain ".", "#", "$", "[", or "]"!`,toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          `User Name can't contain ".", "#", "$", "[", or "]"!`,
+          toast
+        );
       }
       if (error.message.includes('auth/first-name-too-short')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'First name must be between 4 and 15 characters long!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'First name must be between 4 and 15 characters long!',
+          toast
+        );
       }
       if (error.message.includes('auth/last-name-too-short')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'Last name must be between 4 and 15 characters long!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'Last name must be between 4 and 15 characters long!',
+          toast
+        );
       }
       if (error.message.includes('auth/username-too-short')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'User Name name must be between 3 and 15 characters long!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'User Name name must be between 3 and 15 characters long!',
+          toast
+        );
       }
       if (error.message.includes('auth/invalid-email')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'Invalid email format!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'Invalid email format!',
+          toast
+        );
       }
       if (error.message.includes('auth/email-already-in-use')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'User with this email has already been registered!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'User with this email has already been registered!',
+          toast
+        );
       }
       if (error.message.includes('auth/weak-password')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'Password must be between 6 and 15 characters long!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'Password must be between 6 and 15 characters long!',
+          toast
+        );
       }
       if (error.message.includes('auth/invalid-form')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'Please fill out all fields!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'Please fill out all fields!',
+          toast
+        );
       }
       if (error.message.includes('auth/operation-not-allowed')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'Email/password accounts are not enabled!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'Email/password accounts are not enabled!',
+          toast
+        );
       }
       if (error.message.includes('auth/username-already-in-use')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'User with this username already exists!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'User with this username already exists!',
+          toast
+        );
       }
       if (error.message.includes('auth/user-not-found')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'User with this username does not exist!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'User with this username does not exist!',
+          toast
+        );
       }
       if (error.message.includes('auth/wrong-password')) {
-        showToastError(ERR_TOAST_ACCOUNT_NOT_CREATED, 'Invalid password!',toast);
+        showToastError(
+          ERR_TOAST_ACCOUNT_NOT_CREATED,
+          'Invalid password!',
+          toast
+        );
       }
     }
   };
@@ -131,7 +187,12 @@ export default function Register() {
   return (
     <Box width={{ base: '90%', md: '30%' }}>
       <Heading textAlign={'center'}>Register</Heading>
-      <Box display='grid' gridTemplateColumns='repeat(1, 1fr)' gap={4} p={4}>
+      <Box
+        display='grid'
+        gridTemplateColumns='repeat(1, 1fr)'
+        gap={4}
+        p={4}
+      >
         <FormControl isRequired>
           <FormLabel htmlFor='firstName'>First Name:</FormLabel>
           <Input
@@ -214,37 +275,87 @@ export default function Register() {
         </FormControl>
         <FormControl isRequired>
           <FormLabel htmlFor='password'>Password:</FormLabel>
-          <Input
-            value={form.password}
-            onChange={updateForm('password')}
-            type='password'
-            name='password'
-            placeholder='Password'
-            id='password'
-            _focus={{
-              boxShadow: 'md',
-              borderRadius: 'md',
-              bg: 'gray.300',
-              p: 4,
-              transition: 'all 0.2s',
-            }}
-            bg={'gray.200'}
-            shadow={'md'}
-          />
-        </FormControl><br />
+          <InputGroup>
+            <Input
+              value={form.password}
+              onChange={updateForm('password')}
+              type={show ? 'text' : 'password'}
+              name='password'
+              placeholder='Password'
+              id='password'
+              _focus={{
+                boxShadow: 'md',
+                borderRadius: 'md',
+                bg: 'gray.300',
+                p: 4,
+                transition: 'all 0.2s',
+              }}
+              bg={'gray.200'}
+              shadow={'md'}
+            />
+            <InputRightElement>
+              {show ? (
+                <Box
+                  borderLeft='2px solid'
+                  w='2rem'
+                  p='2'
+                  justifyItems='end'
+                  alignItems={'center'}
+                  borderLeftColor='gray.300'
+                  _hover={{ cursor: 'pointer' }}
+                  onClick={handleClick}
+                >
+                  <Icon as={ViewOffIcon} />
+                </Box>
+              ) : (
+                <Box
+                  borderLeft='2px solid'
+                  w='2rem'
+                  p='2'
+                  justifyItems='end'
+                  alignItems={'center'}
+                  borderLeftColor='gray.300'
+                  _hover={{ cursor: 'pointer' }}
+                  onClick={handleClick}
+                >
+                  <Icon as={ViewIcon} />
+                </Box>
+              )}
+            </InputRightElement>
+          </InputGroup>
+        </FormControl>
+        <br />
       </Box>
-      <Flex justify='center' align='center' gap={4}>
-      </Flex>
+      <Flex
+        justify='center'
+        align='center'
+        gap={4}
+      ></Flex>
 
-      <Flex direction="column" alignItems="center">
-      <Button colorScheme='orange' width="92%"  onClick={register}>Register</Button>
-        <Flex alignItems="center" style={{ fontSize: '19px' }}>
-          <Text marginRight={2} >Have an account?</Text>
-          <NavLink to='/login' style={{ fontWeight: 'bold' }}>Login</NavLink>
+      <Flex
+        direction='column'
+        alignItems='center'
+      >
+        <Button
+          colorScheme='orange'
+          width='92%'
+          onClick={register}
+        >
+          Register
+        </Button>
+        <Flex
+          alignItems='center'
+          style={{ fontSize: '19px' }}
+        >
+          <Text marginRight={2}>Have an account?</Text>
+          <NavLink
+            to='/login'
+            style={{ fontWeight: 'bold' }}
+          >
+            Login
+          </NavLink>
         </Flex>
       </Flex>
-
-
     </Box>
   );
 }
