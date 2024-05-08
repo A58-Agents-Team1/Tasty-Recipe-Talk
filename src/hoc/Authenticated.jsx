@@ -4,44 +4,45 @@ import { Navigate, useLocation } from 'react-router-dom';
 import { AppContext } from '../context/AppContext.jsx';
 
 /**
- * 
- * @param {{children: any }} props 
- * @returns 
+ *
+ * @param {{children: any }} props
+ * @returns
  */
 export default function Authenticated({ children }) {
-    const { user } = useContext(AppContext);
-    const location = useLocation();
+  const { user } = useContext(AppContext);
+  const location = useLocation();
 
-    if(!user) {
-        return <Navigate replace to="/login" state={{ from: location }}/>
-    }
+  if (!user) {
+    return <Navigate replace to='/login' state={{ from: location }} />;
+  }
 
-    return (
-        <>
-            {children}
-        </>
-    )
+  return <>{children}</>;
 }
 
 export const IsBlocked = ({ children }) => {
-    const { userData } = useContext(AppContext);
-    if (userData.isBlocked) {
-        return <p>Your account is blocked!</p>
-    }
-    return (
-        <>
-            {children}
-        </>
-    )
-}
+  const { userData } = useContext(AppContext);
+  if (userData.isBlocked) {
+    return <p>Your account is blocked!</p>;
+  }
+  return <>{children}</>;
+};
 
-export const CanDelete = ({ children }) => {
-    const { userData } = useContext(AppContext);
-    if (userData.userRole === 'admin') {
-        return <>{children}</>;
-      }
-}
+export const CanDelete = ({ children, postAuthor }) => {
+  const { userData } = useContext(AppContext);
+  if (userData.userRole === 'admin' || userData.handle === postAuthor) {
+    return <>{children}</>;
+  }
+};
 
 Authenticated.propTypes = {
-    children: PropTypes.any.isRequired,
-}
+  children: PropTypes.any.isRequired,
+};
+
+IsBlocked.propTypes = {
+  children: PropTypes.any.isRequired,
+};
+
+CanDelete.propTypes = {
+  children: PropTypes.any.isRequired,
+  postAuthor: PropTypes.string,
+};
