@@ -16,13 +16,16 @@ export default function Footer() {
       position='static'
       bottom='0'
       mt='auto'
-      p='10px'
-      alignItems='center'
-      justify='end'
-      width='100%'
+      p='1rem'
+      mb='1rem'
+      mx='2rem'
       height={{ base: '10vh', md: '10vh' }}
-      borderTop='2px solid'
-      borderColor={'green.600'}
+      justify='space-evenly'
+      alignItems='center'
+      borderBottom='1px solid'
+      borderColor='green.600'
+      borderRadius='lg'
+      shadow='2xl'
       bg='green.700'
       color={'white'}
     >

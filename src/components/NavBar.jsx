@@ -39,9 +39,10 @@ export default function NavBar() {
       alignItems='center'
       borderBottom='1px solid'
       borderColor='green.600'
-      borderRadius='md'
+      borderRadius='lg'
       p='1rem'
-      mb='1rem'
+      my='1rem'
+      mx='2rem'
       shadow='2xl'
       bg='green.700'
       color={'white'}
@@ -112,16 +113,17 @@ export default function NavBar() {
                 <Avatar
                   size='sm'
                   name={userData ? userData.handle : ''}
+                  src={userData ? userData.avatar : ''}
                 />
                 <MenuButton title='Profile Settings'>
                   <SettingsIcon />
                 </MenuButton>
                 <MenuList
                   color='white'
-                  bg='gray.400'
+                  bg='green.600'
                 >
                   <MenuItem
-                    bg='gray.400'
+                    bg='green.600'
                     as={NavLink}
                     to='/my-profile'
                     _active={{ color: 'red' }}
@@ -131,7 +133,7 @@ export default function NavBar() {
                   </MenuItem>
                   {userData?.userRole === 'admin' && (
                     <MenuItem
-                      bg='gray.400'
+                      bg='green.600'
                       as={NavLink}
                       to='/find-user'
                       _active={{ color: 'red' }}
@@ -142,7 +144,7 @@ export default function NavBar() {
                   )}
                   {userData?.userRole === 'admin' && (
                     <MenuItem
-                      bg='gray.400'
+                      bg='green.600'
                       as={NavLink}
                       to='/blocked-accounts'
                       _active={{ color: 'red' }}
@@ -152,7 +154,7 @@ export default function NavBar() {
                     </MenuItem>
                   )}
                   <MenuItem
-                    bg='gray.400'
+                    bg='green.600'
                     color={'red'}
                     onClick={logout}
                   >
