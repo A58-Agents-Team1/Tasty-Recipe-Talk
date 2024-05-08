@@ -15,7 +15,7 @@ import { CanDelete } from '../hoc/Authenticated';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { likePost, dislikePost } from '../services/posts.service';
-import { NavLink } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getUploadedPhoto } from '../config/firebase-config';
 import { updatePost } from '../services/users.service';
@@ -26,6 +26,7 @@ export default function FullPost({ post }) {
   const dislike = () => dislikePost(post.id, userData.handle);
   const [url, setUrl] = useState('');
   const [editEnable, setEditEnable] = useState(true);
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     title: post.title,
@@ -151,11 +152,17 @@ export default function FullPost({ post }) {
           {editEnable ? (
             <CardFooter>
               {post?.likedBy.includes(userData?.handle) ? (
-                <Button onClick={dislike} style={{ marginRight: '10px' }}>
+                <Button
+                  onClick={dislike}
+                  style={{ marginRight: '10px' }}
+                >
                   Dislike
                 </Button>
               ) : (
-                <Button onClick={like} style={{ marginRight: '10px' }}>
+                <Button
+                  onClick={like}
+                  style={{ marginRight: '10px' }}
+                >
                   Like
                 </Button>
               )}
@@ -172,8 +179,11 @@ export default function FullPost({ post }) {
                   Edit Post
                 </Button>
               )}
-              <Button style={{ marginRight: '10px' }}>
-                <NavLink to={'/all-posts'}>Back</NavLink>
+              <Button
+                style={{ marginRight: '10px' }}
+                onClick={() => navigate(-1)}
+              >
+                Back
               </Button>
               <CanDelete postAuthor={post.author}>
                 <AlertDialogExample postId={post.id} />
