@@ -8,6 +8,7 @@ import {
   Button,
   Stack,
   FormLabel,
+  Textarea,
   Input,
 } from '@chakra-ui/react';
 import { AlertDialogExample } from './Alerts';
@@ -87,52 +88,36 @@ export default function FullPost({ post }) {
               <>
                 <FormLabel htmlFor='title'>Title: </FormLabel>
                 <Input
+                  mb={4}
                   value={form.title}
                   onChange={updateForm('title')}
                   type='text'
                   name='title'
                   id='title'
-                  _focus={{
-                    boxShadow: 'md',
-                    borderRadius: 'md',
-                    bg: 'gray.300',
-                    p: 4,
-                    transition: 'all 0.2s',
-                  }}
                   bg={'gray.200'}
                   shadow={'md'}
                 />
                 <FormLabel htmlFor='description'>Description: </FormLabel>
-                <Input
+                <Textarea
+                  mb={4}
                   value={form.content}
                   onChange={updateForm('content')}
                   type='text'
                   name='content'
                   id='content'
-                  _focus={{
-                    boxShadow: 'md',
-                    borderRadius: 'md',
-                    bg: 'gray.300',
-                    p: 4,
-                    transition: 'all 0.2s',
-                  }}
                   bg={'gray.200'}
                   shadow={'md'}
                 />
                 <FormLabel htmlFor='recipe'>Recipe: </FormLabel>
-                <Input
+                <Textarea
+                  width='600px'
+                  height='160px'
+                  mb={4}
                   value={form.recipe}
                   onChange={updateForm('recipe')}
                   type='text'
                   name='recipe'
                   id='recipe'
-                  _focus={{
-                    boxShadow: 'md',
-                    borderRadius: 'md',
-                    bg: 'gray.300',
-                    p: 4,
-                    transition: 'all 0.2s',
-                  }}
                   bg={'gray.200'}
                   shadow={'md'}
                 />
@@ -152,17 +137,11 @@ export default function FullPost({ post }) {
           {editEnable ? (
             <CardFooter>
               {post?.likedBy.includes(userData?.handle) ? (
-                <Button
-                  onClick={dislike}
-                  style={{ marginRight: '10px' }}
-                >
+                <Button onClick={dislike} style={{ marginRight: '10px' }}>
                   Dislike
                 </Button>
               ) : (
-                <Button
-                  onClick={like}
-                  style={{ marginRight: '10px' }}
-                >
+                <Button onClick={like} style={{ marginRight: '10px' }}>
                   Like
                 </Button>
               )}
@@ -191,6 +170,7 @@ export default function FullPost({ post }) {
             </CardFooter>
           ) : (
             <Button
+              colorScheme='green'
               id='isChecked'
               _selected={{ bg: 'green.500', color: 'white' }}
               style={{ margin: '10px' }}
