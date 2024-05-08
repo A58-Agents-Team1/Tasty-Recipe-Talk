@@ -10,15 +10,15 @@ import {
   FormLabel,
   Input,
 } from '@chakra-ui/react';
-import { useContext, useEffect } from 'react';
+import { AlertDialogExample } from './Alerts';
+import { CanDelete } from '../hoc/Authenticated';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { likePost, dislikePost } from '../services/posts.service';
 import { NavLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getUploadedPhoto } from '../config/firebase-config';
-import { useState } from 'react';
 import { updatePost } from '../services/users.service';
-
 
 export default function FullPost({ post }) {
   const { userData } = useContext(AppContext);
@@ -26,7 +26,7 @@ export default function FullPost({ post }) {
   const dislike = () => dislikePost(post.id, userData.handle);
   const [url, setUrl] = useState('');
   const [editEnable, setEditEnable] = useState(true);
-  
+
   const [form, setForm] = useState({
     title: post.title,
     content: post.content,
@@ -84,8 +84,13 @@ export default function FullPost({ post }) {
               </>
             ) : (
               <>
-                <FormLabel htmlFor="title">Title: </FormLabel>
-                <Input value={form.title} onChange={updateForm('title')} type='text' name='title' id='title'
+                <FormLabel htmlFor='title'>Title: </FormLabel>
+                <Input
+                  value={form.title}
+                  onChange={updateForm('title')}
+                  type='text'
+                  name='title'
+                  id='title'
                   _focus={{
                     boxShadow: 'md',
                     borderRadius: 'md',
@@ -94,9 +99,15 @@ export default function FullPost({ post }) {
                     transition: 'all 0.2s',
                   }}
                   bg={'gray.200'}
-                  shadow={'md'} />
-                <FormLabel htmlFor="description">Description: </FormLabel>
-                <Input value={form.content} onChange={updateForm('content')} type='text' name='content' id='content'
+                  shadow={'md'}
+                />
+                <FormLabel htmlFor='description'>Description: </FormLabel>
+                <Input
+                  value={form.content}
+                  onChange={updateForm('content')}
+                  type='text'
+                  name='content'
+                  id='content'
                   _focus={{
                     boxShadow: 'md',
                     borderRadius: 'md',
@@ -105,9 +116,15 @@ export default function FullPost({ post }) {
                     transition: 'all 0.2s',
                   }}
                   bg={'gray.200'}
-                  shadow={'md'} />
-                <FormLabel htmlFor="recipe">Recipe: </FormLabel>
-                <Input value={form.recipe} onChange={updateForm('recipe')} type='text' name='recipe' id='recipe'
+                  shadow={'md'}
+                />
+                <FormLabel htmlFor='recipe'>Recipe: </FormLabel>
+                <Input
+                  value={form.recipe}
+                  onChange={updateForm('recipe')}
+                  type='text'
+                  name='recipe'
+                  id='recipe'
                   _focus={{
                     boxShadow: 'md',
                     borderRadius: 'md',
@@ -116,10 +133,12 @@ export default function FullPost({ post }) {
                     transition: 'all 0.2s',
                   }}
                   bg={'gray.200'}
-                  shadow={'md'} />
+                  shadow={'md'}
+                />
               </>
             )}
-            <br /><br />
+            <br />
+            <br />
             <Text>
               {post.likedBy.length === 0
                 ? 'No likes yet'
@@ -132,17 +151,11 @@ export default function FullPost({ post }) {
           {editEnable ? (
             <CardFooter>
               {post?.likedBy.includes(userData?.handle) ? (
-                <Button
-                  onClick={dislike}
-                  style={{ marginRight: '10px' }}
-                >
+                <Button onClick={dislike} style={{ marginRight: '10px' }}>
                   Dislike
                 </Button>
               ) : (
-                <Button
-                  onClick={like}
-                  style={{ marginRight: '10px' }}
-                >
+                <Button onClick={like} style={{ marginRight: '10px' }}>
                   Like
                 </Button>
               )}
@@ -155,20 +168,27 @@ export default function FullPost({ post }) {
                   _selected={{ bg: 'green.500', color: 'white' }}
                   style={{ marginRight: '10px' }}
                   onClick={() => setEditEnable(!editEnable)}
-                >Edit Post</Button>
+                >
+                  Edit Post
+                </Button>
               )}
-              <Button>
+              <Button style={{ marginRight: '10px' }}>
                 <NavLink to={'/all-posts'}>Back</NavLink>
               </Button>
-            </CardFooter>)
-            : (
-              <Button
-                id='isChecked'
-                _selected={{ bg: 'green.500', color: 'white' }}
-                style={{ margin: '10px' }}
-                onClick={() => editPost()}
-              >Finish Editing</Button>
-            )}
+              <CanDelete postAuthor={post.author}>
+                <AlertDialogExample postId={post.id} />
+              </CanDelete>
+            </CardFooter>
+          ) : (
+            <Button
+              id='isChecked'
+              _selected={{ bg: 'green.500', color: 'white' }}
+              style={{ margin: '10px' }}
+              onClick={() => editPost()}
+            >
+              Finish Editing
+            </Button>
+          )}
         </Stack>
       </Card>
     </div>
