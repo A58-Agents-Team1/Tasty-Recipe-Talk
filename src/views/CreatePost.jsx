@@ -1,7 +1,14 @@
 import { useContext, useState } from 'react';
 import { addPost } from '../services/posts.service';
 import { AppContext } from '../context/AppContext';
-import { useToast, Heading, Box, Textarea, Input, Button } from '@chakra-ui/react';
+import {
+  useToast,
+  Heading,
+  Box,
+  Textarea,
+  Input,
+  Button,
+} from '@chakra-ui/react';
 import { showToast, showToastError } from '../components/Alerts';
 import { IsBlocked } from '../hoc/Authenticated';
 import { uploadPhoto } from '../config/firebase-config';
@@ -47,49 +54,79 @@ export const CreatePost = () => {
       navigate(`/posts/${postKey}`);
     } catch (error) {
       if (error.message === 'auth/empty-fields') {
-        showToastError('Error', 'Please fill in all fields.', toast);
+        showToastError(
+          'Error with creating post',
+          'Please fill in all fields.',
+          toast
+        );
+      }
+      if (error.message === 'auth/title-length') {
+        showToastError(
+          'Error with creating post',
+          'Title must be between 8 and 64 characters.',
+          toast
+        );
+      }
+      if (error.message === 'auth/content-length') {
+        showToastError(
+          'Error with creating post',
+          'Content must be between 16 and 100 characters.',
+          toast
+        );
+      }
+      if (error.message === 'auth/recipe-length') {
+        showToastError(
+          'Error with creating post',
+          'Recipe must be between 32 and 8192 characters.',
+          toast
+        );
       }
 
       if (error.message === 'auth/no-image') {
-        showToastError('Error', 'Please upload an image.', toast);
+        showToastError(
+          'Error with creating post',
+          'Please upload an image.',
+          toast
+        );
       }
     }
   };
 
   return (
-    <Box p={6} maxW="500px" mx="auto">
+    <Box p={6} maxW='500px' mx='auto'>
       <Heading mb={4}>Create a recipe!</Heading>
       <Input
         mb={4}
-        placeholder="Title"
+        placeholder='Title'
         value={post.title}
-        backgroundColor={"white"}
+        backgroundColor={'white'}
         onChange={(e) => updatePost(e.target.value, 'title')}
       />
       <Textarea
         mb={4}
-        placeholder="Short description"
+        placeholder='Short description'
         value={post.content}
-        backgroundColor={"white"}
+        backgroundColor={'white'}
         onChange={(e) => updatePost(e.target.value, 'content')}
       />
       <Textarea
         mb={4}
-        placeholder="Recipe"
+        placeholder='Recipe'
         value={post.recipe}
-        backgroundColor={"white"}
+        backgroundColor={'white'}
         onChange={(e) => updatePost(e.target.value, 'recipe')}
       />
       <input
-        type="file"
-        mb={4}
-        accept="image/*"
+        type='file'
+        accept='image/*'
         onChange={(event) => {
           setImageUpload(event.target.files[0]);
         }}
       />
       <IsBlocked>
-        <Button colorScheme="teal" onClick={createPost}>Create post</Button>
+        <Button colorScheme='teal' onClick={createPost}>
+          Create post
+        </Button>
       </IsBlocked>
     </Box>
   );
