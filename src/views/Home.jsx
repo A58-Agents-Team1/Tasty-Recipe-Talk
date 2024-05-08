@@ -1,7 +1,17 @@
-import { Heading, Text, Box, Grid, GridItem } from '@chakra-ui/react';
+import {
+  Heading,
+  Text,
+  Box,
+  Grid,
+  GridItem,
+  Image,
+  Flex,
+} from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { getAllPosts } from '../services/posts.service';
 import Post from '../components/Post';
+import logo from '/logo.png';
+import background from '../../public/background.jpg';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -11,12 +21,38 @@ export default function Home() {
   }, [posts]);
 
   return (
-    <Box
-      background={'#f9f9f9'}
+    <Flex
+      direction={'column'}
+      align={'center'}
+      w={'100%'}
       padding={'20px'}
       borderRadius={'10px'}
       boxShadow={'2xl'}
+      backgroundImage={`url(${background})`}
+      backgroundSize={'cover'}
+      backgroundPosition={'center'}
+      backgroundRepeat={'no-repeat'}
     >
+      <Box
+        display={'flex'}
+        justifyContent={'center'}
+        alignItems={'center'}
+        marginBottom={'20px'}
+        borderRadius={'10px'}
+        bg={'green.600'}
+        w='100%'
+        shadow={'2xl'}
+        p={'1rem '}
+      >
+        <Image
+          border='2px solid'
+          borderRadius='full'
+          src={logo}
+          boxSize='sm'
+          alt='Tasty Recipe Talk'
+        />
+      </Box>
+
       <Heading
         color={'coral'}
         fontSize={'32px'}
@@ -56,6 +92,6 @@ export default function Home() {
             </GridItem>
           ))}
       </Grid>
-    </Box>
+    </Flex>
   );
 }
