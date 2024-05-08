@@ -22,8 +22,8 @@ export default function Footer() {
       width='100%'
       height={{ base: '10vh', md: '10vh' }}
       borderTop='2px solid'
-      borderColor={'gray.600'}
-      bg='gray.500'
+      borderColor={'green.600'}
+      bg='green.700'
       color={'white'}
     >
       <Breadcrumb as='div'>

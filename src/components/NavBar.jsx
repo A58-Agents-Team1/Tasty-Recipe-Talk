@@ -38,12 +38,12 @@ export default function NavBar() {
       justify='space-between'
       alignItems='center'
       borderBottom='1px solid'
-      borderColor={'gray.600'}
+      borderColor='green.600'
       borderRadius='md'
       p='1rem'
       mb='1rem'
       shadow='2xl'
-      bg='gray.500'
+      bg='green.700'
       color={'white'}
     >
       <Heading>
@@ -109,11 +109,17 @@ export default function NavBar() {
             <Menu>
               <>
                 <Text as='div'>{userData ? userData.handle : <Spinner />}</Text>
-                <Avatar size='sm' name={userData ? userData.handle : ''} />
+                <Avatar
+                  size='sm'
+                  name={userData ? userData.handle : ''}
+                />
                 <MenuButton title='Profile Settings'>
                   <SettingsIcon />
                 </MenuButton>
-                <MenuList color='white' bg='gray.400'>
+                <MenuList
+                  color='white'
+                  bg='gray.400'
+                >
                   <MenuItem
                     bg='gray.400'
                     as={NavLink}
@@ -145,7 +151,11 @@ export default function NavBar() {
                       Blocked Account
                     </MenuItem>
                   )}
-                  <MenuItem bg='gray.400' color={'red'} onClick={logout}>
+                  <MenuItem
+                    bg='gray.400'
+                    color={'red'}
+                    onClick={logout}
+                  >
                     Logout
                   </MenuItem>
                 </MenuList>
