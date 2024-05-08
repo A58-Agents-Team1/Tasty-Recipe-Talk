@@ -22,8 +22,8 @@ export default function BlockedAccounts() {
         <>
           {allBlockedUsers.map((user) => (
             <>
-              <br />
               <div key={user.id}>
+                <br />
                 <p>First Name: {user.firstName}</p>
                 <p>Last Name: {user.lastName}</p>
                 <p>Username: {user.handle}</p>
