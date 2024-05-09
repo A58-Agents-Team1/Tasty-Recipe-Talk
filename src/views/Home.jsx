@@ -17,7 +17,11 @@ export default function Home() {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
-    getAllPosts('').then(setPosts);
+    const getPost = async () => {
+      const allPosts = await getAllPosts('');
+      setPosts(allPosts);
+    };
+    getPost();
   }, [posts]);
 
   return (
@@ -81,7 +85,10 @@ export default function Home() {
         </Text>
         <Text>Here you can see the five latest posts:</Text>
       </Box>
-      <Grid gap={'20px'} templateColumns={'repeat(2, 1fr)'}>
+      <Grid
+        gap={'20px'}
+        templateColumns={'repeat(2, 1fr)'}
+      >
         {posts &&
           posts
             .slice() // Create a copy of the posts array to avoid mutating the original array
