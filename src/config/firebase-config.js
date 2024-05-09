@@ -5,19 +5,34 @@ import { getDatabase } from 'firebase/database';
 import { getStorage } from 'firebase/storage';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
+// // TODO: Add SDKs for Firebase products that you want to use
+// // https://firebase.google.com/docs/web/setup#available-libraries
+
+// // Your web app's Firebase configuration
+// const firebaseConfig = {
+//   apiKey: 'AIzaSyAVV26vH-NMBwL7M96i7Xbhs2RGJVBetgQ',
+//   authDomain: 'forum-system-aa47e.firebaseapp.com',
+//   projectId: 'forum-system-aa47e',
+//   storageBucket: 'forum-system-aa47e.appspot.com',
+//   messagingSenderId: '893958072554',
+//   appId: '1:893958072554:web:6d39fb2f391b73d85ccf93',
+//   databaseURL:
+//     'https://forum-system-aa47e-default-rtdb.europe-west1.firebasedatabase.app/',
+// };
+
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: 'AIzaSyAVV26vH-NMBwL7M96i7Xbhs2RGJVBetgQ',
-  authDomain: 'forum-system-aa47e.firebaseapp.com',
-  projectId: 'forum-system-aa47e',
-  storageBucket: 'forum-system-aa47e.appspot.com',
-  messagingSenderId: '893958072554',
-  appId: '1:893958072554:web:6d39fb2f391b73d85ccf93',
-  databaseURL:
-    'https://forum-system-aa47e-default-rtdb.europe-west1.firebasedatabase.app/',
+  apiKey: "AIzaSyBztXyQbucTQES-GYl2a56Rdet2mzw6D7A",
+  authDomain: "tasty-recipe-talk.firebaseapp.com",
+  projectId: "tasty-recipe-talk",
+  storageBucket: "tasty-recipe-talk.appspot.com",
+  messagingSenderId: "1080459787152",
+  appId: "1:1080459787152:web:65fce27bc0e9a30de1d115",
+  databaseURL: "https://tasty-recipe-talk-default-rtdb.europe-west1.firebasedatabase.app/"
+
 };
 
 // Initialize Firebase
