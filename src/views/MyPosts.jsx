@@ -10,7 +10,7 @@ export default function MyPosts() {
 
   useEffect(() => {
     getAllPosts('').then(setPosts);
-  }, []);
+  }, [posts]);
 
   return (
     <Box w={'100%'}>
