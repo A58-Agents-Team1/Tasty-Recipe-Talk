@@ -55,3 +55,30 @@ export const dislikePost = async (postId, handle) => {
   updateVal[`posts/${postId}/likedBy/${handle}`] = null;
   await update(ref(db), updateVal);
 };
+
+export const addComment = async (postId, author, content) => {
+  const comment = {
+    author,
+    content,
+    lastEdited: Date.now(),
+    createdOn: Date.now(),
+  };
+  const result = await push(ref(db, `posts/${postId}/comments`), comment);
+  console.log(result);
+  return result.key;
+}
+
+export const getComments = async (postId) => {
+  const snapshot = await get(ref(db, `posts/${postId}/comments`));
+  if (!snapshot.exists()) return [];
+
+  return Object.entries(snapshot.val())
+    .map(([key, value]) => {
+      return {
+        ...value,
+        id: key,
+        createdOn: new Date(value.createdOn).toString(),
+        lastEdited: new Date(value.lastEdited).toString(),
+      };
+    });
+};
