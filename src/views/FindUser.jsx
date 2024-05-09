@@ -89,7 +89,7 @@ export default function FindUser() {
         {search &&
           users.map((user) => (
             <>
-              <div key={user.uid}>
+              <div key={user.id}>
                 <h1>Results</h1>
                 <p>Username : {user?.handle}</p>
                 <p>First name : {user.firstName}</p>
