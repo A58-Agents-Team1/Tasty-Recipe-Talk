@@ -27,6 +27,7 @@ export default function Comment({ comments, postId }) {
   const [newComment, setNewComment] = useState('');
   const [prevComment, setPrevComment] = useState('');
   const [editToggle, setEditToggle] = useState(false);
+  const [commentsState, setCommentState] = useState(comments);
 
   const handleEditToggle = (content) => {
     setEditToggle(!editToggle);
@@ -36,8 +37,21 @@ export default function Comment({ comments, postId }) {
 
   const handleEditComment = async (id, commentId, content) => {
     await updateComment(id, commentId, content);
-    setEditToggle(false);
+
+    setCommentState((prev) =>
+      prev.map((comment) => {
+        if (comment.id === commentId) {
+          return {
+            ...comment,
+            content: content,
+            lastEdited: Date.now(),
+          };
+        }
+        return comment;
+      })
+    );
     setPrevComment('');
+    setEditToggle(false);
   };
 
   const handleCancelComment = () => {
@@ -56,8 +70,8 @@ export default function Comment({ comments, postId }) {
           divider={<StackDivider />}
           spacing='4'
         >
-          {comments.length !== 0 ? (
-            comments.map((comment) => (
+          {commentsState.length !== 0 ? (
+            commentsState.map((comment) => (
               <Box key={comment.id}>
                 <Heading
                   size='xs'
