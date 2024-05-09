@@ -23,3 +23,17 @@ export const ERR_TOAST_ACCOUNT_NOT_CREATED = 'Error Account Not Created.';
 export const GET_GIPHY_URL = 'https://api.giphy.com/v1/gifs/';
 
 export const API_KEY = 'OyZseUHicn2pRWrbxKzvl5yv79KPNTfi';
+
+export const POST_MIN_TITLE_LENGTH = 8;
+
+export const POST_MAX_TITLE_LENGTH = 64;
+
+export const POST_MIN_CONTENT_LENGTH = 16;
+
+export const POST_MAX_CONTENT_LENGTH = 8192;
+
+export const POST_MIN_RECIPE_LENGTH = 32;
+
+export const POST_MAX_RECIPE_LENGTH = 8192;
+
+//TODO: Change the value of the constant to the correct value
