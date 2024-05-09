@@ -92,6 +92,36 @@ export default function Comment({ comments, postId }) {
                   </Text>
                 )}
 
+                {userData.handle === comment.author && (
+                  <Flex flexDirection='row-reverse'>
+                    {editComment && currentComment === comment.content ? (
+                      <Box mt={2}>
+                        <Button
+                          mx={2}
+                          onClick={() =>
+                            handleEditComment(postId, comment.id, newComment)
+                          }
+                        >
+                          Edit
+                        </Button>
+                        <Button onClick={() => handleCancelComment()}>
+                          Cancel
+                        </Button>
+                      </Box>
+                    ) : (
+                      <Icon
+                        aria-label='Edit Icon'
+                        as={EditIcon}
+                        onClick={() => {
+                          handleEditToggle(comment.content);
+                        }}
+                        boxSize={6}
+                        cursor={'pointer'}
+                      />
+                    )}
+                  </Flex>
+                )}
+
                 <Flex
                   align='end'
                   justify='center'
@@ -101,47 +131,35 @@ export default function Comment({ comments, postId }) {
                       fontWeight='500'
                       mt='4'
                     >
-                      Last Edit:{' '}
-                      {new Date(comment.lastEdited).toLocaleDateString()}
+                      Last Edit:
+                      {new Date(comment.lastEdited).toLocaleDateString(
+                        'bg-BG',
+                        {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                          minute: 'numeric',
+                          hour: 'numeric',
+                        }
+                      )}
                     </Text>
                   )}
+
+                  <Spacer />
+
                   <Text
                     fontWeight='500'
                     mt='4'
                   >
-                    Post Created:{' '}
-                    {new Date(comment.createdOn).toLocaleDateString()}
+                    Post Created:
+                    {new Date(comment.createdOn).toLocaleDateString('bg-BG', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                      minute: 'numeric',
+                      hour: 'numeric',
+                    })}
                   </Text>
-                  <Spacer />
-                  {userData.handle === comment.author && (
-                    <>
-                      {editComment && currentComment === comment.content ? (
-                        <Box mt={2}>
-                          <Button
-                            mx={2}
-                            onClick={() =>
-                              handleEditComment(postId, comment.id, newComment)
-                            }
-                          >
-                            Edit
-                          </Button>
-                          <Button onClick={() => handleCancelComment()}>
-                            Cancel
-                          </Button>
-                        </Box>
-                      ) : (
-                        <Icon
-                          aria-label='Edit Icon'
-                          as={EditIcon}
-                          onClick={() => {
-                            handleEditToggle(comment.content);
-                          }}
-                          boxSize={6}
-                          cursor={'pointer'}
-                        />
-                      )}
-                    </>
-                  )}
                 </Flex>
               </Box>
             ))
