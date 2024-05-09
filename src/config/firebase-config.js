@@ -46,7 +46,7 @@ export const storage = getStorage(app);
 
 export const uploadPhoto = async (image, pathName) => {
   const imageRef = ref(storage, `images/${pathName}`);
-  await uploadBytes(imageRef, image).then(() => console.log('yes'));
+  await uploadBytes(imageRef, image);
 };
 
 export const getUploadedPhoto = async (imageName) => {
