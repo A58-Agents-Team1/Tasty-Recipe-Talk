@@ -11,7 +11,7 @@ import { useEffect, useState } from 'react';
 import { getAllPosts } from '../services/posts.service';
 import Post from '../components/Post';
 import logo from '/logo.png';
-import background from '../../public/background.jpg';
+import background from '/background.jpg';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
