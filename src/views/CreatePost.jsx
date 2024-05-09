@@ -14,6 +14,14 @@ import { IsBlocked } from '../hoc/Authenticated';
 import { uploadPhoto } from '../config/firebase-config';
 import { validateImage, validatePost } from '../common/post.validation';
 import { useNavigate } from 'react-router-dom';
+import {
+  POST_MAX_CONTENT_LENGTH,
+  POST_MAX_RECIPE_LENGTH,
+  POST_MAX_TITLE_LENGTH,
+  POST_MIN_CONTENT_LENGTH,
+  POST_MIN_RECIPE_LENGTH,
+  POST_MIN_TITLE_LENGTH,
+} from '../common/constants';
 
 export const CreatePost = () => {
   const [post, setPost] = useState({
@@ -63,21 +71,21 @@ export const CreatePost = () => {
       if (error.message === 'auth/title-length') {
         showToastError(
           'Error with creating post',
-          'Title must be between 8 and 64 characters.',
+          `Title must be between ${POST_MIN_TITLE_LENGTH} and ${POST_MAX_TITLE_LENGTH} characters.`,
           toast
         );
       }
       if (error.message === 'auth/content-length') {
         showToastError(
           'Error with creating post',
-          'Content must be between 16 and 100 characters.',
+          `Content must be between ${POST_MIN_CONTENT_LENGTH} and ${POST_MAX_CONTENT_LENGTH} characters.`,
           toast
         );
       }
       if (error.message === 'auth/recipe-length') {
         showToastError(
           'Error with creating post',
-          'Recipe must be between 32 and 8192 characters.',
+          `Recipe must be between ${POST_MIN_RECIPE_LENGTH} and ${POST_MAX_RECIPE_LENGTH} characters.`,
           toast
         );
       }
@@ -93,7 +101,11 @@ export const CreatePost = () => {
   };
 
   return (
-    <Box p={6} maxW='500px' mx='auto'>
+    <Box
+      p={6}
+      maxW='500px'
+      mx='auto'
+    >
       <Heading mb={4}>Create a recipe!</Heading>
       <Input
         mb={4}
@@ -124,7 +136,10 @@ export const CreatePost = () => {
         }}
       />
       <IsBlocked>
-        <Button colorScheme='teal' onClick={createPost}>
+        <Button
+          colorScheme='teal'
+          onClick={createPost}
+        >
           Create post
         </Button>
       </IsBlocked>
