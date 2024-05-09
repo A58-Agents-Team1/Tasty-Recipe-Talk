@@ -19,7 +19,6 @@ export default function MyPosts() {
       {posts.length !== 0 ? (
         <>
           {posts
-            .slice() // Create a copy of the posts array to avoid mutating the original array
             .filter((post) => post.author === userData.handle) // Sort the posts by author
             .map((post) => (
               <Post key={post.id} post={post} />
