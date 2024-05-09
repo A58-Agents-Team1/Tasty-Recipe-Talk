@@ -64,7 +64,6 @@ export const addComment = async (postId, author, content) => {
     createdOn: Date.now(),
   };
   const result = await push(ref(db, `posts/${postId}/comments`), comment);
-  console.log(result);
   return result.key;
 }
 
@@ -82,3 +81,14 @@ export const getComments = async (postId) => {
       };
     });
 };
+
+export const updateComment = async (postId, commentId, content) => {
+  const form = await getComments(postId);
+  const comment = form.find((comment) => comment.id === commentId);
+  const value = {
+    ...comment[0],
+    content: content,
+    lastEdited: Date.now(),
+  }
+  return await update(ref(db, `posts/${postId}/comments/${commentId}`), value);
+}
