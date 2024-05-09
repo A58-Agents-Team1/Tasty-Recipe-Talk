@@ -13,11 +13,12 @@ import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { likePost, dislikePost } from '../services/posts.service';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { getUploadedPhoto } from '../config/firebase-config';
 
 export default function Post({ post }) {
   const { userData } = useContext(AppContext);
+  const navigate = useNavigate();
   const like = () => likePost(post.id, userData.handle);
   const dislike = () => dislikePost(post.id, userData.handle);
   const [url, setUrl] = useState('');
@@ -53,15 +54,25 @@ export default function Post({ post }) {
           }}
         />
 
-        <Stack width='100%' p={2}>
+        <Stack
+          width='100%'
+          p={2}
+        >
           <CardBody>
             <Heading size='lg'>{post.title}</Heading>
             <Text py='2'>{post.content}</Text>
           </CardBody>
-          <CardFooter width='100%' justify='space-between' fontWeight={600}>
+          <CardFooter
+            width='100%'
+            justify='space-between'
+            fontWeight={600}
+          >
             <Text align='center'>Created By: {post.author}</Text>
             {userData && (
-              <ButtonGroup spacing={2} alignItems='center'>
+              <ButtonGroup
+                spacing={2}
+                alignItems='center'
+              >
                 <Text>
                   {post.likedBy.length === 0
                     ? 'No likes yet'
@@ -69,14 +80,13 @@ export default function Post({ post }) {
                     ? 'Liked by 1 person'
                     : `Liked by ${post.likedBy.length} people`}
                 </Text>
-
                 {post?.likedBy.includes(userData?.handle) ? (
                   <Button onClick={dislike}>Dislike</Button>
                 ) : (
                   <Button onClick={like}>Like</Button>
                 )}
-                <Button>
-                  <Link to={`/posts/${post.id}`}>View Recipe</Link>
+                <Button onClick={() => navigate(`/posts/${post.id}`)}>
+                  View Recipe
                 </Button>
               </ButtonGroup>
             )}
