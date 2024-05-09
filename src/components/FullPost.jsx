@@ -58,7 +58,7 @@ export default function FullPost({ post }) {
       setComments(comments);
     };
     getUrl();
-  }, [post.id, postButtonClicked, comments]);
+  }, [post.id, postButtonClicked]);
 
   const editPost = async () => {
     try {
