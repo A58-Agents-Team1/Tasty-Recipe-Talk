@@ -62,7 +62,6 @@ export const deletePost = (postId) => {
   try {
     const postRef = ref(db, `posts/${postId}`);
     remove(postRef);
-    console.log('Post deleted successfully');
   } catch (error) {
     console.error('Error deleting post:', error.message);
   }
