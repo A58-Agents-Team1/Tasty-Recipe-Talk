@@ -118,10 +118,7 @@ export default function NavBar() {
                 <MenuButton title='Profile Settings'>
                   <SettingsIcon />
                 </MenuButton>
-                <MenuList
-                  color='white'
-                  bg='green.600'
-                >
+                <MenuList color='white' bg='green.600'>
                   <MenuItem
                     bg='green.600'
                     as={NavLink}
@@ -130,6 +127,15 @@ export default function NavBar() {
                     _activeLink={{ color: 'gold' }}
                   >
                     My Profile
+                  </MenuItem>
+                  <MenuItem
+                    bg='green.600'
+                    as={NavLink}
+                    to='/my-posts'
+                    _active={{ color: 'red' }}
+                    _activeLink={{ color: 'gold' }}
+                  >
+                    My Posts
                   </MenuItem>
                   {userData?.userRole === 'admin' && (
                     <MenuItem
@@ -153,11 +159,7 @@ export default function NavBar() {
                       Blocked Account
                     </MenuItem>
                   )}
-                  <MenuItem
-                    bg='green.600'
-                    color={'red'}
-                    onClick={logout}
-                  >
+                  <MenuItem bg='green.600' color={'red'} onClick={logout}>
                     Logout
                   </MenuItem>
                 </MenuList>

@@ -17,6 +17,7 @@ import FullViewRecipe from './views/FullViewRecipe.jsx';
 import FindUser from './views/FindUser.jsx';
 import Profile from './views/Profile.jsx';
 import Giphy from './views/Giphy.jsx';
+import MyPosts from './views/MyPosts.jsx';
 
 function App() {
   const [appState, setAppState] = useState({
@@ -44,54 +45,19 @@ function App() {
       <AppContext.Provider value={{ ...appState, setAppState }}>
         <Layout>
           <Routes>
-            <Route
-              path='/'
-              element={<Home />}
-            />
-            <Route
-              path='/login'
-              element={<Login />}
-            />
-            <Route
-              path='/register'
-              element={<Register />}
-            />
-            <Route
-              path='*'
-              element={<NotFound />}
-            />
-            <Route
-              path='/create-post'
-              element={<CreatePost />}
-            />
-            <Route
-              path='/all-posts'
-              element={<AllPosts />}
-            />
-            <Route
-              path='/posts/:id'
-              element={<FullViewRecipe />}
-            />
-            <Route
-              path='/about'
-              element={<About />}
-            />
-            <Route
-              path='/blocked-accounts'
-              element={<BlockedAccounts />}
-            />
-            <Route
-              path='/my-profile'
-              element={<Profile />}
-            />
-            <Route
-              path='/find-user'
-              element={<FindUser />}
-            />
-            <Route
-              path='/giphy-kitchen'
-              element={<Giphy />}
-            />
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/register' element={<Register />} />
+            <Route path='*' element={<NotFound />} />
+            <Route path='/create-post' element={<CreatePost />} />
+            <Route path='/all-posts' element={<AllPosts />} />
+            <Route path='/posts/:id' element={<FullViewRecipe />} />
+            <Route path='/about' element={<About />} />
+            <Route path='/blocked-accounts' element={<BlockedAccounts />} />
+            <Route path='/my-profile' element={<Profile />} />
+            <Route path='/find-user' element={<FindUser />} />
+            <Route path='/giphy-kitchen' element={<Giphy />} />
+            <Route path='/my-posts' element={<MyPosts />} />
           </Routes>
         </Layout>
       </AppContext.Provider>
