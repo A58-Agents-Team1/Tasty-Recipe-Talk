@@ -83,12 +83,8 @@ export const getComments = async (postId) => {
 };
 
 export const updateComment = async (postId, commentId, content) => {
-  const form = await getComments(postId);
-  const comment = form.find((comment) => comment.id === commentId);
-  const value = {
-    ...comment[0],
-    content: content,
-    lastEdited: Date.now(),
-  }
-  return await update(ref(db, `posts/${postId}/comments/${commentId}`), value);
+  const updateVal = {};
+  updateVal[`posts/${postId}/comments/${commentId}/content`] = content;
+  updateVal[`posts/${postId}/comments/${commentId}/lastEdited`] = Date.now();
+  await update(ref(db), updateVal);
 }

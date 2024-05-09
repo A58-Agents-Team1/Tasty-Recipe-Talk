@@ -25,24 +25,24 @@ export default function Comment({ comments, postId }) {
   const { userData } = useContext(AppContext);
 
   const [newComment, setNewComment] = useState('');
-  const [editComment, setEditComment] = useState('');
-  const [currentComment, setCurrentComment] = useState('');
+  const [prevComment, setPrevComment] = useState('');
+  const [editToggle, setEditToggle] = useState(false);
 
   const handleEditToggle = (content) => {
-    setEditComment((prev) => !prev);
-    setCurrentComment(content);
+    setEditToggle(!editToggle);
+    setPrevComment(content);
     setNewComment(content);
   };
 
   const handleEditComment = async (id, commentId, content) => {
     await updateComment(id, commentId, content);
-    setEditComment(false);
-    setCurrentComment('');
+    setEditToggle(false);
+    setPrevComment('');
   };
 
   const handleCancelComment = () => {
-    setEditComment(false);
-    setCurrentComment('');
+    setEditToggle(false);
+    setPrevComment('');
   };
 
   return (
@@ -78,7 +78,7 @@ export default function Comment({ comments, postId }) {
                   </Text>
                 </Heading>
 
-                {editComment && currentComment === comment.content ? (
+                {prevComment === comment.content ? (
                   <Input
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
@@ -94,7 +94,7 @@ export default function Comment({ comments, postId }) {
 
                 {userData.handle === comment.author && (
                   <Flex flexDirection='row-reverse'>
-                    {editComment && currentComment === comment.content ? (
+                    {prevComment === comment.content ? (
                       <Box mt={2}>
                         <Button
                           mx={2}
@@ -131,7 +131,7 @@ export default function Comment({ comments, postId }) {
                       fontWeight='500'
                       mt='4'
                     >
-                      Last Edit:
+                      Last Edit:{' '}
                       {new Date(comment.lastEdited).toLocaleDateString(
                         'bg-BG',
                         {
@@ -151,7 +151,7 @@ export default function Comment({ comments, postId }) {
                     fontWeight='500'
                     mt='4'
                   >
-                    Post Created:
+                    Post Created:{' '}
                     {new Date(comment.createdOn).toLocaleDateString('bg-BG', {
                       year: 'numeric',
                       month: 'long',
