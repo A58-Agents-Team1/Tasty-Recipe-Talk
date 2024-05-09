@@ -10,24 +10,32 @@ import {
   FormLabel,
   Textarea,
   Input,
+  Box,
 } from '@chakra-ui/react';
 import { AlertDialogExample } from './Alerts';
 import { CanDelete } from '../hoc/Authenticated';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
-import { likePost, dislikePost } from '../services/posts.service';
+import { likePost, dislikePost, getComments } from '../services/posts.service';
 import { useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { getUploadedPhoto } from '../config/firebase-config';
 import { updatePost } from '../services/users.service';
+import AddComment from './AddComment';
+import Comment from './Comment';
 
 export default function FullPost({ post }) {
   const { userData } = useContext(AppContext);
+
+  const navigate = useNavigate();
+
   const like = () => likePost(post.id, userData.handle);
   const dislike = () => dislikePost(post.id, userData.handle);
+
   const [url, setUrl] = useState('');
+  const [comments, setComments] = useState([]);
   const [editEnable, setEditEnable] = useState(true);
-  const navigate = useNavigate();
+  const [postButtonClicked, setPostButtonClicked] = useState(false);
 
   const [form, setForm] = useState({
     title: post.title,
@@ -45,10 +53,12 @@ export default function FullPost({ post }) {
   useEffect(() => {
     const getUrl = async () => {
       const result = await getUploadedPhoto(post.id);
+      const comments = await getComments(post.id);
       setUrl(result);
+      setComments(comments);
     };
     getUrl();
-  }, [post.id]);
+  }, [post.id, postButtonClicked]);
 
   const editPost = async () => {
     try {
@@ -135,39 +145,63 @@ export default function FullPost({ post }) {
           </CardBody>
 
           {editEnable ? (
-            <CardFooter>
-              {post?.likedBy.includes(userData?.handle) ? (
-                <Button onClick={dislike} style={{ marginRight: '10px' }}>
-                  Dislike
-                </Button>
-              ) : (
-                <Button onClick={like} style={{ marginRight: '10px' }}>
-                  Like
-                </Button>
-              )}
-              {!userData.isBlocked && (
-                <Button style={{ marginRight: '10px' }}>Add Comment</Button>
-              )}
-              {userData.handle === post.author && (
+            <>
+              <CardFooter>
+                {post?.likedBy.includes(userData?.handle) ? (
+                  <Button
+                    onClick={dislike}
+                    style={{ marginRight: '10px' }}
+                  >
+                    Dislike
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={like}
+                    style={{ marginRight: '10px' }}
+                  >
+                    Like
+                  </Button>
+                )}
+                {!userData.isBlocked && (
+                  <Button
+                    marginRight='10px'
+                    onClick={() => {
+                      setPostButtonClicked(!postButtonClicked);
+                    }}
+                  >
+                    Add Comment
+                  </Button>
+                )}
+                {userData.handle === post.author && (
+                  <Button
+                    id='isChecked'
+                    _selected={{ bg: 'green.500', color: 'white' }}
+                    style={{ marginRight: '10px' }}
+                    onClick={() => setEditEnable(!editEnable)}
+                  >
+                    Edit Post
+                  </Button>
+                )}
                 <Button
-                  id='isChecked'
-                  _selected={{ bg: 'green.500', color: 'white' }}
                   style={{ marginRight: '10px' }}
-                  onClick={() => setEditEnable(!editEnable)}
+                  onClick={() => navigate(-1)}
                 >
-                  Edit Post
+                  Back
                 </Button>
+                <CanDelete postAuthor={post.author}>
+                  <AlertDialogExample postId={post.id} />
+                </CanDelete>
+              </CardFooter>
+              <br />
+              {postButtonClicked && (
+                <Box>
+                  <AddComment
+                    postId={post.id}
+                    setPostButtonClicked={setPostButtonClicked}
+                  />
+                </Box>
               )}
-              <Button
-                style={{ marginRight: '10px' }}
-                onClick={() => navigate(-1)}
-              >
-                Back
-              </Button>
-              <CanDelete postAuthor={post.author}>
-                <AlertDialogExample postId={post.id} />
-              </CanDelete>
-            </CardFooter>
+            </>
           ) : (
             <Button
               colorScheme='green'
@@ -181,6 +215,10 @@ export default function FullPost({ post }) {
           )}
         </Stack>
       </Card>
+
+      <br />
+
+      <Comment comments={comments} />
     </div>
   );
 }
