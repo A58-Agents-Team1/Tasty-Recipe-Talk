@@ -26,7 +26,7 @@ export default function Comment({ comments, postId }) {
 
   const [newComment, setNewComment] = useState('');
   const [prevComment, setPrevComment] = useState('');
-  const [editToggle, setEditToggle] = useState(false);
+  const [editToggle, setEditToggle] = useState(true);
   const [commentsState, setCommentState] = useState(comments);
 
   const handleEditToggle = (content) => {
