@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Post from '../components/Post';
-import { Form, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { onChildChanged, ref } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { getAllPosts } from '../services/posts.service';
@@ -10,6 +10,7 @@ import {
   FormLabel,
   Heading,
   Input,
+  Spacer,
   Tab,
   TabList,
   Tabs,
@@ -51,8 +52,17 @@ export default function AllPosts() {
 
   return (
     <Box w={'100%'}>
-      <Flex mt={5} align={'center'} justify={'center'}>
-        <FormLabel fontWeight={800} fontSize={30} htmlFor='search'>
+      <Flex
+        my={5}
+        align={'center'}
+        justify={'center'}
+      >
+        <FormLabel
+          fontWeight={800}
+          fontSize={30}
+          color={'gray.100'}
+          htmlFor='search'
+        >
           Search:{' '}
         </FormLabel>
         <Input
@@ -62,35 +72,66 @@ export default function AllPosts() {
           onChange={(e) => setSearch(e.target.value)}
           name='search'
           id='search'
-          backgroundColor='white'
-          w={'30%'}
+          placeholder='Search for a recipe'
+          backgroundColor='gray.100'
+          fontWeight={800}
+          fontSize={24}
+          w={'40%'}
         />
+        <Spacer />
+        <Tabs
+          variant='enclosed'
+          color={'gray.100'}
+          align='center'
+        >
+          <TabList align='center'>
+            <Box
+              as='label'
+              alignSelf={'center'}
+              fontWeight={800}
+              fontSize={30}
+              mx='3'
+            >
+              Sort by:
+            </Box>
+            <Tab
+              _selected={{
+                color: 'gray.100',
+                bg: 'blue.500',
+                scale: 1.1,
+                transform: 'auto',
+              }}
+              onClick={() => setSortBy('comments')}
+            >
+              Comments
+            </Tab>
+            <Tab
+              _selected={{
+                color: 'gray.100',
+                bg: 'red.500',
+                scale: 1.1,
+                transform: 'auto',
+              }}
+              onClick={() => setSortBy('likedBy')}
+            >
+              Likes
+            </Tab>
+            <Tab
+              _selected={{
+                color: 'gray.100',
+                bg: 'orange.500',
+                scale: 1.1,
+                transform: 'auto',
+              }}
+              onClick={() => setSortBy('createdOn')}
+            >
+              Created on
+            </Tab>
+          </TabList>
+        </Tabs>
       </Flex>
-      <br />
       {posts.length !== 0 ? (
         <>
-          <Tabs variant='enclosed' color={'white'}>
-            <TabList>
-              <Tab
-                _selected={{ color: 'white', bg: 'blue.500' }}
-                onClick={() => setSortBy('comments')}
-              >
-                by comments
-              </Tab>
-              <Tab
-                _selected={{ color: 'white', bg: 'red.500' }}
-                onClick={() => setSortBy('likedBy')}
-              >
-                by likes
-              </Tab>
-              <Tab
-                _selected={{ color: 'white', bg: 'orange.500' }}
-                onClick={() => setSortBy('createdOn')}
-              >
-                created on
-              </Tab>
-            </TabList>
-          </Tabs>
           {posts
             .filter((post) => post[sortBy] !== undefined)
             .sort((a, b) => {
@@ -101,7 +142,10 @@ export default function AllPosts() {
               return 0;
             })
             .map((post) => (
-              <Post key={post.id} post={post} />
+              <Post
+                key={post.id}
+                post={post}
+              />
             ))}
         </>
       ) : (
