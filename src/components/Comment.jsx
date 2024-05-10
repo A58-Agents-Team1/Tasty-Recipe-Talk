@@ -16,7 +16,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { EditIcon } from '@chakra-ui/icons';
 import { updateComment } from '../services/posts.service';
@@ -26,7 +26,7 @@ export default function Comment({ comments, postId }) {
 
   const [newComment, setNewComment] = useState('');
   const [prevComment, setPrevComment] = useState('');
-  const [editToggle, setEditToggle] = useState(true);
+  const [editToggle, setEditToggle] = useState(false);
   const [commentsState, setCommentState] = useState(comments);
 
   const handleEditToggle = (content) => {
@@ -47,10 +47,11 @@ export default function Comment({ comments, postId }) {
             lastEdited: Date.now(),
           };
         }
+        setPrevComment(comment.content);
         return comment;
       })
     );
-    setPrevComment('');
+
     setEditToggle(false);
   };
 
@@ -59,6 +60,9 @@ export default function Comment({ comments, postId }) {
     setPrevComment('');
   };
 
+  useEffect(() => {
+    setCommentState(comments);
+  }, [comments]);
   return (
     <Card>
       <CardHeader>
@@ -92,7 +96,7 @@ export default function Comment({ comments, postId }) {
                   </Text>
                 </Heading>
 
-                {prevComment === comment.content ? (
+                {editToggle && prevComment === comment.content ? (
                   <Input
                     value={newComment}
                     onChange={(e) => setNewComment(e.target.value)}
@@ -108,7 +112,7 @@ export default function Comment({ comments, postId }) {
 
                 {userData.handle === comment.author && (
                   <Flex flexDirection='row-reverse'>
-                    {prevComment === comment.content ? (
+                    {editToggle && prevComment === comment.content ? (
                       <Box mt={2}>
                         <Button
                           mx={2}
