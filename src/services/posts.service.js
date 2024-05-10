@@ -1,4 +1,4 @@
-import { ref, push, update, get } from 'firebase/database';
+import { ref, push, update, get, remove } from 'firebase/database';
 import { db } from '../config/firebase-config';
 
 export const addPost = async (author, title, content, recipe) => {
@@ -65,30 +65,34 @@ export const addComment = async (postId, author, content) => {
   };
   const result = await push(ref(db, `posts/${postId}/comments`), comment);
   return result.key;
-}
+};
 
 export const getComments = async (postId) => {
   const snapshot = await get(ref(db, `posts/${postId}/comments`));
   if (!snapshot.exists()) return [];
 
-  return Object.entries(snapshot.val())
-    .map(([key, value]) => {
-      return {
-        ...value,
-        id: key,
-        createdOn: new Date(value.createdOn).toString(),
-        lastEdited: new Date(value.lastEdited).toString(),
-      };
-    });
+  return Object.entries(snapshot.val()).map(([key, value]) => {
+    return {
+      ...value,
+      id: key,
+      createdOn: new Date(value.createdOn).toString(),
+      lastEdited: new Date(value.lastEdited).toString(),
+    };
+  });
 };
 
 export const updateComment = async (postId, commentId, content) => {
-  const form = await getComments(postId);
-  const comment = form.find((comment) => comment.id === commentId);
-  const value = {
-    ...comment[0],
-    content: content,
-    lastEdited: Date.now(),
+  const updateVal = {};
+  updateVal[`posts/${postId}/comments/${commentId}/content`] = content;
+  updateVal[`posts/${postId}/comments/${commentId}/lastEdited`] = Date.now();
+  await update(ref(db), updateVal);
+};
+
+export const deleteComment = async (postId, commentId) => {
+  try {
+    const postRef = ref(db, `posts/${postId}/comments/${commentId}`);
+    await remove(postRef);
+  } catch (error) {
+    console.error('Error deleting comment:', error.message);
   }
-  return await update(ref(db, `posts/${postId}/comments/${commentId}`), value);
-}
+};

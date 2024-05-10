@@ -13,16 +13,29 @@ import { deletePost } from '../services/users.service';
 import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useNavigate } from 'react-router-dom';
+import { deleteComment } from '../services/posts.service';
 
-export function AlertDialogExample({ postId }) {
+export function AlertDialogExample({
+  postId,
+  title,
+  commentId = undefined,
+  setDeleteToggle = undefined,
+}) {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const cancelRef = useRef();
   const navigate = useNavigate();
 
   function handleDelete() {
-    deletePost(postId);
-    navigate('/', { replace: true });
-    onClose();
+    if (commentId) {
+      deleteComment(postId, commentId).then(() =>
+        setDeleteToggle((prev) => !prev)
+      );
+      onClose();
+    } else {
+      deletePost(postId);
+      navigate('/', { replace: true });
+      onClose();
+    }
   }
 
   return (
@@ -39,7 +52,7 @@ export function AlertDialogExample({ postId }) {
         <AlertDialogOverlay>
           <AlertDialogContent>
             <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-              Delete Recipe Post
+              {title}
             </AlertDialogHeader>
 
             <AlertDialogBody>
@@ -83,4 +96,7 @@ export const showToastError = (title, message, toast) => {
 
 AlertDialogExample.propTypes = {
   postId: PropTypes.string,
+  title: PropTypes.string,
+  commentId: PropTypes.string || undefined,
+  setDeleteToggle: PropTypes.func,
 };
