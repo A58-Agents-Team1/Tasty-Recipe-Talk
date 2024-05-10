@@ -8,7 +8,22 @@ import {
   getUsersByName,
   unblockAccount,
 } from '../services/users.service';
-import { Button, useToast } from '@chakra-ui/react';
+import {
+  Avatar,
+  Badge,
+  Box,
+  Button,
+  Flex,
+  FormLabel,
+  Input,
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  Text,
+  useToast,
+} from '@chakra-ui/react';
 import { showToast, showToastError } from '../components/Alerts';
 
 export default function FindUser() {
@@ -18,6 +33,7 @@ export default function FindUser() {
   const search = searchParams.get('search') || '';
   const toast = useToast();
   const navigate = useNavigate();
+  const [activeBar, setActiveBar] = useState('username');
 
   const setSearch = (value) => {
     setSearchParams({ search: value });
@@ -27,29 +43,30 @@ export default function FindUser() {
     !userData && navigate('/login');
   }, []);
 
+  const handleTabClick = (tab) => {
+    setActiveBar(tab);
+    setSearchParams({ search: '' });
+  };
+
   useEffect(() => {
     const fetchAccount = async () => {
-      try {
-        const resultWithHandle = await getUserByHandle(search);
-        const resultWithEmail = await getUsersByEmail(search);
-        const resultWithName = await getUsersByName(search);
+      if (!search) return;
 
-        if (resultWithHandle.exists()) {
-          const userHandle = resultWithHandle.val();
-          setUsers([userHandle]);
-        } else if (resultWithEmail.length > 0) {
-          setUsers(resultWithEmail);
-        } else if (resultWithName.length > 0) {
-          setUsers(resultWithName);
-        } else {
-          setUsers([]);
-        }
-      } catch (error) {
-        console.error('Error fetching user data:', error);
+      let result = [];
+      if (activeBar === 'username') {
+        result = await getUserByHandle(search);
+        console.log(result);
+      } else if (activeBar === 'email') {
+        result = await getUsersByEmail(search);
+      } else if (activeBar === 'first name') {
+        result = await getUsersByName(search);
       }
+
+      setUsers(result);
     };
+
     fetchAccount();
-  }, [search, users]);
+  }, [search, activeBar]);
 
   const blockAcc = (inputData) => {
     try {
@@ -70,23 +87,70 @@ export default function FindUser() {
   };
 
   return (
-    <div>
-      <h1>Admin Page</h1>
-      <p>Your Username: {userData?.handle}</p>
-      <p>Your Email: {userData.email}</p>
-      <br />
-      <label htmlFor='search'>Find User: </label>
-      <input
-        type='text'
-        value={search}
-        onChange={(e) => setSearch(e.target.value)}
-        name='search'
-        id='search'
-      />
+    <Flex direction='column'>
+      <Flex direction='column'>
+        <Flex
+          align='top'
+          justify='space-between'
+          mb={5}
+          w={'100%'}
+          direction='column'
+        >
+          <Flex align='top' mb={5}>
+            <Avatar
+              size='sm'
+              backgroundColor='purple'
+              name={userData ? userData.handle : ''}
+              src={userData ? userData.avatar : ''}
+            />
+            <Box ml='3'>
+              <Text fontWeight='bold'>
+                {userData.handle}
+                <Badge ml='1' colorScheme='green'>
+                  admin
+                </Badge>
+              </Text>
+              <Text fontSize='m'>email : {userData.email}</Text>
+            </Box>
+          </Flex>
+          <Tabs variant='enclosed' color={'white'}>
+            <TabList>
+              <Tab
+                _selected={{ color: 'white', bg: 'blue.500' }}
+                onClick={() => handleTabClick('username')}
+              >
+                Username
+              </Tab>
+              <Tab
+                _selected={{ color: 'white', bg: 'red.500' }}
+                onClick={() => handleTabClick('email')}
+              >
+                Email
+              </Tab>
+              <Tab
+                _selected={{ color: 'white', bg: 'orange.500' }}
+                onClick={() => handleTabClick('first name')}
+              >
+                First Name
+              </Tab>
+            </TabList>
+          </Tabs>
+        </Flex>
+        <FormLabel htmlFor='search'>Find User by {activeBar}: </FormLabel>{' '}
+        <br />
+        <Input
+          type='text'
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          name='search'
+          id='search'
+        />
+      </Flex>
       <>
         <br />
         <br />
         {search &&
+          users.length > 0 &&
           users.map((user) => (
             <>
               <div key={user.id}>
@@ -110,6 +174,6 @@ export default function FindUser() {
             </>
           ))}
       </>
-    </div>
+    </Flex>
   );
 }
