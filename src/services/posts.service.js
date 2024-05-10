@@ -6,6 +6,7 @@ export const addPost = async (author, title, content, recipe) => {
     author,
     title,
     content,
+    comments: '',
     recipe,
     createdOn: Date.now(),
   };
