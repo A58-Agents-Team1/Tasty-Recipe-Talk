@@ -50,7 +50,7 @@ export default function Login() {
     }
   }, [user]);
 
-  const validateEmailLoginForm = async () => {
+  const validateEmailLoginForm = () => {
     if (form.email === '' || form.password === '') {
       throw new Error('auth/invalid-form');
     }
@@ -59,7 +59,8 @@ export default function Login() {
 
     validatePassword(form.password);
   };
-  const validateUserNameLoginForm = async () => {
+
+  const validateUserNameLoginForm = () => {
     if (form.userName === '' || form.password === '') {
       throw new Error('auth/invalid-form');
     }
@@ -76,7 +77,7 @@ export default function Login() {
 
   const loginWithEmail = async () => {
     try {
-      await validateEmailLoginForm();
+      validateEmailLoginForm();
       const { user } = await loginUser(form.email, form.password);
       setAppState({ user, userData: null });
       navigate('/');
@@ -118,12 +119,17 @@ export default function Login() {
 
   const loginWithUserName = async () => {
     try {
-      const emails = (await getUserByHandle(form.userName)).val();
-      await validateUserNameLoginForm();
-      if (emails === null) {
+      const res = await getUserByHandle(form.userName);
+      const emails = res[0].email;
+
+      validateUserNameLoginForm();
+
+      if (emails === null || emails === undefined) {
         throw new Error('auth/invalid-username');
       }
-      const { user } = await loginUser(emails.email, form.password);
+
+      const { user } = await loginUser(emails, form.password);
+
       setAppState({ user, userData: null });
       navigate('/');
     } catch (error) {
