@@ -101,11 +101,7 @@ export const CreatePost = () => {
   };
 
   return (
-    <Box
-      p={6}
-      maxW='500px'
-      mx='auto'
-    >
+    <Box p={6} maxW='500px' mx='auto'>
       <Heading mb={4}>Create a recipe!</Heading>
       <Input
         mb={4}
@@ -136,10 +132,7 @@ export const CreatePost = () => {
         }}
       />
       <IsBlocked>
-        <Button
-          colorScheme='teal'
-          onClick={createPost}
-        >
+        <Button colorScheme='teal' onClick={createPost}>
           Create post
         </Button>
       </IsBlocked>
