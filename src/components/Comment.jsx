@@ -16,20 +16,25 @@ import {
   Text,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { EditIcon } from '@chakra-ui/icons';
 import { updateComment } from '../services/posts.service';
 import { CanDelete } from '../hoc/Authenticated';
 import { AlertDialogExample } from './Alerts';
 
-export default function Comment({ comments, postId, setDeleteToggle }) {
+export default function Comment({
+  comments,
+  setComments,
+  setEditPostState,
+  postId,
+  setDeleteToggle,
+}) {
   const { userData } = useContext(AppContext);
 
   const [newComment, setNewComment] = useState('');
   const [prevComment, setPrevComment] = useState('');
   const [editToggle, setEditToggle] = useState(false);
-  const [commentsState, setCommentState] = useState(comments);
 
   const handleEditToggle = (content) => {
     setEditToggle(!editToggle);
@@ -40,7 +45,7 @@ export default function Comment({ comments, postId, setDeleteToggle }) {
   const handleEditComment = async (id, commentId, content) => {
     await updateComment(id, commentId, content);
 
-    setCommentState((prev) =>
+    setComments((prev) =>
       prev.map((comment) => {
         if (comment.id === commentId) {
           return {
@@ -53,7 +58,7 @@ export default function Comment({ comments, postId, setDeleteToggle }) {
         return comment;
       })
     );
-
+    setEditPostState((prev) => !prev);
     setEditToggle(false);
   };
 
@@ -62,10 +67,6 @@ export default function Comment({ comments, postId, setDeleteToggle }) {
     setPrevComment('');
   };
 
-  useEffect(() => {
-    setCommentState(comments);
-  }, [comments]);
-
   return (
     <Card>
       <CardHeader>
@@ -73,9 +74,12 @@ export default function Comment({ comments, postId, setDeleteToggle }) {
       </CardHeader>
 
       <CardBody>
-        <Stack divider={<StackDivider />} spacing='4'>
-          {commentsState.length !== 0 ? (
-            commentsState.map((comment) => (
+        <Stack
+          divider={<StackDivider />}
+          spacing='4'
+        >
+          {comments.length > 0 ? (
+            comments.map((comment) => (
               <Box key={comment.id}>
                 <Heading
                   size='xs'
@@ -88,7 +92,10 @@ export default function Comment({ comments, postId, setDeleteToggle }) {
                     name={comment.author ? comment.author : ''}
                     src={comment.authorPicture ? userData.avatar : ''}
                   />
-                  <Text as='div' m={2}>
+                  <Text
+                    as='div'
+                    m={2}
+                  >
                     {comment.author ? comment.author : <Spinner />}
                   </Text>
                 </Heading>
@@ -99,7 +106,10 @@ export default function Comment({ comments, postId, setDeleteToggle }) {
                     onChange={(e) => setNewComment(e.target.value)}
                   />
                 ) : (
-                  <Text pt='2' fontSize='lg'>
+                  <Text
+                    pt='2'
+                    fontSize='lg'
+                  >
                     {comment.content}
                   </Text>
                 )}
@@ -131,24 +141,32 @@ export default function Comment({ comments, postId, setDeleteToggle }) {
                             setDeleteToggle={setDeleteToggle}
                           />
                         </CanDelete>
-                        <Icon
-                          mr={4}
-                          aria-label='Edit Icon'
-                          as={EditIcon}
-                          onClick={() => {
-                            handleEditToggle(comment.content);
-                          }}
-                          boxSize={10}
-                          cursor={'pointer'}
-                        />
+                        {userData.handle === comment.author && (
+                          <Icon
+                            mr={4}
+                            aria-label='Edit Icon'
+                            as={EditIcon}
+                            onClick={() => {
+                              handleEditToggle(comment.content);
+                            }}
+                            boxSize={10}
+                            cursor={'pointer'}
+                          />
+                        )}
                       </>
                     )}
                   </Flex>
                 )}
 
-                <Flex align='end' justify='center'>
+                <Flex
+                  align='end'
+                  justify='center'
+                >
                   {comment.createdOn !== comment.lastEdited && (
-                    <Text fontWeight='500' mt='4'>
+                    <Text
+                      fontWeight='500'
+                      mt='4'
+                    >
                       Last Edit:{' '}
                       {new Date(comment.lastEdited).toLocaleDateString(
                         'bg-BG',
@@ -165,7 +183,10 @@ export default function Comment({ comments, postId, setDeleteToggle }) {
 
                   <Spacer />
 
-                  <Text fontWeight='500' mt='4'>
+                  <Text
+                    fontWeight='500'
+                    mt='4'
+                  >
                     Post Created:{' '}
                     {new Date(comment.createdOn).toLocaleDateString('bg-BG', {
                       year: 'numeric',
@@ -180,10 +201,16 @@ export default function Comment({ comments, postId, setDeleteToggle }) {
             ))
           ) : (
             <Box>
-              <Heading size='xs' textTransform='uppercase'>
+              <Heading
+                size='xs'
+                textTransform='uppercase'
+              >
                 No Comments yet
               </Heading>
-              <Text pt='2' fontSize='sm'>
+              <Text
+                pt='2'
+                fontSize='sm'
+              >
                 Congratulations you can be the first one who will comment that
                 post.
               </Text>

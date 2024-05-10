@@ -36,6 +36,7 @@ export default function FullPost({ post }) {
   const [comments, setComments] = useState([]);
   const [editEnable, setEditEnable] = useState(true);
   const [deleteToggle, setDeleteToggle] = useState(false);
+  const [editPostState, setEditPostState] = useState(false);
   const [postButtonClicked, setPostButtonClicked] = useState(false);
 
   const [form, setForm] = useState({
@@ -43,6 +44,15 @@ export default function FullPost({ post }) {
     content: post.content,
     recipe: post.recipe,
   });
+
+  const editPost = async () => {
+    try {
+      await updatePost(post.id, form);
+      setEditEnable(!editEnable);
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
 
   const updateForm = (props) => (e) => {
     setForm({
@@ -59,16 +69,7 @@ export default function FullPost({ post }) {
       setComments(comments);
     };
     getUrl();
-  }, [post.id, postButtonClicked, deleteToggle]);
-
-  const editPost = async () => {
-    try {
-      await updatePost(post.id, form);
-      setEditEnable(!editEnable);
-    } catch (e) {
-      console.log(e.message);
-    }
-  };
+  }, [post.id, postButtonClicked, deleteToggle, editPostState]);
 
   return (
     <div>
@@ -149,11 +150,17 @@ export default function FullPost({ post }) {
             <>
               <CardFooter>
                 {post?.likedBy.includes(userData?.handle) ? (
-                  <Button onClick={dislike} style={{ marginRight: '10px' }}>
+                  <Button
+                    onClick={dislike}
+                    style={{ marginRight: '10px' }}
+                  >
                     Dislike
                   </Button>
                 ) : (
-                  <Button onClick={like} style={{ marginRight: '10px' }}>
+                  <Button
+                    onClick={like}
+                    style={{ marginRight: '10px' }}
+                  >
                     Like
                   </Button>
                 )}
@@ -218,6 +225,8 @@ export default function FullPost({ post }) {
 
       <Comment
         comments={comments}
+        setComments={setComments}
+        setEditPostState={setEditPostState}
         postId={post.id}
         setDeleteToggle={setDeleteToggle}
       />
