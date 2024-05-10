@@ -20,8 +20,10 @@ import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { EditIcon } from '@chakra-ui/icons';
 import { updateComment } from '../services/posts.service';
+import { CanDelete } from '../hoc/Authenticated';
+import { AlertDialogExample } from './Alerts';
 
-export default function Comment({ comments, postId }) {
+export default function Comment({ comments, postId, setDeleteToggle }) {
   const { userData } = useContext(AppContext);
 
   const [newComment, setNewComment] = useState('');
@@ -63,6 +65,7 @@ export default function Comment({ comments, postId }) {
   useEffect(() => {
     setCommentState(comments);
   }, [comments]);
+
   return (
     <Card>
       <CardHeader>
@@ -70,10 +73,7 @@ export default function Comment({ comments, postId }) {
       </CardHeader>
 
       <CardBody>
-        <Stack
-          divider={<StackDivider />}
-          spacing='4'
-        >
+        <Stack divider={<StackDivider />} spacing='4'>
           {commentsState.length !== 0 ? (
             commentsState.map((comment) => (
               <Box key={comment.id}>
@@ -88,10 +88,7 @@ export default function Comment({ comments, postId }) {
                     name={comment.author ? comment.author : ''}
                     src={comment.authorPicture ? userData.avatar : ''}
                   />
-                  <Text
-                    as='div'
-                    m={2}
-                  >
+                  <Text as='div' m={2}>
                     {comment.author ? comment.author : <Spinner />}
                   </Text>
                 </Heading>
@@ -102,15 +99,13 @@ export default function Comment({ comments, postId }) {
                     onChange={(e) => setNewComment(e.target.value)}
                   />
                 ) : (
-                  <Text
-                    pt='2'
-                    fontSize='lg'
-                  >
+                  <Text pt='2' fontSize='lg'>
                     {comment.content}
                   </Text>
                 )}
 
-                {userData.handle === comment.author && (
+                {(userData.userRole === 'admin' ||
+                  userData.handle === comment.author) && (
                   <Flex flexDirection='row-reverse'>
                     {editToggle && prevComment === comment.content ? (
                       <Box mt={2}>
@@ -127,28 +122,33 @@ export default function Comment({ comments, postId }) {
                         </Button>
                       </Box>
                     ) : (
-                      <Icon
-                        aria-label='Edit Icon'
-                        as={EditIcon}
-                        onClick={() => {
-                          handleEditToggle(comment.content);
-                        }}
-                        boxSize={6}
-                        cursor={'pointer'}
-                      />
+                      <>
+                        <CanDelete postAuthor={comment.author}>
+                          <AlertDialogExample
+                            postId={postId}
+                            title='Delete Comment'
+                            commentId={comment.id}
+                            setDeleteToggle={setDeleteToggle}
+                          />
+                        </CanDelete>
+                        <Icon
+                          mr={4}
+                          aria-label='Edit Icon'
+                          as={EditIcon}
+                          onClick={() => {
+                            handleEditToggle(comment.content);
+                          }}
+                          boxSize={10}
+                          cursor={'pointer'}
+                        />
+                      </>
                     )}
                   </Flex>
                 )}
 
-                <Flex
-                  align='end'
-                  justify='center'
-                >
+                <Flex align='end' justify='center'>
                   {comment.createdOn !== comment.lastEdited && (
-                    <Text
-                      fontWeight='500'
-                      mt='4'
-                    >
+                    <Text fontWeight='500' mt='4'>
                       Last Edit:{' '}
                       {new Date(comment.lastEdited).toLocaleDateString(
                         'bg-BG',
@@ -165,10 +165,7 @@ export default function Comment({ comments, postId }) {
 
                   <Spacer />
 
-                  <Text
-                    fontWeight='500'
-                    mt='4'
-                  >
+                  <Text fontWeight='500' mt='4'>
                     Post Created:{' '}
                     {new Date(comment.createdOn).toLocaleDateString('bg-BG', {
                       year: 'numeric',
@@ -183,16 +180,10 @@ export default function Comment({ comments, postId }) {
             ))
           ) : (
             <Box>
-              <Heading
-                size='xs'
-                textTransform='uppercase'
-              >
+              <Heading size='xs' textTransform='uppercase'>
                 No Comments yet
               </Heading>
-              <Text
-                pt='2'
-                fontSize='sm'
-              >
+              <Text pt='2' fontSize='sm'>
                 Congratulations you can be the first one who will comment that
                 post.
               </Text>
@@ -206,4 +197,6 @@ export default function Comment({ comments, postId }) {
 
 Comment.propTypes = {
   comments: PropTypes.array.isRequired,
+  postId: PropTypes.string.isRequired,
+  setDeleteToggle: PropTypes.func.isRequired,
 };

@@ -35,6 +35,7 @@ export default function FullPost({ post }) {
   const [url, setUrl] = useState('');
   const [comments, setComments] = useState([]);
   const [editEnable, setEditEnable] = useState(true);
+  const [deleteToggle, setDeleteToggle] = useState(false);
   const [postButtonClicked, setPostButtonClicked] = useState(false);
 
   const [form, setForm] = useState({
@@ -58,7 +59,7 @@ export default function FullPost({ post }) {
       setComments(comments);
     };
     getUrl();
-  }, [post.id, postButtonClicked]);
+  }, [post.id, postButtonClicked, deleteToggle]);
 
   const editPost = async () => {
     try {
@@ -148,17 +149,11 @@ export default function FullPost({ post }) {
             <>
               <CardFooter>
                 {post?.likedBy.includes(userData?.handle) ? (
-                  <Button
-                    onClick={dislike}
-                    style={{ marginRight: '10px' }}
-                  >
+                  <Button onClick={dislike} style={{ marginRight: '10px' }}>
                     Dislike
                   </Button>
                 ) : (
-                  <Button
-                    onClick={like}
-                    style={{ marginRight: '10px' }}
-                  >
+                  <Button onClick={like} style={{ marginRight: '10px' }}>
                     Like
                   </Button>
                 )}
@@ -189,7 +184,10 @@ export default function FullPost({ post }) {
                   Back
                 </Button>
                 <CanDelete postAuthor={post.author}>
-                  <AlertDialogExample postId={post.id} />
+                  <AlertDialogExample
+                    postId={post.id}
+                    title='Delete Recipe Post'
+                  />
                 </CanDelete>
               </CardFooter>
               <br />
@@ -221,6 +219,7 @@ export default function FullPost({ post }) {
       <Comment
         comments={comments}
         postId={post.id}
+        setDeleteToggle={setDeleteToggle}
       />
     </div>
   );

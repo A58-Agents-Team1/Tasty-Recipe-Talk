@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Flex,
   FormControl,
@@ -48,17 +47,10 @@ export default function AddComment({ postId, setPostButtonClicked }) {
           <Flex>
             <Spacer />
 
-            <Button
-              onClick={handleComment}
-              mt={2}
-              mx={2}
-            >
+            <Button onClick={handleComment} mt={2} mx={2}>
               Make Comment
             </Button>
-            <Button
-              onClick={() => setPostButtonClicked(false)}
-              mt={2}
-            >
+            <Button onClick={() => setPostButtonClicked(false)} mt={2}>
               Go Back
             </Button>
           </Flex>
