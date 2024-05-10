@@ -12,15 +12,8 @@ import { update } from 'firebase/database';
 import { API_KEY, GET_GIPHY_URL } from '../common/constants.js';
 
 export const getUserByHandle = async (handle) => {
-  const snapshot = await get(ref(db, 'users'));
-  const users = [];
-  snapshot.forEach((acc) => {
-    const user = acc.val();
-    if (user.handle.toLowerCase().includes(handle.toLowerCase())) {
-      users.push(user);
-    }
-  });
-  return users;
+  const res = await get(ref(db, `users/${handle}`));
+  return res.val();
 };
 
 export const getUsersByEmail = async (email) => {
@@ -54,6 +47,18 @@ export const getAllUsersByIsBlocked = async (isBlocked) => {
   snapshot.forEach((acc) => {
     const user = acc.val();
     if (user.isBlocked === isBlocked) {
+      users.push(user);
+    }
+  });
+  return users;
+};
+
+export const getFilterUserByHandle = async (handle) => {
+  const snapshot = await get(ref(db, 'users'));
+  const users = [];
+  snapshot.forEach((acc) => {
+    const user = acc.val();
+    if (user.handle.toLowerCase().includes(handle.toLowerCase())) {
       users.push(user);
     }
   });

@@ -120,7 +120,7 @@ export default function Login() {
   const loginWithUserName = async () => {
     try {
       const res = await getUserByHandle(form.userName);
-      const emails = res[0].email;
+      const emails = res?.email;
 
       validateUserNameLoginForm();
 
@@ -274,10 +274,7 @@ export default function Login() {
       </InputGroup>
       <br />
       <br />
-      <FormLabel
-        htmlFor='isChecked'
-        textAlign={'center'}
-      >
+      <FormLabel htmlFor='isChecked' textAlign={'center'}>
         {userNameOrEmail ? 'Login with Email' : 'Login with Username'}
         <Switch
           id='isChecked'
@@ -287,36 +284,19 @@ export default function Login() {
           onChange={() => setUserNameOrEmail(!userNameOrEmail)}
         />
       </FormLabel>
-      <Flex
-        direction='column'
-        alignItems='center'
-      >
+      <Flex direction='column' alignItems='center'>
         {userNameOrEmail ? (
-          <Button
-            onClick={loginWithEmail}
-            width='100%'
-            colorScheme='green'
-          >
+          <Button onClick={loginWithEmail} width='100%' colorScheme='green'>
             Login Email
           </Button>
         ) : (
-          <Button
-            onClick={loginWithUserName}
-            width='100%'
-            colorScheme='green'
-          >
+          <Button onClick={loginWithUserName} width='100%' colorScheme='green'>
             Login User
           </Button>
         )}
-        <Flex
-          alignItems='center'
-          style={{ fontSize: '19px' }}
-        >
+        <Flex alignItems='center' style={{ fontSize: '19px' }}>
           <Text marginRight={2}>Don`t have an account?</Text>
-          <NavLink
-            to='/register'
-            style={{ fontWeight: 'bold' }}
-          >
+          <NavLink to='/register' style={{ fontWeight: 'bold' }}>
             Register
           </NavLink>
         </Flex>

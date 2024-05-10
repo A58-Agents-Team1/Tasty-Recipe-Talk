@@ -3,7 +3,7 @@ import { AppContext } from '../context/AppContext';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   blockAccount,
-  getUserByHandle,
+  getFilterUserByHandle,
   getUsersByEmail,
   getUsersByName,
   unblockAccount,
@@ -18,8 +18,6 @@ import {
   Input,
   Tab,
   TabList,
-  TabPanel,
-  TabPanels,
   Tabs,
   Text,
   useToast,
@@ -54,8 +52,7 @@ export default function FindUser() {
 
       let result = [];
       if (activeBar === 'username') {
-        result = await getUserByHandle(search);
-        console.log(result);
+        result = await getFilterUserByHandle(search);
       } else if (activeBar === 'email') {
         result = await getUsersByEmail(search);
       } else if (activeBar === 'first name') {
@@ -170,7 +167,6 @@ export default function FindUser() {
                   </Button>
                 )}
               </div>
-              <br />
             </>
           ))}
       </>
