@@ -57,28 +57,6 @@ export default function AllPosts() {
         align={'center'}
         justify={'center'}
       >
-        <FormLabel
-          fontWeight={800}
-          fontSize={30}
-          color={'gray.100'}
-          htmlFor='search'
-        >
-          Search:{' '}
-        </FormLabel>
-        <Input
-          title='Search for a recipe'
-          type='text'
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          name='search'
-          id='search'
-          placeholder='Search for a recipe'
-          backgroundColor='gray.100'
-          fontWeight={800}
-          fontSize={24}
-          w={'40%'}
-        />
-        <Spacer />
         <Tabs
           variant='enclosed'
           color={'gray.100'}
@@ -129,6 +107,28 @@ export default function AllPosts() {
             </Tab>
           </TabList>
         </Tabs>
+        <Spacer />
+        <FormLabel
+          fontWeight={800}
+          fontSize={30}
+          color={'gray.100'}
+          htmlFor='search'
+        >
+          Search:{' '}
+        </FormLabel>
+        <Input
+          title='Search for a recipe'
+          type='text'
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          name='search'
+          id='search'
+          placeholder='Search for a recipe'
+          backgroundColor='gray.100'
+          fontWeight={800}
+          fontSize={24}
+          w={'40%'}
+        />
       </Flex>
       {posts.length !== 0 ? (
         <>
