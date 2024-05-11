@@ -8,8 +8,6 @@ import {
   Button,
   Stack,
   ButtonGroup,
-  Grid,
-  GridItem,
   Spacer,
   Flex,
   Box,
@@ -60,57 +58,29 @@ export default function Post({ post }) {
           }}
         />
 
-        <Stack
-          width='100%'
-          p={2}
-        >
+        <Stack width='100%' p={2}>
           <CardBody>
             <Heading size='lg'>{post.title}</Heading>
-            <Text
-              maxW={'550px'}
-              py='2'
-            >
+            <Text maxW={'550px'} py='2'>
               {post.content}
             </Text>
-            <Flex
-              flexDirection={'row'}
-              gap={2}
-            >
-              <Box
-                alignSelf={'flex-start'}
-                justifySelf={'flex-start'}
-              >
-                <Text
-                  fontWeight={'600'}
-                  fontSize={'md'}
-                  align='center'
-                >
+            <Flex flexDirection={'row'} gap={2}>
+              <Box alignSelf={'flex-start'} justifySelf={'flex-start'}>
+                <Text fontWeight={'600'} fontSize={'md'} align='center'>
                   Created: {formatDate(post.createdOn)}
                 </Text>
               </Box>
               <Spacer />
               <Box>
-                <Text
-                  fontWeight={'600'}
-                  fontSize={'md'}
-                  align='center'
-                >
+                <Text fontWeight={'600'} fontSize={'md'} align='center'>
                   Author: {post.author}
                 </Text>
               </Box>
             </Flex>
           </CardBody>
-          <CardFooter
-            width='100%'
-            justify='space-between'
-            fontWeight={600}
-          >
+          <CardFooter width='100%' justify='space-between' fontWeight={600}>
             {userData && (
-              <ButtonGroup
-                spacing={2}
-                flex={1}
-                alignItems='center'
-              >
+              <ButtonGroup spacing={2} flex={1} alignItems='center'>
                 <Text>
                   {post.likedBy.length === 0
                     ? 'No likes yet'

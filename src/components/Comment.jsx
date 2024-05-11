@@ -75,10 +75,7 @@ export default function Comment({
       </CardHeader>
 
       <CardBody>
-        <Stack
-          divider={<StackDivider border={'1px'} />}
-          spacing='4'
-        >
+        <Stack divider={<StackDivider border={'1px'} />} spacing='4'>
           {comments.length > 0 ? (
             comments.map((comment) => (
               <Box key={comment.id}>
@@ -93,10 +90,7 @@ export default function Comment({
                     name={comment.author ? comment.author : ''}
                     src={comment.authorPicture ? userData.avatar : ''}
                   />
-                  <Text
-                    as='div'
-                    m={2}
-                  >
+                  <Text as='div' m={2}>
                     {comment.author ? comment.author : <Spinner />}
                   </Text>
                 </Heading>
@@ -163,25 +157,16 @@ export default function Comment({
                   </Flex>
                 )}
 
-                <Flex
-                  align='end'
-                  justify='center'
-                >
+                <Flex align='end' justify='center'>
                   {comment.createdOn !== comment.lastEdited && (
-                    <Text
-                      fontWeight='500'
-                      mt='4'
-                    >
+                    <Text fontWeight='500' mt='4'>
                       Last Edit: {formatDate(comment.lastEdited)}
                     </Text>
                   )}
 
                   <Spacer />
 
-                  <Text
-                    fontWeight='500'
-                    mt='4'
-                  >
+                  <Text fontWeight='500' mt='4'>
                     Created: {formatDate(comment.createdOn)}
                   </Text>
                 </Flex>
@@ -189,16 +174,10 @@ export default function Comment({
             ))
           ) : (
             <Box>
-              <Heading
-                size='xs'
-                textTransform='uppercase'
-              >
+              <Heading size='xs' textTransform='uppercase'>
                 No Comments yet
               </Heading>
-              <Text
-                pt='2'
-                fontSize='sm'
-              >
+              <Text pt='2' fontSize='sm'>
                 Congratulations you can be the first one who will comment that
                 post.
               </Text>
@@ -214,4 +193,6 @@ Comment.propTypes = {
   comments: PropTypes.array.isRequired,
   postId: PropTypes.string.isRequired,
   setDeleteToggle: PropTypes.func.isRequired,
+  setComments: PropTypes.func.isRequired,
+  setEditPostState: PropTypes.func.isRequired,
 };
