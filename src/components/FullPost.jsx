@@ -254,7 +254,7 @@ export default function FullPost({ post }) {
                 style={{ margin: '10px' }}
                 onClick={() => setEditEnable(!editEnable)}
               >
-                Back
+                Cancel
               </Button>
             </Flex>
           )}

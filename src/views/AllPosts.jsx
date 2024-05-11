@@ -52,8 +52,16 @@ export default function AllPosts() {
 
   return (
     <Box w={'100%'}>
-      <Flex my={5} align={'center'} justify={'center'}>
-        <Tabs variant='enclosed' color={'gray.100'} align='center'>
+      <Flex
+        my={5}
+        align={'center'}
+        justify={'center'}
+      >
+        <Tabs
+          variant='enclosed'
+          color={'gray.100'}
+          align='center'
+        >
           <TabList align='center'>
             <Box
               as='label'
@@ -69,8 +77,6 @@ export default function AllPosts() {
                 color: 'gray.100',
                 textColor: 'black',
                 bg: 'yellow.100',
-                scale: 1.1,
-                transform: 'auto',
               }}
               onClick={() => setSortBy('comments')}
             >
@@ -81,8 +87,6 @@ export default function AllPosts() {
                 color: 'gray.100',
                 textColor: 'black',
                 bg: 'yellow.100',
-                scale: 1.1,
-                transform: 'auto',
               }}
               onClick={() => setSortBy('likedBy')}
             >
@@ -93,8 +97,6 @@ export default function AllPosts() {
                 color: 'gray.100',
                 textColor: 'black',
                 bg: 'yellow.100',
-                scale: 1.1,
-                transform: 'auto',
               }}
               onClick={() => setSortBy('createdOn')}
             >
@@ -137,7 +139,10 @@ export default function AllPosts() {
               return 0;
             })
             .map((post) => (
-              <Post key={post.id} post={post} />
+              <Post
+                key={post.id}
+                post={post}
+              />
             ))}
         </>
       ) : (

@@ -187,14 +187,14 @@ export const CreatePost = () => {
             colorScheme='teal'
             onClick={createPost}
           >
-            Create post
+            Create
           </Button>
         </IsBlocked>
         <Button
           colorScheme='blue'
           onClick={() => navigate(-1)}
         >
-          Back
+          Cancel
         </Button>
       </Flex>
     </Box>
