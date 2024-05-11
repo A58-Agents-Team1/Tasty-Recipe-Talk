@@ -63,7 +63,7 @@ export default function FindUser() {
     };
 
     fetchAccount();
-  }, [search, activeBar]);
+  }, [search, activeBar, users]);
 
   const blockAcc = (inputData) => {
     try {
