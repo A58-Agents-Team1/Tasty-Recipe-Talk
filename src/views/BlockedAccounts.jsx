@@ -29,25 +29,34 @@ export default function BlockedAccounts() {
       boxShadow={'2xl'}
       bg={'gray.300'}
     >
-      <Heading align={'center'} mb={2}>
+      <Heading
+        align={'center'}
+        mb={2}
+      >
         Blocked People
       </Heading>
-
-      {allBlockedUsers ? (
-        allBlockedUsers.map((user) => (
-          <div key={user.id}>
-            <Box fontWeight={'bold'} fontSize={'lg'}>
-              <Divider border={'1px solid'} m={2} />
+      <>
+        {allBlockedUsers ? (
+          allBlockedUsers.map((user) => (
+            <Box
+              key={user.uid}
+              fontWeight={'bold'}
+              fontSize={'lg'}
+            >
+              <Divider
+                border={'1px solid'}
+                m={2}
+              />
               <Text>First Name: {user.firstName}</Text>
               <Text>Last Name: {user.lastName}</Text>
               <Text>Username: {user.handle}</Text>
               <Text>Email: {user.email}</Text>
             </Box>
-          </div>
-        ))
-      ) : (
-        <Text>No blocked users</Text>
-      )}
+          ))
+        ) : (
+          <Text>No blocked users</Text>
+        )}
+      </>
     </Box>
   );
 }
