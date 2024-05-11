@@ -46,7 +46,30 @@ export const uploadPhoto = async (image, pathName) => {
 };
 
 export const getUploadedPhoto = async (imageName) => {
-  const imageRef = ref(storage, `images/${imageName}`);
-  const url = await getDownloadURL(imageRef);
-  return url;
+  try {
+    const imageRef = ref(storage, `images/${imageName}`);
+    const url = await getDownloadURL(imageRef);
+    return url;
+  } catch (e) {
+    if (e.message === 'storage/object-not-found') {
+      return null;
+    }
+  }
+};
+
+export const uploadProfilePhoto = async (image, handle) => {
+  const imageRef = ref(storage, `profileImages/${handle}`);
+  await uploadBytes(imageRef, image);
+};
+
+export const getProfilePicture = async (handle) => {
+  try {
+    const imageRef = ref(storage, `profileImages/${handle}`);
+    const url = await getDownloadURL(imageRef);
+    return url;
+  } catch (e) {
+    if (e.message === 'storage/object-not-found') {
+      throw new Error('storage/object-not-found');
+    }
+  }
 };
