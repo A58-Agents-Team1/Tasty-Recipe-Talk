@@ -104,12 +104,7 @@ export const CreatePost = () => {
   };
 
   return (
-    <Box
-      p={6}
-      maxW='500px'
-      mx='auto'
-      backgroundColor={'gray.300'}
-    >
+    <Box p={6} maxW='500px' mx='auto' backgroundColor={'gray.300'}>
       <Heading mb={4}>Create a recipe!</Heading>
       <Input
         mb={4}
@@ -153,11 +148,7 @@ export const CreatePost = () => {
           shadow={'md'}
         />
         <Box>
-          <Heading
-            size='md'
-            mb={2}
-            align='center'
-          >
+          <Heading size='md' mb={2} align='center'>
             Image Preview:
           </Heading>
           {imageUpload ? (
@@ -169,31 +160,17 @@ export const CreatePost = () => {
               borderRadius={'lg'}
             />
           ) : (
-            <Skeleton
-              height='300px'
-              width='400px'
-            />
+            <Skeleton height='300px' width='400px' />
           )}
         </Box>
       </Flex>
-      <Flex
-        flexDirection={'row'}
-        align={'center'}
-        justify={'center'}
-        gap={4}
-      >
+      <Flex flexDirection={'row'} align={'center'} justify={'center'} gap={4}>
         <IsBlocked>
-          <Button
-            colorScheme='teal'
-            onClick={createPost}
-          >
+          <Button colorScheme='teal' onClick={createPost}>
             Create
           </Button>
         </IsBlocked>
-        <Button
-          colorScheme='blue'
-          onClick={() => navigate(-1)}
-        >
+        <Button colorScheme='blue' onClick={() => navigate(-1)}>
           Cancel
         </Button>
       </Flex>

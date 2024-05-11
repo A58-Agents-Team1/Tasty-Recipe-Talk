@@ -11,8 +11,8 @@ const Profile = () => {
   const toast = useToast();
   const [editEnable, setEditEnable] = useState(true);
   const [form, setForm] = useState({
-    firstName: userData.firstName,
-    lastName: userData.lastName,
+    firstName: userData ? userData.firstName : '',
+    lastName: userData ? userData.lastName : '',
   });
 
   const updateForm = (props) => (e) => {
@@ -40,22 +40,33 @@ const Profile = () => {
       <FormLabel htmlFor='isChecked'> </FormLabel>
       {userData && editEnable === true ? (
         <>
-          <Heading textAlign={'center'} size="md">Hello, {userData.handle}, what recipe will you upload today?</Heading>
-          <p>Username: {userData.handle}</p>
-          <p>Email: {userData.email}</p>
-          <p>First Name: {userData.firstName}</p>
-          <p>Last Name: {userData.lastName}</p>
-          <h2 style={{ color: 'red', fontWeight: 'bold' }}>{userData.isBlocked && 'Your account is blocked !!!'}</h2>
+          <Heading textAlign={'center'} size='md'>
+            Hello, {userData?.handle}, what recipe will you upload today?
+          </Heading>
+          <p>Username: {userData?.handle}</p>
+          <p>Email: {userData?.email}</p>
+          <p>First Name: {userData?.firstName}</p>
+          <p>Last Name: {userData?.lastName}</p>
+          <h2 style={{ color: 'red', fontWeight: 'bold' }}>
+            {userData?.isBlocked && 'Your account is blocked !!!'}
+          </h2>
           <br />
         </>
-      )
-        :
+      ) : (
         <>
-        <Heading textAlign={'center'} size="md">Hello, {userData.handle}, here you can edit your profile:</Heading>
-          <p>Username: {userData.handle}</p>
-          <p>Email: {userData.email}</p>
-          <FormLabel htmlFor="firstName">First Name: </FormLabel>
-          <Input value={form.firstName} onChange={updateForm('firstName')} type='text' name='firstName' placeholder='First Name' id='firstName'
+          <Heading textAlign={'center'} size='md'>
+            Hello, {userData?.handle}, here you can edit your profile:
+          </Heading>
+          <p>Username: {userData?.handle}</p>
+          <p>Email: {userData?.email}</p>
+          <FormLabel htmlFor='firstName'>First Name: </FormLabel>
+          <Input
+            value={form.firstName}
+            onChange={updateForm('firstName')}
+            type='text'
+            name='firstName'
+            placeholder='First Name'
+            id='firstName'
             _focus={{
               boxShadow: 'md',
               borderRadius: 'md',
@@ -64,9 +75,16 @@ const Profile = () => {
               transition: 'all 0.2s',
             }}
             bg={'gray.200'}
-            shadow={'md'} />
-          <FormLabel htmlFor="lastName">Last Name: </FormLabel>
-          <Input value={form.lastName} onChange={updateForm('lastName')} type='text' name='lastName' placeholder='Last Name' id='lastName'
+            shadow={'md'}
+          />
+          <FormLabel htmlFor='lastName'>Last Name: </FormLabel>
+          <Input
+            value={form.lastName}
+            onChange={updateForm('lastName')}
+            type='text'
+            name='lastName'
+            placeholder='Last Name'
+            id='lastName'
             _focus={{
               boxShadow: 'md',
               borderRadius: 'md',
@@ -75,23 +93,32 @@ const Profile = () => {
               transition: 'all 0.2s',
             }}
             bg={'gray.200'}
-            shadow={'md'} />
-          <br /><br />
-        </>}
+            shadow={'md'}
+          />
+          <br />
+          <br />
+        </>
+      )}
 
-      {editEnable
-        ? <Button
+      {editEnable ? (
+        <Button
           id='isChecked'
           colorScheme='green'
           _selected={{ bg: 'green.500', color: 'white' }}
           onClick={() => setEditEnable(!editEnable)}
-        >Edit Profile</Button>
-        : <Button
+        >
+          Edit Profile
+        </Button>
+      ) : (
+        <Button
           id='isChecked'
           colorScheme='green'
           _selected={{ bg: 'green.500', color: 'white' }}
           onClick={() => editProfile()}
-        >Done</Button>}
+        >
+          Done
+        </Button>
+      )}
     </div>
   );
 };

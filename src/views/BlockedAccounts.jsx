@@ -1,5 +1,5 @@
 import { Box, Divider, Heading, Text } from '@chakra-ui/react';
-import { useContext, useEffect, useState } from 'react'; // Add the missing import statement for useState
+import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
 import { getAllUsersByIsBlocked } from '../services/users.service';
@@ -10,8 +10,12 @@ export default function BlockedAccounts() {
   const [allBlockedUsers, setAllBlockedUsers] = useState([]);
 
   useEffect(() => {
-    getAllUsersByIsBlocked(true).then(setAllBlockedUsers).catch(console.error);
+    const fetchBlockedUsers = async () => {
+      const res = await getAllUsersByIsBlocked(true);
+      setAllBlockedUsers(res);
+    };
     !userData && navigate('/login');
+    fetchBlockedUsers();
   }, []);
 
   return (
@@ -25,34 +29,22 @@ export default function BlockedAccounts() {
       boxShadow={'2xl'}
       bg={'gray.300'}
     >
-      <Heading
-        align={'center'}
-        mb={2}
-      >
+      <Heading align={'center'} mb={2}>
         Blocked People
       </Heading>
 
       {allBlockedUsers ? (
-        <>
-          {allBlockedUsers.map((user) => (
-            <>
-              <Box
-                key={user.id}
-                fontWeight={'bold'}
-                fontSize={'lg'}
-              >
-                <Divider
-                  border={'1px solid'}
-                  m={2}
-                />
-                <Text>First Name: {user.firstName}</Text>
-                <Text>Last Name: {user.lastName}</Text>
-                <Text>Username: {user.handle}</Text>
-                <Text>Email: {user.email}</Text>
-              </Box>
-            </>
-          ))}
-        </>
+        allBlockedUsers.map((user) => (
+          <div key={user.id}>
+            <Box fontWeight={'bold'} fontSize={'lg'}>
+              <Divider border={'1px solid'} m={2} />
+              <Text>First Name: {user.firstName}</Text>
+              <Text>Last Name: {user.lastName}</Text>
+              <Text>Username: {user.handle}</Text>
+              <Text>Email: {user.email}</Text>
+            </Box>
+          </div>
+        ))
       ) : (
         <Text>No blocked users</Text>
       )}

@@ -19,7 +19,7 @@ export default function MyPosts() {
       {posts.length !== 0 ? (
         <>
           {posts
-            .filter((post) => post.author === userData.handle) // Sort the posts by author
+            .filter((post) => post.author === userData?.handle) // Sort the posts by author
             .map((post) => (
               <Post key={post.id} post={post} />
             ))}

@@ -21,7 +21,7 @@ export default function Authenticated({ children }) {
 
 export function IsBlocked({ children }) {
   const { userData } = useContext(AppContext);
-  if (userData.isBlocked) {
+  if (userData?.isBlocked) {
     return <p>Your account is blocked!</p>;
   }
   return <>{children}</>;

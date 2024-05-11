@@ -71,18 +71,19 @@ export default function NavBar() {
                   Home
                 </BreadcrumbLink>
               </BreadcrumbItem>
-              {!userData?.isBlocked && (
-                <BreadcrumbItem>
-                  <BreadcrumbLink
-                    as={NavLink}
-                    to='/create-post'
-                    _active={{ color: 'red' }}
-                    _activeLink={{ color: 'gold' }}
-                  >
-                    Create post
-                  </BreadcrumbLink>
-                </BreadcrumbItem>
-              )}
+              {!userData ||
+                (userData?.isBlocked !== null && (
+                  <BreadcrumbItem>
+                    <BreadcrumbLink
+                      as={NavLink}
+                      to='/create-post'
+                      _active={{ color: 'red' }}
+                      _activeLink={{ color: 'gold' }}
+                    >
+                      Create post
+                    </BreadcrumbLink>
+                  </BreadcrumbItem>
+                ))}
               <BreadcrumbItem>
                 <BreadcrumbLink
                   as={NavLink}

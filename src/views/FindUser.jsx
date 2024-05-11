@@ -97,17 +97,17 @@ export default function FindUser() {
             <Avatar
               size='sm'
               backgroundColor='purple'
-              name={userData ? userData.handle : ''}
-              src={userData ? userData.avatar : ''}
+              name={userData ? userData?.handle : ''}
+              src={userData ? userData?.avatar : ''}
             />
             <Box ml='3'>
               <Text fontWeight='bold'>
-                {userData.handle}
+                {userData?.handle}
                 <Badge ml='1' colorScheme='green'>
                   admin
                 </Badge>
               </Text>
-              <Text fontSize='m'>email : {userData.email}</Text>
+              <Text fontSize='m'>email : {userData?.email}</Text>
             </Box>
           </Flex>
           <Tabs variant='enclosed' color={'white'}>
