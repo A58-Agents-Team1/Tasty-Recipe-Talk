@@ -11,6 +11,11 @@ import {
   Textarea,
   Input,
   Box,
+  Grid,
+  GridItem,
+  Spacer,
+  Divider,
+  Flex,
 } from '@chakra-ui/react';
 import { AlertDialogExample } from './Alerts';
 import { CanDelete } from '../hoc/Authenticated';
@@ -23,6 +28,7 @@ import { getUploadedPhoto } from '../config/firebase-config';
 import { updatePost } from '../services/users.service';
 import AddComment from './AddComment';
 import Comment from './Comment';
+import { formatDate } from '../helper/format-date';
 
 export default function FullPost({ post }) {
   const { userData } = useContext(AppContext);
@@ -72,12 +78,16 @@ export default function FullPost({ post }) {
   }, [post.id, postButtonClicked, deleteToggle, editPostState]);
 
   return (
-    <div>
+    <>
       <Card
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
         variant='outline'
         mt={3}
+        border={'1px solid'}
+        borderColor={'gray.400'}
+        shadow={{ base: 'md', sm: 'xl' }}
+        w={'100%'}
       >
         <Image
           objectFit='cover'
@@ -89,13 +99,19 @@ export default function FullPost({ post }) {
         <Stack>
           <CardBody>
             {userData && editEnable === true ? (
-              <>
-                <Heading size='md'>{`Title: ${post.title}`}</Heading>
-                <Text py='2'>{`Description: ${post.content}`}</Text>
-                <br />
+              <Box
+                border={'5px dotted'}
+                borderColor={'gray.400'}
+                borderRadius={'md'}
+                p={2}
+                mb={4}
+                w={'100%'}
+              >
+                <Heading size='md'>{`${post.title}`}</Heading>
+                <Text py='2'>{`${post.content}`}</Text>
                 <Text>{`Recipe: ${post.recipe}`}</Text>
                 <br />
-              </>
+              </Box>
             ) : (
               <>
                 <FormLabel htmlFor='title'>Title: </FormLabel>
@@ -135,20 +151,33 @@ export default function FullPost({ post }) {
                 />
               </>
             )}
-            <br />
-            <br />
-            <Text>
-              {post.likedBy.length === 0
-                ? 'No likes yet'
-                : `Liked by: ${post.likedBy}`}
-            </Text>
-            <br />
-            <Text>{`Author: ${post.author}`}</Text>
+            <Grid
+              w={'100%'}
+              templateColumns='max-content 1fr max-content'
+              gap={6}
+            >
+              <GridItem>
+                <Text>{`Created: ${formatDate(post.createdOn)}`}</Text>
+              </GridItem>
+              <Spacer />
+              <GridItem justifySelf={'end'}>
+                <Text>{`Author: ${post.author}`}</Text>
+              </GridItem>
+            </Grid>
           </CardBody>
 
           {editEnable ? (
             <>
-              <CardFooter>
+              <CardFooter
+                flexDirection={'row'}
+                justify={'end'}
+              >
+                <Text m={2}>
+                  {post.likedBy.length === 0
+                    ? 'No likes yet'
+                    : `Likes: ${post.likedBy.length}`}
+                </Text>
+                <Spacer />
                 {post?.likedBy.includes(userData?.handle) ? (
                   <Button
                     onClick={dislike}
@@ -208,20 +237,31 @@ export default function FullPost({ post }) {
               )}
             </>
           ) : (
-            <Button
-              colorScheme='green'
-              id='isChecked'
-              _selected={{ bg: 'green.500', color: 'white' }}
-              style={{ margin: '10px' }}
-              onClick={() => editPost()}
-            >
-              Finish Editing
-            </Button>
+            <Flex justify={'end'}>
+              <Button
+                colorScheme='green'
+                id='isChecked'
+                _selected={{ bg: 'green.500', color: 'white' }}
+                style={{ margin: '10px' }}
+                onClick={() => editPost()}
+              >
+                Finish Editing
+              </Button>
+              <Button
+                colorScheme='green'
+                id='isChecked'
+                _selected={{ bg: 'green.500', color: 'white' }}
+                style={{ margin: '10px' }}
+                onClick={() => setEditEnable(!editEnable)}
+              >
+                Back
+              </Button>
+            </Flex>
           )}
         </Stack>
       </Card>
 
-      <br />
+      <Divider m={2} />
 
       <Comment
         comments={comments}
@@ -230,7 +270,7 @@ export default function FullPost({ post }) {
         postId={post.id}
         setDeleteToggle={setDeleteToggle}
       />
-    </div>
+    </>
   );
 }
 

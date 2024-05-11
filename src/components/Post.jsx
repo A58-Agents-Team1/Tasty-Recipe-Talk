@@ -8,6 +8,11 @@ import {
   Button,
   Stack,
   ButtonGroup,
+  Grid,
+  GridItem,
+  Spacer,
+  Flex,
+  Box,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
@@ -15,6 +20,7 @@ import { AppContext } from '../context/AppContext';
 import { likePost, dislikePost } from '../services/posts.service';
 import { useNavigate } from 'react-router-dom';
 import { getUploadedPhoto } from '../config/firebase-config';
+import { formatDate } from '../helper/format-date';
 
 export default function Post({ post }) {
   const { userData } = useContext(AppContext);
@@ -33,7 +39,7 @@ export default function Post({ post }) {
   }, [post.id]);
 
   return (
-    <div className='single-post'>
+    <>
       <Card
         direction={{ base: 'column', sm: 'row' }}
         overflow='hidden'
@@ -43,7 +49,7 @@ export default function Post({ post }) {
       >
         <Image
           objectFit='cover'
-          maxW={{ base: '100%', sm: '200px' }}
+          maxW={{ base: '30%', sm: 'auto' }}
           src={url}
           alt='Card image'
           onMouseEnter={() => setIsHovered(true)}
@@ -60,17 +66,49 @@ export default function Post({ post }) {
         >
           <CardBody>
             <Heading size='lg'>{post.title}</Heading>
-            <Text py='2'>{post.content}</Text>
+            <Text
+              maxW={'550px'}
+              py='2'
+            >
+              {post.content}
+            </Text>
+            <Flex
+              flexDirection={'row'}
+              gap={2}
+            >
+              <Box
+                alignSelf={'flex-start'}
+                justifySelf={'flex-start'}
+              >
+                <Text
+                  fontWeight={'600'}
+                  fontSize={'md'}
+                  align='center'
+                >
+                  Created: {formatDate(post.createdOn)}
+                </Text>
+              </Box>
+              <Spacer />
+              <Box>
+                <Text
+                  fontWeight={'600'}
+                  fontSize={'md'}
+                  align='center'
+                >
+                  Author: {post.author}
+                </Text>
+              </Box>
+            </Flex>
           </CardBody>
           <CardFooter
             width='100%'
             justify='space-between'
             fontWeight={600}
           >
-            <Text align='center'>Created By: {post.author}</Text>
             {userData && (
               <ButtonGroup
                 spacing={2}
+                flex={1}
                 alignItems='center'
               >
                 <Text>
@@ -78,8 +116,9 @@ export default function Post({ post }) {
                     ? 'No likes yet'
                     : post.likedBy.length === 1
                     ? 'Liked by 1 person'
-                    : `Liked by ${post.likedBy.length} people`}
+                    : `${post.likedBy.length} Likes`}
                 </Text>
+                <Spacer />
                 {post?.likedBy.includes(userData?.handle) ? (
                   <Button onClick={dislike}>Dislike</Button>
                 ) : (
@@ -93,7 +132,7 @@ export default function Post({ post }) {
           </CardFooter>
         </Stack>
       </Card>
-    </div>
+    </>
   );
 }
 

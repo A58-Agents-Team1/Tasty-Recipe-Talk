@@ -22,6 +22,7 @@ import { EditIcon } from '@chakra-ui/icons';
 import { updateComment } from '../services/posts.service';
 import { CanDelete } from '../hoc/Authenticated';
 import { AlertDialogExample } from './Alerts';
+import { formatDate } from '../helper/format-date';
 
 export default function Comment({
   comments,
@@ -75,7 +76,7 @@ export default function Comment({
 
       <CardBody>
         <Stack
-          divider={<StackDivider />}
+          divider={<StackDivider border={'1px'} />}
           spacing='4'
         >
           {comments.length > 0 ? (
@@ -85,7 +86,7 @@ export default function Comment({
                   size='xs'
                   textTransform='uppercase'
                   display='flex'
-                  flexDirection={{ base: 'column-reverse', md: 'row-reverse' }}
+                  flexDirection={{ base: 'column', md: 'row' }}
                 >
                   <Avatar
                     size='sm'
@@ -109,6 +110,10 @@ export default function Comment({
                   <Text
                     pt='2'
                     fontSize='lg'
+                    border={'1px solid'}
+                    borderRadius={'md'}
+                    p={2}
+                    m={3}
                   >
                     {comment.content}
                   </Text>
@@ -167,17 +172,7 @@ export default function Comment({
                       fontWeight='500'
                       mt='4'
                     >
-                      Last Edit:{' '}
-                      {new Date(comment.lastEdited).toLocaleDateString(
-                        'bg-BG',
-                        {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                          minute: 'numeric',
-                          hour: 'numeric',
-                        }
-                      )}
+                      Last Edit: {formatDate(comment.lastEdited)}
                     </Text>
                   )}
 
@@ -187,14 +182,7 @@ export default function Comment({
                     fontWeight='500'
                     mt='4'
                   >
-                    Post Created:{' '}
-                    {new Date(comment.createdOn).toLocaleDateString('bg-BG', {
-                      year: 'numeric',
-                      month: 'long',
-                      day: 'numeric',
-                      minute: 'numeric',
-                      hour: 'numeric',
-                    })}
+                    Created: {formatDate(comment.createdOn)}
                   </Text>
                 </Flex>
               </Box>

@@ -1,4 +1,4 @@
-import { Heading, Text } from '@chakra-ui/react';
+import { Box, Divider, Heading, Text } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react'; // Add the missing import statement for useState
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
@@ -15,26 +15,47 @@ export default function BlockedAccounts() {
   }, []);
 
   return (
-    <div>
-      <Heading>Blocked People</Heading>
-      <Text>Here you can see the people you have blocked.</Text>
+    <Box
+      flex={1}
+      justifyContent={'center'}
+      alignItems={'center'}
+      gap={2}
+      p={5}
+      borderRadius={'10px'}
+      boxShadow={'2xl'}
+      bg={'gray.300'}
+    >
+      <Heading
+        align={'center'}
+        mb={2}
+      >
+        Blocked People
+      </Heading>
+
       {allBlockedUsers ? (
         <>
           {allBlockedUsers.map((user) => (
             <>
-              <div key={user.id}>
-                <br />
-                <p>First Name: {user.firstName}</p>
-                <p>Last Name: {user.lastName}</p>
-                <p>Username: {user.handle}</p>
-                <p>Email: {user.email}</p>
-              </div>
+              <Box
+                key={user.id}
+                fontWeight={'bold'}
+                fontSize={'lg'}
+              >
+                <Divider
+                  border={'1px solid'}
+                  m={2}
+                />
+                <Text>First Name: {user.firstName}</Text>
+                <Text>Last Name: {user.lastName}</Text>
+                <Text>Username: {user.handle}</Text>
+                <Text>Email: {user.email}</Text>
+              </Box>
             </>
           ))}
         </>
       ) : (
         <Text>No blocked users</Text>
       )}
-    </div>
+    </Box>
   );
 }

@@ -103,7 +103,7 @@ export default function AllPosts() {
               }}
               onClick={() => setSortBy('createdOn')}
             >
-              Created on
+              Created
             </Tab>
           </TabList>
         </Tabs>

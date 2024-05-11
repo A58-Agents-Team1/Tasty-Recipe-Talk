@@ -40,7 +40,10 @@ export function AlertDialogExample({
 
   return (
     <>
-      <Button colorScheme='red' onClick={onOpen}>
+      <Button
+        colorScheme='red'
+        onClick={onOpen}
+      >
         <DeleteIcon />
       </Button>
 
@@ -51,20 +54,31 @@ export function AlertDialogExample({
       >
         <AlertDialogOverlay>
           <AlertDialogContent>
-            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+            <AlertDialogHeader
+              fontSize='lg'
+              fontWeight='bold'
+            >
               {title}
             </AlertDialogHeader>
 
-            <AlertDialogBody>
+            <AlertDialogBody fontWeight={'600'}>
               Are you sure? You can`t undo this action afterwards.
             </AlertDialogBody>
 
-            <AlertDialogFooter>
-              <Button ref={cancelRef} onClick={onClose}>
-                Cancel
-              </Button>
-              <Button colorScheme='red' onClick={handleDelete} ml={3}>
+            <AlertDialogFooter gap={2}>
+              <Button
+                colorScheme='red'
+                onClick={handleDelete}
+                ml={3}
+              >
                 Delete
+              </Button>
+              <Button
+                ref={cancelRef}
+                colorScheme='green'
+                onClick={onClose}
+              >
+                Cancel
               </Button>
             </AlertDialogFooter>
           </AlertDialogContent>
