@@ -113,19 +113,31 @@ export default function FindUser() {
           <Tabs variant='enclosed' color={'white'}>
             <TabList>
               <Tab
-                _selected={{ color: 'white', bg: 'blue.500' }}
+                _selected={{
+                  color: 'white',
+                  textColor: 'black',
+                  bg: 'yellow.100',
+                }}
                 onClick={() => handleTabClick('username')}
               >
                 Username
               </Tab>
               <Tab
-                _selected={{ color: 'white', bg: 'red.500' }}
+                _selected={{
+                  color: 'white',
+                  textColor: 'black',
+                  bg: 'yellow.100',
+                }}
                 onClick={() => handleTabClick('email')}
               >
                 Email
               </Tab>
               <Tab
-                _selected={{ color: 'white', bg: 'orange.500' }}
+                _selected={{
+                  color: 'white',
+                  textColor: 'black',
+                  bg: 'yellow.100',
+                }}
                 onClick={() => handleTabClick('first name')}
               >
                 First Name

@@ -59,7 +59,7 @@ export default function Home() {
       </Box>
 
       <Heading
-        color={'coral'}
+        color={'black'}
         fontSize={'32px'}
         marginBottom={'20px'}
         textAlign={'center'}
@@ -84,19 +84,12 @@ export default function Home() {
           Join discussions, ask questions, and discover new recipes from food
           enthusiasts around the world.
         </Text>
-        <Text>Here you can see the five latest posts:</Text>
+        <Text>Here you can see the four most liked and four latest posts:</Text>
       </Box>
 
-      <Divider
-        border={'2px solid'}
-        borderRadius={'10px'}
-        m={'20px'}
-      />
+      <Divider border={'2px solid'} borderRadius={'10px'} m={'20px'} />
       <Heading>The most liked recipes</Heading>
-      <Grid
-        templateColumns={'repeat(2, 1fr)'}
-        gap={'2'}
-      >
+      <Grid templateColumns={'repeat(2, 1fr)'} gap={'2'}>
         {posts &&
           posts
             .toSorted((a, b) => b.likedBy.length - a.likedBy.length)
@@ -107,16 +100,9 @@ export default function Home() {
               </GridItem>
             ))}
       </Grid>
-      <Divider
-        border={'2px solid'}
-        borderRadius={'10px'}
-        m={'20px'}
-      />
+      <Divider border={'2px solid'} borderRadius={'10px'} m={'20px'} />
       <Heading>Latest recipes</Heading>
-      <Grid
-        templateColumns={'repeat(2, 1fr)'}
-        gap={'2'}
-      >
+      <Grid templateColumns={'repeat(2, 1fr)'} gap={'2'}>
         {posts
           ? posts
               .toSorted((a, b) => b.createdOn.length - a.createdOn.length)

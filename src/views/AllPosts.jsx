@@ -52,16 +52,8 @@ export default function AllPosts() {
 
   return (
     <Box w={'100%'}>
-      <Flex
-        my={5}
-        align={'center'}
-        justify={'center'}
-      >
-        <Tabs
-          variant='enclosed'
-          color={'gray.100'}
-          align='center'
-        >
+      <Flex my={5} align={'center'} justify={'center'}>
+        <Tabs variant='enclosed' color={'gray.100'} align='center'>
           <TabList align='center'>
             <Box
               as='label'
@@ -75,7 +67,8 @@ export default function AllPosts() {
             <Tab
               _selected={{
                 color: 'gray.100',
-                bg: 'blue.500',
+                textColor: 'black',
+                bg: 'yellow.100',
                 scale: 1.1,
                 transform: 'auto',
               }}
@@ -86,7 +79,8 @@ export default function AllPosts() {
             <Tab
               _selected={{
                 color: 'gray.100',
-                bg: 'red.500',
+                textColor: 'black',
+                bg: 'yellow.100',
                 scale: 1.1,
                 transform: 'auto',
               }}
@@ -97,7 +91,8 @@ export default function AllPosts() {
             <Tab
               _selected={{
                 color: 'gray.100',
-                bg: 'orange.500',
+                textColor: 'black',
+                bg: 'yellow.100',
                 scale: 1.1,
                 transform: 'auto',
               }}
@@ -142,10 +137,7 @@ export default function AllPosts() {
               return 0;
             })
             .map((post) => (
-              <Post
-                key={post.id}
-                post={post}
-              />
+              <Post key={post.id} post={post} />
             ))}
         </>
       ) : (

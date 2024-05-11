@@ -48,10 +48,10 @@ export default function AddComment({ postId, setPostButtonClicked }) {
             <Spacer />
 
             <Button onClick={handleComment} mt={2} mx={2}>
-              Make Comment
+              Add Comment
             </Button>
             <Button onClick={() => setPostButtonClicked(false)} mt={2}>
-              Go Back
+              Cancel
             </Button>
           </Flex>
         </GridItem>
