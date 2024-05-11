@@ -8,6 +8,9 @@ import {
   Textarea,
   Input,
   Button,
+  Flex,
+  Image,
+  Skeleton,
 } from '@chakra-ui/react';
 import { showToast, showToastError } from '../components/Alerts';
 import { IsBlocked } from '../hoc/Authenticated';
@@ -101,7 +104,12 @@ export const CreatePost = () => {
   };
 
   return (
-    <Box p={6} maxW='500px' mx='auto'>
+    <Box
+      p={6}
+      maxW='500px'
+      mx='auto'
+      backgroundColor={'gray.300'}
+    >
       <Heading mb={4}>Create a recipe!</Heading>
       <Input
         mb={4}
@@ -118,24 +126,77 @@ export const CreatePost = () => {
         onChange={(e) => updatePost(e.target.value, 'content')}
       />
       <Textarea
-        mb={4}
         placeholder='Recipe'
         value={post.recipe}
         backgroundColor={'white'}
         onChange={(e) => updatePost(e.target.value, 'recipe')}
       />
-      <input
-        type='file'
-        accept='image/*'
-        onChange={(event) => {
-          setImageUpload(event.target.files[0]);
-        }}
-      />
-      <IsBlocked>
-        <Button colorScheme='teal' onClick={createPost}>
-          Create post
+      <Flex
+        flexDirection='column'
+        alignItems='center'
+        justifyContent='center'
+        m={4}
+      >
+        <Input
+          type='file'
+          accept='image/*'
+          onChange={(event) => {
+            setImageUpload(event.target.files[0]);
+          }}
+          p={2}
+          w={'100%'}
+          h={'100%'}
+          mb={2}
+          fontWeight={'500'}
+          border={'2px dashed'}
+          borderRadius={'md'}
+          shadow={'md'}
+        />
+        <Box>
+          <Heading
+            size='md'
+            mb={2}
+            align='center'
+          >
+            Image Preview:
+          </Heading>
+          {imageUpload ? (
+            <Image
+              width='800px'
+              src={URL.createObjectURL(imageUpload)}
+              alt='Preview'
+              boxShadow={'2xl'}
+              borderRadius={'lg'}
+            />
+          ) : (
+            <Skeleton
+              height='300px'
+              width='400px'
+            />
+          )}
+        </Box>
+      </Flex>
+      <Flex
+        flexDirection={'row'}
+        align={'center'}
+        justify={'center'}
+        gap={4}
+      >
+        <IsBlocked>
+          <Button
+            colorScheme='teal'
+            onClick={createPost}
+          >
+            Create post
+          </Button>
+        </IsBlocked>
+        <Button
+          colorScheme='blue'
+          onClick={() => navigate(-1)}
+        >
+          Back
         </Button>
-      </IsBlocked>
+      </Flex>
     </Box>
   );
 };
