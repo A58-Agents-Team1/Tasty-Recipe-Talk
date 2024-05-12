@@ -1,8 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { useNavigate } from 'react-router-dom';
-import { updateUser } from '../services/users.service';
-import { showToastError } from '../components/Alerts';
+import { getUserByHandle, updateUser } from '../services/users.service';
+import { showToast, showToastError } from '../components/Alerts';
 import {
   Heading,
   Input,
@@ -13,19 +13,27 @@ import {
   Box,
   Text,
   Avatar,
+  Skeleton,
+  Image,
 } from '@chakra-ui/react';
+import {
+  getProfilePicture,
+  uploadProfilePhoto,
+} from '../config/firebase-config';
 
 const Profile = () => {
-  const { userData } = useContext(AppContext);
+  const { avatar, userData, setAppState } = useContext(AppContext);
   const navigate = useNavigate();
   const toast = useToast();
   const [editEnable, setEditEnable] = useState(true);
+  const [formPictureToggle, setFormPictureToggle] = useState(false);
+  const [imageUpload, setImageUpload] = useState(null);
   const [form, setForm] = useState({
     firstName: userData ? userData.firstName : '',
     lastName: userData ? userData.lastName : '',
   });
 
-  const [urlProfilPhoto, setUrlProfilPhoto] = useState('');
+  const [profilePhotoUrl, setProfilePhotoUrl] = useState('');
 
   const updateForm = (props) => (e) => {
     setForm({
@@ -33,10 +41,6 @@ const Profile = () => {
       [props]: e.target.value,
     });
   };
-
-  useEffect(() => {
-    !userData && navigate('/login');
-  }, []);
 
   const editProfile = async () => {
     try {
@@ -47,12 +51,55 @@ const Profile = () => {
     }
   };
 
+  const addProfilePhoto = async () => {
+    if (!imageUpload) {
+      setImageUpload(null);
+      return showToastError('Error', 'Please select an image', toast);
+    }
+    await uploadProfilePhoto(imageUpload, userData?.handle);
+    const res = await getProfilePicture(userData?.handle);
+    setAppState((prev) => {
+      return { ...prev, avatar: res };
+    });
+
+    setImageUpload(null);
+
+    showToast(
+      'Profile Photo Uploaded',
+      'Profile Photo Uploaded Successfully',
+      toast
+    );
+    setFormPictureToggle(false);
+  };
+
+  useEffect(() => {
+    if (!userData) {
+      navigate('/login');
+    } else {
+      getProfilePicture(userData.handle).then((res) => {
+        setAppState((prevState) => {
+          return { ...prevState, avatar: res };
+        });
+        setProfilePhotoUrl(res);
+      });
+      getUserByHandle(userData.handle).then((res) => {
+        setAppState((prev) => {
+          return { ...prev, userData: res };
+        });
+      });
+    }
+  }, [userData, navigate, setAppState]);
+
   return (
     <div>
-      <FormLabel htmlFor='isChecked'> </FormLabel>
       {userData && editEnable === true ? (
         <>
-          <Flex align='center' justify='center' direction='column'>
+          <Flex
+            align='center'
+            justify='center'
+            direction='column'
+            m={4}
+          >
             <Heading
               p={4}
               textAlign={'center'}
@@ -61,19 +108,24 @@ const Profile = () => {
               borderRadius='md'
               borderColor='gray.800'
               background={'yellow.100'}
+              mb={4}
             >
               Hello {userData?.handle}, here you can find all information about
               your account.
-            </Heading>{' '}
-            <br />
+            </Heading>
+
             <Flex align='center'>
-              <Box borderRadius='full' p='1' backgroundColor={'black'}>
-                {urlProfilPhoto ? (
+              <Box
+                borderRadius='full'
+                p='1'
+                backgroundColor={'black'}
+              >
+                {profilePhotoUrl ? (
                   <Avatar
                     title='Profile Photo'
                     boxSize='200px'
                     borderRadius='full'
-                    src={urlProfilPhoto}
+                    src={avatar ? avatar : profilePhotoUrl}
                   />
                 ) : (
                   <Box
@@ -91,7 +143,7 @@ const Profile = () => {
                 )}
               </Box>
               <Flex
-                direction='column'
+                direction='row'
                 ml='4'
                 p='4'
                 border='2px'
@@ -99,43 +151,118 @@ const Profile = () => {
                 borderColor='gray.800'
                 background={'yellow.100'}
               >
-                <Text>Username: {userData?.handle}</Text>
-                <Text>Email: {userData?.email}</Text>
-                <Text>First Name: {userData?.firstName}</Text>
-                <Text>Last Name: {userData?.lastName}</Text>
-                {userData?.isBlocked && (
-                  <Text color='red' fontWeight='bold'>
-                    Your account is blocked !!!
-                  </Text>
-                )}
-                <Flex align={'center'} spacing={4}>
-                  {' '}
-                  <Button
-                    mt={2}
-                    mr={2}
-                    colorScheme='green'
-                    onClick={() => setEditEnable(!editEnable)}
+                <Flex flexDirection={'column'}>
+                  <Text>Username: {userData?.handle}</Text>
+                  <Text>Email: {userData?.email}</Text>
+                  <Text>First Name: {userData?.firstName}</Text>
+                  <Text>Last Name: {userData?.lastName}</Text>
+                  {userData?.isBlocked && (
+                    <Text
+                      color='red'
+                      fontWeight='bold'
+                    >
+                      Your account is blocked !!!
+                    </Text>
+                  )}
+                  <Flex
+                    align={'center'}
+                    spacing={4}
                   >
-                    Edit Profile
-                  </Button>
-                  <Button
-                    mt={2}
-                    colorScheme='green'
-                    onClick={() => {
-                      console.log('TODO');
-                    }}
-                  >
-                    Change Profile Photo
-                  </Button>
+                    <Button
+                      mt={2}
+                      mr={2}
+                      colorScheme='green'
+                      onClick={() => setEditEnable(!editEnable)}
+                    >
+                      Edit Profile
+                    </Button>
+                    <Button
+                      mt={2}
+                      colorScheme='green'
+                      onClick={() => {
+                        setFormPictureToggle((prev) => !prev);
+                      }}
+                    >
+                      {formPictureToggle ? <>Cancel</> : <>Add Profile Photo</>}
+                    </Button>
+                  </Flex>
+                  {formPictureToggle && (
+                    <Flex
+                      flexDirection={'column'}
+                      align='center'
+                      justify='center'
+                      border={'2px solid'}
+                    >
+                      <Flex flexDirection={'column'}>
+                        <FormLabel htmlFor='profilePhoto'>
+                          Profile Photo:{' '}
+                        </FormLabel>
+                        {imageUpload !== null ? (
+                          <Image
+                            width='300px'
+                            src={URL.createObjectURL(imageUpload)}
+                            alt='Preview'
+                            boxShadow={'2xl'}
+                            borderRadius={'lg'}
+                          />
+                        ) : (
+                          <Skeleton
+                            height='250px'
+                            width='auto'
+                          />
+                        )}
+                        {!imageUpload && (
+                          <Input
+                            type='file'
+                            accept='image/*'
+                            name='profilePhoto'
+                            id='profilePhoto'
+                            onChange={(e) => setImageUpload(e.target.files[0])}
+                            _focus={{
+                              boxShadow: 'md',
+                              borderRadius: 'md',
+                              bg: 'gray.300',
+                              p: 4,
+                              transition: 'all 0.2s',
+                            }}
+                            bg={'gray.200'}
+                            shadow={'md'}
+                          />
+                        )}
+                      </Flex>
+                      <Box>
+                        <Button
+                          mt={2}
+                          colorScheme='green'
+                          onClick={() => addProfilePhoto()}
+                        >
+                          Upload
+                        </Button>
+                        <Button
+                          mt={2}
+                          colorScheme='red'
+                          onClick={() => {
+                            setImageUpload(null);
+                            setFormPictureToggle((prev) => !prev);
+                          }}
+                        >
+                          Cancel
+                        </Button>
+                      </Box>
+                    </Flex>
+                  )}
                 </Flex>
               </Flex>
             </Flex>
           </Flex>
-          <br />
         </>
       ) : (
         <>
-          <Flex align='center' justify='center' direction='column'>
+          <Flex
+            align='center'
+            justify='center'
+            direction='column'
+          >
             <Heading
               p={4}
               textAlign={'center'}
@@ -148,15 +275,18 @@ const Profile = () => {
               Hello {userData?.handle}, here you can edit information about your
               account.
             </Heading>
-            <br />
             <Flex align='center'>
-              <Box borderRadius='full' p='1' backgroundColor={'black'}>
-                {urlProfilPhoto ? (
+              <Box
+                borderRadius='full'
+                p='1'
+                backgroundColor={'black'}
+              >
+                {profilePhotoUrl ? (
                   <Avatar
                     title='Profile Photo'
                     boxSize='200px'
                     borderRadius='full'
-                    src={urlProfilPhoto}
+                    src={avatar ? avatar : ''}
                   />
                 ) : (
                   <Box
@@ -220,11 +350,26 @@ const Profile = () => {
                   bg={'gray.200'}
                   shadow={'md'}
                 />
-                <br />
-                <br />
-                <Button colorScheme='green' onClick={() => editProfile()}>
-                  Done
-                </Button>
+                <Flex
+                  align={'center'}
+                  spacing={4}
+                  justify={'end'}
+                  gap={2}
+                  mt={4}
+                >
+                  <Button
+                    colorScheme='green'
+                    onClick={() => editProfile()}
+                  >
+                    Edit
+                  </Button>
+                  <Button
+                    colorScheme='red'
+                    onClick={() => setEditEnable((prev) => !prev)}
+                  >
+                    Cancel
+                  </Button>
+                </Flex>
               </Flex>
             </Flex>
           </Flex>

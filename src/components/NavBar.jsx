@@ -15,22 +15,33 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext.jsx';
 import { logoutUser } from '../services/auth.service.js';
 import { SettingsIcon } from '@chakra-ui/icons';
 import logo from '/logo.png';
+import { getProfilePicture } from '../config/firebase-config.js';
 
 export default function NavBar() {
-  const { user, userData, setAppState } = useContext(AppContext);
+  const { avatar, user, userData, setAppState } = useContext(AppContext);
+  // const [avatar, setAvatar] = useState('');
   const navigate = useNavigate();
 
   const logout = async () => {
     await logoutUser();
-    setAppState({ user: null, userData: null });
+    setAppState({ user: null, userData: null, avatar: null });
     navigate('/');
   };
+
+  useEffect(() => {
+    !avatar &&
+      getProfilePicture(userData?.handle).then((res) => {
+        setAppState((prevState) => {
+          return { ...prevState, avatar: res };
+        });
+      });
+  }, [userData, avatar]);
 
   return (
     <Flex
@@ -114,12 +125,15 @@ export default function NavBar() {
                 <Avatar
                   size='sm'
                   name={userData ? userData.handle : ''}
-                  src={userData ? userData.avatar : ''}
+                  src={avatar ? avatar : ''}
                 />
                 <MenuButton title='Profile Settings'>
                   <SettingsIcon />
                 </MenuButton>
-                <MenuList color='white' bg='green.600'>
+                <MenuList
+                  color='white'
+                  bg='green.600'
+                >
                   <MenuItem
                     bg='green.600'
                     as={NavLink}
@@ -160,7 +174,11 @@ export default function NavBar() {
                       Blocked Account
                     </MenuItem>
                   )}
-                  <MenuItem bg='green.600' color={'red'} onClick={logout}>
+                  <MenuItem
+                    bg='green.600'
+                    color={'red'}
+                    onClick={logout}
+                  >
                     Logout
                   </MenuItem>
                 </MenuList>
