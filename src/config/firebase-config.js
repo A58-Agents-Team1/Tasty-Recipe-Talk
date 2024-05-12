@@ -66,6 +66,9 @@ export const getProfilePicture = async (handle) => {
   try {
     const imageRef = ref(storage, `profileImages/${handle}`);
     const url = await getDownloadURL(imageRef);
+    if (!url) {
+      return '';
+    }
     return url;
   } catch (e) {
     if (e.message === 'storage/object-not-found') {
