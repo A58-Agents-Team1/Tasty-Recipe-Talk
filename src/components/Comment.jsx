@@ -16,13 +16,14 @@ import {
   Text,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { EditIcon } from '@chakra-ui/icons';
 import { updateComment } from '../services/posts.service';
 import { CanDelete } from '../hoc/Authenticated';
 import { AlertDialogExample } from './Alerts';
 import { formatDate } from '../helper/format-date';
+import { getProfilePicture } from '../config/firebase-config';
 
 export default function Comment({
   comments,
@@ -32,10 +33,10 @@ export default function Comment({
   setDeleteToggle,
 }) {
   const { userData } = useContext(AppContext);
-
   const [newComment, setNewComment] = useState('');
   const [prevComment, setPrevComment] = useState('');
   const [editToggle, setEditToggle] = useState(false);
+  const [authorPhotos, setAuthorPhotos] = useState({});
 
   const handleEditToggle = (content) => {
     setEditToggle(!editToggle);
@@ -68,6 +69,21 @@ export default function Comment({
     setPrevComment('');
   };
 
+  useEffect(() => {
+    const fetchPhotos = async () => {
+      const newAuthorPhotos = {};
+      for (const comment of comments) {
+        if (!newAuthorPhotos[comment.author])
+          newAuthorPhotos[comment.author] = await getProfilePicture(
+            comment.author
+          );
+      }
+      setAuthorPhotos(newAuthorPhotos);
+    };
+
+    fetchPhotos();
+  }, [comments]);
+
   return (
     <Card>
       <CardHeader>
@@ -75,109 +91,138 @@ export default function Comment({
       </CardHeader>
 
       <CardBody>
-        <Stack divider={<StackDivider border={'1px'} />} spacing='4'>
+        <Stack
+          divider={<StackDivider border={'1px'} />}
+          spacing='4'
+        >
           {comments.length > 0 ? (
-            comments.map((comment) => (
-              <Box key={comment.id}>
-                <Heading
-                  size='xs'
-                  textTransform='uppercase'
-                  display='flex'
-                  flexDirection={{ base: 'column', md: 'row' }}
-                >
-                  <Avatar
-                    size='sm'
-                    name={comment.author ? comment.author : ''}
-                    src={comment.authorPicture ? userData.avatar : ''}
-                  />
-                  <Text as='div' m={2}>
-                    {comment.author ? comment.author : <Spinner />}
-                  </Text>
-                </Heading>
+            comments.map((comment) => {
+              return (
+                <Box key={comment.id}>
+                  <Box>
+                    <Heading
+                      size='xs'
+                      textTransform='uppercase'
+                      display='flex'
+                      flexDirection={{ base: 'column', md: 'row' }}
+                    >
+                      <Avatar
+                        size='sm'
+                        name={comment.author ? comment.author : ''}
+                        src={authorPhotos[comment.author] || ''}
+                      />
+                      <Text
+                        as='div'
+                        m={2}
+                      >
+                        {comment.author ? comment.author : <Spinner />}
+                      </Text>
+                    </Heading>
 
-                {editToggle && prevComment === comment.content ? (
-                  <Input
-                    value={newComment}
-                    onChange={(e) => setNewComment(e.target.value)}
-                  />
-                ) : (
-                  <Text
-                    pt='2'
-                    fontSize='lg'
-                    border={'1px solid'}
-                    borderRadius={'md'}
-                    p={2}
-                    m={3}
-                  >
-                    {comment.content}
-                  </Text>
-                )}
-
-                {(userData.userRole === 'admin' ||
-                  userData.handle === comment.author) && (
-                  <Flex flexDirection='row-reverse'>
                     {editToggle && prevComment === comment.content ? (
-                      <Box mt={2}>
-                        <Button
-                          mx={2}
-                          onClick={() =>
-                            handleEditComment(postId, comment.id, newComment)
-                          }
-                        >
-                          Edit
-                        </Button>
-                        <Button onClick={() => handleCancelComment()}>
-                          Cancel
-                        </Button>
-                      </Box>
+                      <Input
+                        value={newComment}
+                        onChange={(e) => setNewComment(e.target.value)}
+                      />
                     ) : (
-                      <>
-                        <CanDelete postAuthor={comment.author}>
-                          <AlertDialogExample
-                            postId={postId}
-                            title='Delete Comment'
-                            commentId={comment.id}
-                            setDeleteToggle={setDeleteToggle}
-                          />
-                        </CanDelete>
-                        {userData.handle === comment.author && (
-                          <Icon
-                            mr={4}
-                            aria-label='Edit Icon'
-                            as={EditIcon}
-                            onClick={() => {
-                              handleEditToggle(comment.content);
-                            }}
-                            boxSize={10}
-                            cursor={'pointer'}
-                          />
-                        )}
-                      </>
+                      <Text
+                        pt='2'
+                        fontSize='lg'
+                        border={'1px solid'}
+                        borderRadius={'md'}
+                        p={2}
+                        m={3}
+                      >
+                        {comment.content}
+                      </Text>
                     )}
-                  </Flex>
-                )}
 
-                <Flex align='end' justify='center'>
-                  {comment.createdOn !== comment.lastEdited && (
-                    <Text fontWeight='500' mt='4'>
-                      Last Edit: {formatDate(comment.lastEdited)}
-                    </Text>
-                  )}
+                    {(userData.userRole === 'admin' ||
+                      userData.handle === comment.author) && (
+                      <Flex flexDirection='row-reverse'>
+                        {editToggle && prevComment === comment.content ? (
+                          <Box mt={2}>
+                            <Button
+                              mx={2}
+                              onClick={() =>
+                                handleEditComment(
+                                  postId,
+                                  comment.id,
+                                  newComment
+                                )
+                              }
+                            >
+                              Edit
+                            </Button>
+                            <Button onClick={() => handleCancelComment()}>
+                              Cancel
+                            </Button>
+                          </Box>
+                        ) : (
+                          <>
+                            <CanDelete postAuthor={comment.author}>
+                              <AlertDialogExample
+                                postId={postId}
+                                title='Delete Comment'
+                                commentId={comment.id}
+                                setDeleteToggle={setDeleteToggle}
+                              />
+                            </CanDelete>
+                            {userData.handle === comment.author && (
+                              <Icon
+                                mr={4}
+                                aria-label='Edit Icon'
+                                as={EditIcon}
+                                onClick={() => {
+                                  handleEditToggle(comment.content);
+                                }}
+                                boxSize={10}
+                                cursor={'pointer'}
+                              />
+                            )}
+                          </>
+                        )}
+                      </Flex>
+                    )}
 
-                  <Spacer />
+                    <Flex
+                      align='end'
+                      justify='center'
+                    >
+                      {comment.createdOn !== comment.lastEdited && (
+                        <Text
+                          fontWeight='500'
+                          mt='4'
+                        >
+                          Last Edit: {formatDate(comment.lastEdited)}
+                        </Text>
+                      )}
 
-                  <Text fontWeight='500' mt='4'>
-                    Created: {formatDate(comment.createdOn)}
-                  </Text>
-                </Flex>
-              </Box>
-            ))
+                      <Spacer />
+
+                      <Text
+                        fontWeight='500'
+                        mt='4'
+                      >
+                        Created: {formatDate(comment.createdOn)}
+                      </Text>
+                    </Flex>
+                  </Box>
+                </Box>
+              );
+            })
           ) : (
             <Box>
-              <Heading size='xs' textTransform='uppercase'>
+              <Heading
+                size='xs'
+                textTransform='uppercase'
+              >
                 No Comments yet
               </Heading>
-              <Text pt='2' fontSize='sm'>
+              <Text
+                pt='2'
+                fontSize='sm'
+              >
                 Congratulations you can be the first one who will comment that
                 post.
               </Text>
