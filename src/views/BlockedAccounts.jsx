@@ -25,28 +25,20 @@ export default function BlockedAccounts() {
       alignItems={'center'}
       gap={2}
       p={5}
-      borderRadius={'10px'}
       boxShadow={'2xl'}
-      bg={'gray.300'}
+      border='2px'
+      borderRadius='md'
+      borderColor='gray.800'
+      background={'yellow.200'}
     >
-      <Heading
-        align={'center'}
-        mb={2}
-      >
+      <Heading align={'center'} mb={2}>
         Blocked People
       </Heading>
       <>
         {allBlockedUsers ? (
           allBlockedUsers.map((user) => (
-            <Box
-              key={user.uid}
-              fontWeight={'bold'}
-              fontSize={'lg'}
-            >
-              <Divider
-                border={'1px solid'}
-                m={2}
-              />
+            <Box key={user.uid} fontWeight={'bold'} fontSize={'lg'}>
+              <Divider border={'1px solid'} m={2} />
               <Text>First Name: {user.firstName}</Text>
               <Text>Last Name: {user.lastName}</Text>
               <Text>Username: {user.handle}</Text>

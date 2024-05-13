@@ -84,7 +84,18 @@ export default function FindUser() {
   };
 
   return (
-    <Flex direction='column'>
+    <Flex
+      w={'600px'}
+      direction='column'
+      p={4}
+      align='center'
+      justify='center'
+      m={4}
+      border='2px'
+      borderRadius='md'
+      borderColor='gray.800'
+      background={'yellow.200'}
+    >
       <Flex direction='column'>
         <Flex
           align='top'
@@ -110,13 +121,14 @@ export default function FindUser() {
               <Text fontSize='m'>email : {userData?.email}</Text>
             </Box>
           </Flex>
-          <Tabs variant='enclosed' color={'white'}>
-            <TabList>
+          <Tabs variant='enclosed' color={'black'}>
+            <TabList borderColor='black'>
               <Tab
                 _selected={{
-                  color: 'white',
                   textColor: 'black',
-                  bg: 'yellow.100',
+                  fontWeight: 'bold',
+                  bg: 'yellow.300',
+                  borderColor: 'black',
                 }}
                 onClick={() => handleTabClick('username')}
               >
@@ -124,9 +136,10 @@ export default function FindUser() {
               </Tab>
               <Tab
                 _selected={{
-                  color: 'white',
                   textColor: 'black',
-                  bg: 'yellow.100',
+                  fontWeight: 'bold',
+                  bg: 'yellow.300',
+                  borderColor: 'black',
                 }}
                 onClick={() => handleTabClick('email')}
               >
@@ -134,9 +147,10 @@ export default function FindUser() {
               </Tab>
               <Tab
                 _selected={{
-                  color: 'white',
                   textColor: 'black',
-                  bg: 'yellow.100',
+                  fontWeight: 'bold',
+                  bg: 'yellow.300',
+                  borderColor: 'black',
                 }}
                 onClick={() => handleTabClick('first name')}
               >
@@ -146,10 +160,11 @@ export default function FindUser() {
           </Tabs>
         </Flex>
         <FormLabel htmlFor='search'>Find User by {activeBar}: </FormLabel>{' '}
-        <br />
         <Input
           type='text'
           value={search}
+          placeholder={`Enter ${activeBar}`}
+          backgroundColor={'white'}
           onChange={(e) => setSearch(e.target.value)}
           name='search'
           id='search'
@@ -162,7 +177,16 @@ export default function FindUser() {
           users.length > 0 &&
           users.map((user) => (
             <>
-              <div key={user.id}>
+              <Flex
+                key={user.id}
+                p={4}
+                direction='column'
+                border='2px'
+                borderRadius='md'
+                borderColor='gray.800'
+                background={'yellow.300'}
+                m={2}
+              >
                 <h1>Results</h1>
                 <p>Username : {user?.handle}</p>
                 <p>First name : {user.firstName}</p>
@@ -170,15 +194,23 @@ export default function FindUser() {
                 <p>Email : {user.email}</p>
                 <p>Blocked : {user.isBlocked ? 'Yes' : 'No'}</p>
                 {user.isBlocked ? (
-                  <Button onClick={() => unblockAcc(user?.handle)}>
+                  <Button
+                    mt={2}
+                    colorScheme='green'
+                    onClick={() => unblockAcc(user?.handle)}
+                  >
                     Unblock user
                   </Button>
                 ) : (
-                  <Button onClick={() => blockAcc(user?.handle)}>
+                  <Button
+                    mt={2}
+                    colorScheme='red'
+                    onClick={() => blockAcc(user?.handle)}
+                  >
                     Block user
                   </Button>
                 )}
-              </div>
+              </Flex>
             </>
           ))}
       </>

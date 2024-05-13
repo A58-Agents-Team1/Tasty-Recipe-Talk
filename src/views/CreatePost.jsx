@@ -104,7 +104,17 @@ export const CreatePost = () => {
   };
 
   return (
-    <Box p={6} maxW='500px' mx='auto' backgroundColor={'gray.300'}>
+    <Flex
+      p={4}
+      align='center'
+      justify='center'
+      direction='column'
+      m={4}
+      border='2px'
+      borderRadius='md'
+      borderColor='gray.800'
+      background={'yellow.200'}
+    >
       <Heading mb={4}>Create a recipe!</Heading>
       <Input
         mb={4}
@@ -166,14 +176,14 @@ export const CreatePost = () => {
       </Flex>
       <Flex flexDirection={'row'} align={'center'} justify={'center'} gap={4}>
         <IsBlocked>
-          <Button colorScheme='teal' onClick={createPost}>
+          <Button colorScheme='green' onClick={createPost}>
             Create
           </Button>
         </IsBlocked>
-        <Button colorScheme='blue' onClick={() => navigate(-1)}>
-          Cancel
+        <Button colorScheme='red' onClick={() => navigate(-1)}>
+          Back
         </Button>
       </Flex>
-    </Box>
+    </Flex>
   );
 };
