@@ -70,10 +70,14 @@ export default function FullPost({ post }) {
 
   useEffect(() => {
     const getUrl = async () => {
-      const result = await getUploadedPhoto(post.id);
-      const comments = await getComments(post.id);
-      setUrl(result);
-      setComments(comments);
+      try {
+        const result = await getUploadedPhoto(post.id);
+        const comments = await getComments(post.id);
+        setUrl(result);
+        setComments(comments);
+      } catch (e) {
+        console.log(e.message);
+      }
     };
     getUrl();
   }, [post.id, postButtonClicked, deleteToggle, editPostState]);

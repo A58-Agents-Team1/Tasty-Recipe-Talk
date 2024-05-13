@@ -31,8 +31,12 @@ export default function Post({ post }) {
 
   useEffect(() => {
     const getUrl = async () => {
-      const result = await getUploadedPhoto(post.id);
-      setUrl(result);
+      try {
+        const result = await getUploadedPhoto(post.id);
+        setUrl(result);
+      } catch (e) {
+        console.log(e.message);
+      }
     };
     getUrl();
   }, [post.id]);

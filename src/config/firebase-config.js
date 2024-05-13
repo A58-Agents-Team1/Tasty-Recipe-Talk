@@ -41,8 +41,12 @@ export const db = getDatabase(app);
 export const storage = getStorage(app);
 
 export const uploadPhoto = async (image, pathName) => {
-  const imageRef = ref(storage, `images/${pathName}`);
-  await uploadBytes(imageRef, image);
+  try {
+    const imageRef = ref(storage, `images/${pathName}`);
+    await uploadBytes(imageRef, image);
+  } catch (e) {
+    console.log(e.message);
+  }
 };
 
 export const getUploadedPhoto = async (imageName) => {
