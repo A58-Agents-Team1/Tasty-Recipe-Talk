@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import Post from '../components/Post';
-import { useSearchParams } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
 import { onChildChanged, ref } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import { getAllPosts } from '../services/posts.service';
@@ -8,19 +8,21 @@ import {
   Box,
   Flex,
   FormLabel,
-  Heading,
   Input,
   Spacer,
   Tab,
   TabList,
   Tabs,
+  Text,
 } from '@chakra-ui/react';
+import { AppContext } from '../context/AppContext';
 
 export default function AllPosts() {
   const [posts, setPosts] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const search = searchParams.get('search') || '';
   const [sortBy, setSortBy] = useState('createdOn');
+  const { userData } = useContext(AppContext);
 
   const setSearch = (value) => {
     setSearchParams({ search: value });
@@ -52,16 +54,8 @@ export default function AllPosts() {
 
   return (
     <Box w={'100%'}>
-      <Flex
-        my={5}
-        align={'center'}
-        justify={'center'}
-      >
-        <Tabs
-          variant='enclosed'
-          color={'gray.100'}
-          align='center'
-        >
+      <Flex my={5} align={'center'} justify={'center'}>
+        <Tabs variant='enclosed' color={'gray.100'} align='center'>
           <TabList align='center'>
             <Box
               as='label'
@@ -139,14 +133,39 @@ export default function AllPosts() {
               return 0;
             })
             .map((post) => (
-              <Post
-                key={post.id}
-                post={post}
-              />
+              <Post key={post.id} post={post} />
             ))}
         </>
       ) : (
-        <Heading>No posts found</Heading>
+        <Flex
+          flexDirection='column'
+          alignItems='center'
+          p='4'
+          border='2px solid'
+          borderRadius='md'
+          borderColor='gray.800'
+          background='yellow.100'
+          boxShadow='lg'
+          mb='4'
+        >
+          <Text fontSize={24} mb={2} align={'center'}>
+            Looks like your culinary adventure is just getting started,{' '}
+            <strong>{userData?.handle}</strong>! Why not share your delicious
+            recipe and kickstart a flavorful journey for others to follow?
+          </Text>
+
+          <Flex alignItems='center'>
+            <Text fontSize={16} marginRight={2}>
+              Here you can create your first post:
+            </Text>
+            <NavLink
+              to='/create-post'
+              style={{ fontWeight: 'bold', fontSize: 16 }}
+            >
+              Create Post
+            </NavLink>
+          </Flex>
+        </Flex>
       )}
     </Box>
   );
