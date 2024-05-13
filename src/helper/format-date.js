@@ -1,10 +1,9 @@
-export const formatDate = (date) => new Date(date).toLocaleDateString(
-  'bg-BG',
-  {
+export const formatDate = (date) =>
+  new Date(date).toLocaleDateString('bg-BG', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
     minute: 'numeric',
     hour: 'numeric',
-  }
-)
+    second: 'numeric',
+  });
