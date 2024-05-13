@@ -88,7 +88,7 @@ const Profile = () => {
         });
       });
     }
-  }, [userData?.handle, navigate]);
+  }, [userData?.handle, navigate, imageUpload]);
 
   return (
     <div>
@@ -126,7 +126,11 @@ const Profile = () => {
             borderColor='gray.800'
             background={'yellow.100'}
           >
-            <Box borderRadius='full' p='1' backgroundColor={'black'}>
+            <Box
+              borderRadius='full'
+              p='1'
+              backgroundColor={'black'}
+            >
               {profilePhotoUrl ? (
                 <Avatar
                   title='Profile Photo'
@@ -161,7 +165,11 @@ const Profile = () => {
             >
               <Flex flexDirection={'column'}>
                 {userData?.isBlocked && (
-                  <Text color='red' fontWeight='bold' fontSize={24}>
+                  <Text
+                    color='red'
+                    fontWeight='bold'
+                    fontSize={24}
+                  >
                     Your account is blocked !!!
                   </Text>
                 )}
@@ -169,7 +177,10 @@ const Profile = () => {
                 <Text>Email: {userData?.email}</Text>
                 <Text>First Name: {userData?.firstName}</Text>
                 <Text>Last Name: {userData?.lastName}</Text>
-                <Flex alignItems='center' mt={4}>
+                <Flex
+                  alignItems='center'
+                  mt={4}
+                >
                   <Button
                     mt={2}
                     mr={2}
@@ -204,7 +215,11 @@ const Profile = () => {
           borderColor='gray.800'
           background={'yellow.200'}
         >
-          <Flex align='center' justify='center' direction='column'>
+          <Flex
+            align='center'
+            justify='center'
+            direction='column'
+          >
             <Heading
               p={4}
               mb={4}
@@ -226,7 +241,11 @@ const Profile = () => {
               borderColor='gray.800'
               background={'yellow.100'}
             >
-              <Box borderRadius='full' p='1' backgroundColor={'black'}>
+              <Box
+                borderRadius='full'
+                p='1'
+                backgroundColor={'black'}
+              >
                 {profilePhotoUrl ? (
                   <Avatar
                     title='Profile Photo'
@@ -303,7 +322,10 @@ const Profile = () => {
                   gap={2}
                   mt={4}
                 >
-                  <Button colorScheme='green' onClick={() => editProfile()}>
+                  <Button
+                    colorScheme='green'
+                    onClick={() => editProfile()}
+                  >
                     Edit
                   </Button>
                   <Button
@@ -363,7 +385,10 @@ const Profile = () => {
                     borderRadius={'lg'}
                   />
                 ) : (
-                  <Skeleton height='250px' width='auto' />
+                  <Skeleton
+                    height='250px'
+                    width='auto'
+                  />
                 )}
                 {!imageUpload && (
                   <Input
