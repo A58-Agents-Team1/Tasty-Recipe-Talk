@@ -11,6 +11,7 @@ export default function About() {
         p={4}
         backgroundColor={'yellow.200'}
         border={'2px solid'}
+        borderRadius={'md'}
       >
         Welcome to{' '}
         <Tooltip
@@ -70,6 +71,7 @@ export default function About() {
         mb={4}
         backgroundColor={'yellow.200'}
         border={'2px solid'}
+        borderRadius={'md'}
       >
         <Text
           fontSize='xl'
