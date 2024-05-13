@@ -11,6 +11,7 @@ import {
   Spacer,
   Flex,
   Box,
+  Tooltip,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
@@ -81,13 +82,13 @@ export default function Post({ post }) {
           <CardFooter width='100%' justify='space-between' fontWeight={600}>
             {userData && (
               <ButtonGroup spacing={2} flex={1} alignItems='center'>
-                <Text>
-                  {post.likedBy.length === 0
-                    ? 'No likes yet'
-                    : post.likedBy.length === 1
-                    ? 'Liked by 1 person'
-                    : `${post.likedBy.length} Likes`}
-                </Text>
+                <Tooltip label={`Likes by: ${post.likedBy}`} placement='right'>
+                  <Text m={2}>
+                    {post.likedBy.length === 0
+                      ? 'No likes yet'
+                      : `Likes: ${post.likedBy.length}`}
+                  </Text>
+                </Tooltip>
                 <Spacer />
                 {post?.likedBy.includes(userData?.handle) ? (
                   <Button onClick={dislike}>Dislike</Button>

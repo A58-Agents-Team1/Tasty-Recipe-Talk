@@ -16,6 +16,7 @@ import {
   Spacer,
   Divider,
   Flex,
+  Tooltip,
 } from '@chakra-ui/react';
 import { AlertDialogExample } from './Alerts';
 import { CanDelete } from '../hoc/Authenticated';
@@ -168,28 +169,21 @@ export default function FullPost({ post }) {
 
           {editEnable ? (
             <>
-              <CardFooter
-                flexDirection={'row'}
-                justify={'end'}
-              >
-                <Text m={2}>
-                  {post.likedBy.length === 0
-                    ? 'No likes yet'
-                    : `Likes: ${post.likedBy.length}`}
-                </Text>
+              <CardFooter flexDirection={'row'} justify={'end'}>
+                <Tooltip label={`Likes by: ${post.likedBy}`} placement='right'>
+                  <Text m={2}>
+                    {post.likedBy.length === 0
+                      ? 'No likes yet'
+                      : `Likes: ${post.likedBy.length}`}
+                  </Text>
+                </Tooltip>
                 <Spacer />
                 {post?.likedBy.includes(userData?.handle) ? (
-                  <Button
-                    onClick={dislike}
-                    style={{ marginRight: '10px' }}
-                  >
+                  <Button onClick={dislike} style={{ marginRight: '10px' }}>
                     Dislike
                   </Button>
                 ) : (
-                  <Button
-                    onClick={like}
-                    style={{ marginRight: '10px' }}
-                  >
+                  <Button onClick={like} style={{ marginRight: '10px' }}>
                     Like
                   </Button>
                 )}
