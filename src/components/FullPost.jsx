@@ -99,6 +99,11 @@ export default function FullPost({ post }) {
 
         <Stack>
           <CardBody>
+            {userData && userData.isBlocked && (
+              <Heading align='center' color='red.500'>
+                You are not able to leave comments because you are Blocked!
+              </Heading>
+            )}
             {userData && editEnable === true ? (
               <Box
                 border={'5px dotted'}
