@@ -88,7 +88,7 @@ const Profile = () => {
         });
       });
     }
-  }, [userData, navigate, setAppState]);
+  }, [userData?.handle, navigate]);
 
   return (
     <div>
@@ -132,6 +132,7 @@ const Profile = () => {
                   title='Profile Photo'
                   boxSize='200px'
                   borderRadius='full'
+                  alt={`${userData?.handle} profile photo`}
                   src={avatar ? avatar : profilePhotoUrl}
                 />
               ) : (
