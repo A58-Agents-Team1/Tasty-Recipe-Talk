@@ -15,6 +15,7 @@ import {
   Button,
   Flex,
   FormLabel,
+  Heading,
   Input,
   Tab,
   TabList,
@@ -171,47 +172,43 @@ export default function FindUser() {
         />
       </Flex>
       <>
-        <br />
-        <br />
         {search &&
           users.length > 0 &&
           users.map((user) => (
-            <>
-              <Flex
-                key={user.id}
-                p={4}
-                direction='column'
-                border='2px'
-                borderRadius='md'
-                borderColor='gray.800'
-                background={'yellow.300'}
-                m={2}
-              >
-                <h1>Results</h1>
-                <p>Username : {user?.handle}</p>
-                <p>First name : {user.firstName}</p>
-                <p>last name : {user.lastName}</p>
-                <p>Email : {user.email}</p>
-                <p>Blocked : {user.isBlocked ? 'Yes' : 'No'}</p>
-                {user.isBlocked ? (
-                  <Button
-                    mt={2}
-                    colorScheme='green'
-                    onClick={() => unblockAcc(user?.handle)}
-                  >
-                    Unblock user
-                  </Button>
-                ) : (
-                  <Button
-                    mt={2}
-                    colorScheme='red'
-                    onClick={() => blockAcc(user?.handle)}
-                  >
-                    Block user
-                  </Button>
-                )}
-              </Flex>
-            </>
+            <Flex
+              key={user.uid}
+              p={4}
+              direction='column'
+              border='2px'
+              borderRadius='md'
+              borderColor='gray.800'
+              background={'yellow.300'}
+              m={2}
+            >
+              <Heading>Results</Heading>
+              <Text>Username : {user?.handle}</Text>
+              <Text>First name : {user.firstName}</Text>
+              <Text>last name : {user.lastName}</Text>
+              <Text>Email : {user.email}</Text>
+              <Text>Blocked : {user.isBlocked ? 'Yes' : 'No'}</Text>
+              {user.isBlocked ? (
+                <Button
+                  mt={2}
+                  colorScheme='green'
+                  onClick={() => unblockAcc(user?.handle)}
+                >
+                  Unblock user
+                </Button>
+              ) : (
+                <Button
+                  mt={2}
+                  colorScheme='red'
+                  onClick={() => blockAcc(user?.handle)}
+                >
+                  Block user
+                </Button>
+              )}
+            </Flex>
           ))}
       </>
     </Flex>
