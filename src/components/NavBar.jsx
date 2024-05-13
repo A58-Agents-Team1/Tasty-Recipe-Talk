@@ -15,7 +15,7 @@ import {
   Spinner,
   Text,
 } from '@chakra-ui/react';
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext.jsx';
 import { logoutUser } from '../services/auth.service.js';
@@ -25,7 +25,6 @@ import { getProfilePicture } from '../config/firebase-config.js';
 
 export default function NavBar() {
   const { avatar, user, userData, setAppState } = useContext(AppContext);
-  // const [avatar, setAvatar] = useState('');
   const navigate = useNavigate();
 
   const logout = async () => {
@@ -83,7 +82,7 @@ export default function NavBar() {
                 </BreadcrumbLink>
               </BreadcrumbItem>
               {!userData ||
-                (userData?.isBlocked !== null && (
+                (userData?.isBlocked !== true && (
                   <BreadcrumbItem>
                     <BreadcrumbLink
                       as={NavLink}
@@ -130,10 +129,7 @@ export default function NavBar() {
                 <MenuButton title='Profile Settings'>
                   <SettingsIcon />
                 </MenuButton>
-                <MenuList
-                  color='white'
-                  bg='green.600'
-                >
+                <MenuList color='white' bg='green.600'>
                   <MenuItem
                     bg='green.600'
                     as={NavLink}
@@ -174,11 +170,7 @@ export default function NavBar() {
                       Blocked Account
                     </MenuItem>
                   )}
-                  <MenuItem
-                    bg='green.600'
-                    color={'red'}
-                    onClick={logout}
-                  >
+                  <MenuItem bg='green.600' color={'red'} onClick={logout}>
                     Logout
                   </MenuItem>
                 </MenuList>
