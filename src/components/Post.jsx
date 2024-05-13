@@ -82,13 +82,13 @@ export default function Post({ post }) {
           <CardFooter width='100%' justify='space-between' fontWeight={600}>
             {userData && (
               <ButtonGroup spacing={2} flex={1} alignItems='center'>
-                <Tooltip label={`Likes by: ${post.likedBy}`} placement='right'>
-                  <Text m={2}>
-                    {post.likedBy.length === 0
-                      ? 'No likes yet'
-                      : `Likes: ${post.likedBy.length}`}
-                  </Text>
-                </Tooltip>
+                {post.likedBy.length > 0 ? (
+                  <Tooltip label={`Likes: ${post.likedBy}`} placement='top'>
+                    <Text m={2}>{`Likes: ${post.likedBy.length}`}</Text>
+                  </Tooltip>
+                ) : (
+                  <Text m={2}>No likes yet</Text>
+                )}
                 <Spacer />
                 {post?.likedBy.includes(userData?.handle) ? (
                   <Button onClick={dislike}>Dislike</Button>
