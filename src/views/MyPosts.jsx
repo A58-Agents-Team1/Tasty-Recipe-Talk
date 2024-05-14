@@ -66,17 +66,19 @@ export default function MyPosts() {
             a flavorful journey for others to follow?
           </Text>
 
-          <Flex alignItems='center'>
-            <Text fontSize={16} marginRight={2}>
-              Here you can create your first post:
-            </Text>
-            <NavLink
-              to='/create-post'
-              style={{ fontWeight: 'bold', fontSize: 16 }}
-            >
-              Create Post
-            </NavLink>
-          </Flex>
+          {!userData.isBlocked && (
+            <Flex alignItems='center'>
+              <Text fontSize={16} marginRight={2}>
+                Here you can create your first post:
+              </Text>
+              <NavLink
+                to='/create-post'
+                style={{ fontWeight: 'bold', fontSize: 16 }}
+              >
+                Create Post
+              </NavLink>
+            </Flex>
+          )}
         </Flex>
       )}
     </Box>
