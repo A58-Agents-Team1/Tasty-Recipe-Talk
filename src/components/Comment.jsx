@@ -113,7 +113,10 @@ export default function Comment({
       background={'yellow.100'}
     >
       <CardHeader>
-        <Flex justify='space-between' align='center'>
+        <Flex
+          justify='space-between'
+          align='center'
+        >
           <Heading size='md'>Comments</Heading>
           <Menu>
             <MenuButton
@@ -124,7 +127,10 @@ export default function Comment({
             >
               Filter
             </MenuButton>
-            <MenuList backgroundColor={'yellow.200'} border={'2px solid'}>
+            <MenuList
+              backgroundColor={'yellow.200'}
+              border={'2px solid'}
+            >
               <MenuItem
                 _hover={{ backgroundColor: 'yellow.100' }}
                 backgroundColor={'yellow.200'}
@@ -145,7 +151,10 @@ export default function Comment({
       </CardHeader>
 
       <CardBody>
-        <Stack divider={<StackDivider border={'1px'} />} spacing='4'>
+        <Stack
+          divider={<StackDivider border={'1px'} />}
+          spacing='4'
+        >
           {comments.length > 0 ? (
             comments
               .sort((a, b) => {
@@ -170,48 +179,54 @@ export default function Comment({
                           name={comment.author ? comment.author : ''}
                           src={authorPhotos[comment.author] || ''}
                         />
-                        <Text as='div' m={2}>
+                        <Text
+                          as='div'
+                          m={2}
+                        >
                           {comment.author ? comment.author : <Spinner />}
                         </Text>
                       </Heading>
 
-                      {comment?.likedBy &&
-                      Object.keys(comment?.likedBy).length > 0 ? (
-                        <Tooltip
-                          label={`Likes: ${Object.keys(comment.likedBy)}`}
-                          placement='top'
-                        >
-                          <Text m={2}>{`Likes: ${
-                            Object.keys(comment.likedBy).length
-                          }`}</Text>
-                        </Tooltip>
-                      ) : (
-                        <Text m={2}>No likes yet</Text>
-                      )}
-                      {comment.likedBy &&
-                      Object.keys(comment.likedBy).includes(
-                        userData?.handle
-                      ) ? (
-                        <Button
-                          onClick={() =>
-                            dislikeFunc(postId, comment.id, userData?.handle)
-                          }
-                          style={{ marginRight: '10px' }}
-                          colorScheme='red'
-                        >
-                          Dislike
-                        </Button>
-                      ) : (
-                        <Button
-                          onClick={() =>
-                            likeFunc(postId, comment.id, userData?.handle)
-                          }
-                          style={{ marginRight: '10px' }}
-                          colorScheme='green'
-                        >
-                          Like
-                        </Button>
-                      )}
+                      <Flex justify={'space-between'}>
+                        {comment?.likedBy &&
+                        Object.keys(comment?.likedBy).length > 0 ? (
+                          <Tooltip
+                            label={`Likes: ${Object.keys(comment.likedBy)}`}
+                            placement='right'
+                            align='left'
+                          >
+                            <Text m={2}>{`Likes: ${
+                              Object.keys(comment.likedBy).length
+                            }`}</Text>
+                          </Tooltip>
+                        ) : (
+                          <Text m={2}>No likes yet</Text>
+                        )}
+                        {comment.likedBy &&
+                        Object.keys(comment.likedBy).includes(
+                          userData?.handle
+                        ) ? (
+                          <Button
+                            onClick={() =>
+                              dislikeFunc(postId, comment.id, userData?.handle)
+                            }
+                            style={{ marginRight: '10px' }}
+                            colorScheme='red'
+                          >
+                            Dislike
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={() =>
+                              likeFunc(postId, comment.id, userData?.handle)
+                            }
+                            style={{ marginRight: '10px' }}
+                            colorScheme='green'
+                          >
+                            Like
+                          </Button>
+                        )}
+                      </Flex>
 
                       {editToggle && prevComment === comment.content ? (
                         <Input
@@ -287,16 +302,25 @@ export default function Comment({
                         </Flex>
                       )}
 
-                      <Flex align='end' justify='center'>
+                      <Flex
+                        align='end'
+                        justify='center'
+                      >
                         {comment.createdOn !== comment.lastEdited && (
-                          <Text fontWeight='500' mt='4'>
+                          <Text
+                            fontWeight='500'
+                            mt='4'
+                          >
                             Last Edit: {formatDate(comment.lastEdited)}
                           </Text>
                         )}
 
                         <Spacer />
 
-                        <Text fontWeight='500' mt='4'>
+                        <Text
+                          fontWeight='500'
+                          mt='4'
+                        >
                           Created: {formatDate(comment.createdOn)}
                         </Text>
                       </Flex>
@@ -306,10 +330,16 @@ export default function Comment({
               })
           ) : (
             <Box>
-              <Heading size='xs' textTransform='uppercase'>
+              <Heading
+                size='xs'
+                textTransform='uppercase'
+              >
                 No Comments yet
               </Heading>
-              <Text pt='2' fontSize='sm'>
+              <Text
+                pt='2'
+                fontSize='sm'
+              >
                 Congratulations you can be the first one who will comment that
                 post.
               </Text>
