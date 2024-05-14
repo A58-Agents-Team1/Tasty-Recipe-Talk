@@ -45,6 +45,7 @@ export default function FullPost({ post }) {
   const [deleteToggle, setDeleteToggle] = useState(false);
   const [editPostState, setEditPostState] = useState(false);
   const [postButtonClicked, setPostButtonClicked] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const [form, setForm] = useState({
     title: post.title,
@@ -80,7 +81,7 @@ export default function FullPost({ post }) {
       }
     };
     getUrl();
-  }, [post.id, postButtonClicked, deleteToggle, editPostState]);
+  }, [post.id, postButtonClicked, deleteToggle, editPostState, refresh]);
 
   return (
     <>
@@ -272,6 +273,7 @@ export default function FullPost({ post }) {
         setEditPostState={setEditPostState}
         postId={post.id}
         setDeleteToggle={setDeleteToggle}
+        setRefresh={setRefresh}
       />
     </>
   );
