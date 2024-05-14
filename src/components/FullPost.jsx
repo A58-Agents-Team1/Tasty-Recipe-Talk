@@ -180,7 +180,7 @@ export default function FullPost({ post }) {
             <>
               <CardFooter flexDirection={'row'} justify={'end'}>
                 {post.likedBy.length > 0 ? (
-                  <Tooltip label={`Likes: ${post.likedBy}`} placement='top'>
+                  <Tooltip label={`Likes: ${post.likedBy}`} placement='right'>
                     <Text m={2}>{`Likes: ${post.likedBy.length}`}</Text>
                   </Tooltip>
                 ) : (
