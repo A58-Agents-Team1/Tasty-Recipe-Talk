@@ -21,6 +21,13 @@ export default function MyPosts() {
         <>
           {posts
             .filter((post) => post.author === userData?.handle) // Sort the posts by author
+            .sort((a, b) => {
+              const keyA = new Date(a['createdOn']);
+              const keyB = new Date(b['createdOn']);
+              if (keyA < keyB) return 1;
+              if (keyA > keyB) return -1;
+              return 0;
+            })
             .map((post) => (
               <Post key={post.id} post={post} />
             ))}
