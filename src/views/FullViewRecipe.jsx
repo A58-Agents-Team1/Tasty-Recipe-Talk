@@ -14,10 +14,10 @@ export default function FullViewRecipe() {
       setPost({
         ...snapshot.val(),
         id,
-        likedBy: snapshot.val().likedBy
-          ? Object.keys(snapshot.val().likedBy)
+        likedBy: snapshot.val()?.likedBy
+          ? Object.keys(snapshot.val()?.likedBy)
           : [],
-        createdOn: new Date(snapshot.val().createdOn).toString(),
+        createdOn: new Date(snapshot.val()?.createdOn).toString(),
       });
     });
   }, [id]);
