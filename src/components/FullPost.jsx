@@ -136,7 +136,7 @@ export default function FullPost({ post }) {
                   type='text'
                   name='title'
                   id='title'
-                  bg={'gray.200'}
+                  bg={'yellow.200'}
                   shadow={'md'}
                 />
                 <FormLabel htmlFor='description'>Description: </FormLabel>
@@ -147,7 +147,7 @@ export default function FullPost({ post }) {
                   type='text'
                   name='content'
                   id='content'
-                  bg={'gray.200'}
+                  bg={'yellow.200'}
                   shadow={'md'}
                 />
                 <FormLabel htmlFor='recipe'>Recipe: </FormLabel>
@@ -160,7 +160,7 @@ export default function FullPost({ post }) {
                   type='text'
                   name='recipe'
                   id='recipe'
-                  bg={'gray.200'}
+                  bg={'yellow.200'}
                   shadow={'md'}
                 />
               </>

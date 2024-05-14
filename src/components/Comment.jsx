@@ -189,7 +189,9 @@ export default function Comment({
                         <Text m={2}>No likes yet</Text>
                       )}
                       {comment.likedBy &&
-                      Object.keys(comment.likedBy)[0] === userData?.handle ? (
+                      Object.keys(comment.likedBy).includes(
+                        userData?.handle
+                      ) ? (
                         <Button
                           onClick={() =>
                             dislikeFunc(postId, comment.id, userData?.handle)

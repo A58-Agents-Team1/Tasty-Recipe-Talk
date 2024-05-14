@@ -199,7 +199,7 @@ export default function FindUser() {
               border='2px'
               borderRadius='md'
               borderColor='gray.800'
-              background={'yellow.300'}
+              background={'yellow.100'}
               m={2}
             >
               <Heading>Results</Heading>

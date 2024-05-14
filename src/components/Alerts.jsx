@@ -40,10 +40,7 @@ export function AlertDialogExample({
 
   return (
     <>
-      <Button
-        colorScheme='red'
-        onClick={onOpen}
-      >
+      <Button colorScheme='red' onClick={onOpen}>
         <DeleteIcon />
       </Button>
 
@@ -53,11 +50,8 @@ export function AlertDialogExample({
         onClose={onClose}
       >
         <AlertDialogOverlay>
-          <AlertDialogContent>
-            <AlertDialogHeader
-              fontSize='lg'
-              fontWeight='bold'
-            >
+          <AlertDialogContent backgroundColor={'yellow.100'}>
+            <AlertDialogHeader fontSize='lg' fontWeight='bold'>
               {title}
             </AlertDialogHeader>
 
@@ -66,18 +60,10 @@ export function AlertDialogExample({
             </AlertDialogBody>
 
             <AlertDialogFooter gap={2}>
-              <Button
-                colorScheme='red'
-                onClick={handleDelete}
-                ml={3}
-              >
+              <Button colorScheme='red' onClick={handleDelete} ml={3}>
                 Delete
               </Button>
-              <Button
-                ref={cancelRef}
-                colorScheme='green'
-                onClick={onClose}
-              >
+              <Button ref={cancelRef} colorScheme='green' onClick={onClose}>
                 Cancel
               </Button>
             </AlertDialogFooter>
