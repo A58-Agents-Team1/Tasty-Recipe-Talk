@@ -28,7 +28,9 @@ export default function Post({ post }) {
   const dislike = () => dislikePost(post.id, userData.handle);
   const [url, setUrl] = useState('');
   const [isHovered, setIsHovered] = useState(false);
-
+  const uniqueUsers = [
+    ...new Set(Object.values(post.comments).map((comment) => comment.author)),
+  ];
   useEffect(() => {
     const getUrl = async () => {
       try {
@@ -67,43 +69,94 @@ export default function Post({ post }) {
           }}
         />
 
-        <Stack width='100%' p={2}>
+        <Stack
+          width='100%'
+          p={2}
+        >
           <CardBody>
             <Heading size='lg'>{post.title}</Heading>
-            <Text maxW={'550px'} py='2'>
+            <Text
+              maxW={'550px'}
+              py='2'
+            >
               {post.content}
             </Text>
-            <Flex flexDirection={'row'} gap={2}>
-              <Box alignSelf={'flex-start'} justifySelf={'flex-start'}>
-                <Text fontWeight={'600'} fontSize={'md'} align='center'>
+            <Flex
+              flexDirection={'row'}
+              gap={2}
+            >
+              <Box
+                alignSelf={'flex-start'}
+                justifySelf={'flex-start'}
+              >
+                <Text
+                  fontWeight={'600'}
+                  fontSize={'md'}
+                  align='center'
+                >
                   Created: {formatDate(post.createdOn)}
                 </Text>
               </Box>
               <Spacer />
               <Box>
-                <Text fontWeight={'600'} fontSize={'md'} align='center'>
+                <Text
+                  fontWeight={'600'}
+                  fontSize={'md'}
+                  align='center'
+                >
                   Author: {post.author}
                 </Text>
               </Box>
             </Flex>
           </CardBody>
-          <CardFooter width='100%' justify='space-between' fontWeight={600}>
+          <CardFooter
+            width='100%'
+            justify='space-between'
+            fontWeight={600}
+          >
             {userData && (
-              <ButtonGroup spacing={2} flex={1} alignItems='center'>
-                {post.likedBy.length > 0 ? (
-                  <Tooltip label={`Likes: ${post.likedBy}`} placement='right'>
-                    <Text m={2}>{`Likes: ${post.likedBy.length}`}</Text>
-                  </Tooltip>
-                ) : (
-                  <Text m={2}>No likes yet</Text>
-                )}
+              <ButtonGroup
+                spacing={2}
+                flex={1}
+                alignItems='center'
+              >
+                <Flex flexDirection={'column'}>
+                  {post.likedBy.length > 0 ? (
+                    <Tooltip
+                      label={`Likes: ${post.likedBy}`}
+                      placement='right'
+                    >
+                      <Text m={2}>{`Likes: ${post.likedBy.length}`}</Text>
+                    </Tooltip>
+                  ) : (
+                    <Text m={2}>No likes yet</Text>
+                  )}
+                  {Object.keys(post.comments).length > 0 ? (
+                    <Tooltip
+                      label={`Commentators: ${uniqueUsers}`}
+                      placement='right'
+                    >
+                      <Text m={2}>{`Comments: ${
+                        Object.keys(post.comments).length
+                      }`}</Text>
+                    </Tooltip>
+                  ) : (
+                    <Text m={2}>No comments yet</Text>
+                  )}
+                </Flex>
                 <Spacer />
                 {post?.likedBy.includes(userData?.handle) ? (
-                  <Button colorScheme='red' onClick={dislike}>
+                  <Button
+                    colorScheme='red'
+                    onClick={dislike}
+                  >
                     Dislike
                   </Button>
                 ) : (
-                  <Button colorScheme='green' onClick={like}>
+                  <Button
+                    colorScheme='green'
+                    onClick={like}
+                  >
                     Like
                   </Button>
                 )}
