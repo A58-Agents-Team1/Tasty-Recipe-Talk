@@ -22,7 +22,7 @@ export const getUsersByEmail = async (email) => {
   snapshot.forEach((acc) => {
     const user = acc.val();
 
-    if (user.email.toLowerCase().includes(email.toLowerCase())) {
+    if (user.email?.toLowerCase().includes(email.toLowerCase())) {
       users.push(user);
     }
   });
@@ -34,7 +34,7 @@ export const getUsersByName = async (name) => {
   const users = [];
   snapshot.forEach((acc) => {
     const user = acc.val();
-    if (user.firstName.toLowerCase().includes(name.toLowerCase())) {
+    if (user.firstName?.toLowerCase().includes(name.toLowerCase())) {
       users.push(user);
     }
   });
@@ -58,7 +58,7 @@ export const getFilterUserByHandle = async (handle) => {
   const users = [];
   snapshot.forEach((acc) => {
     const user = acc.val();
-    if (user.handle.toLowerCase().includes(handle.toLowerCase())) {
+    if (user.handle?.toLowerCase().includes(handle.toLowerCase())) {
       users.push(user);
     }
   });
