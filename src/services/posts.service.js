@@ -18,7 +18,7 @@ export const getAllPosts = async (search) => {
   const snapshot = await get(ref(db, 'posts'));
   if (!snapshot.exists()) return [];
 
-  return Object.entries(snapshot.val())
+  return Object.entries(await snapshot.val())
     .map(([key, value]) => {
       return {
         ...value,
@@ -27,7 +27,7 @@ export const getAllPosts = async (search) => {
         createdOn: new Date(value.createdOn).toString(),
       };
     })
-    .filter((post) => post.title.toLowerCase().includes(search.toLowerCase()));
+    .filter((post) => post.title?.toLowerCase().includes(search.toLowerCase()));
 };
 
 export const getPostById = async (id) => {
@@ -96,4 +96,18 @@ export const deleteComment = async (postId, commentId) => {
   } catch (error) {
     console.error('Error deleting comment:', error.message);
   }
+};
+
+export const likeComment = async (postId, commentId, handle) => {
+  const updateVal = {};
+  updateVal[`posts/${postId}/comments/${commentId}/likedBy/${handle}`] = true;
+  updateVal[`users/${handle}/likedComments/${commentId}`] = true;
+  await update(ref(db), updateVal);
+};
+
+export const dislikeComment = async (postId, commentId, handle) => {
+  const updateVal = {};
+  updateVal[`posts/${postId}/comments/${commentId}/likedBy/${handle}`] = null;
+  updateVal[`users/${handle}/likedComments/${commentId}`] = null;
+  await update(ref(db), updateVal);
 };
