@@ -6,8 +6,6 @@ import { db } from '../config/firebase-config';
 import { getAllPosts } from '../services/posts.service';
 import {
   Box,
-  Center,
-  Divider,
   Flex,
   FormLabel,
   Input,
@@ -130,13 +128,6 @@ export default function AllPosts() {
               </Tab>
             </TabList>
           </Tabs>
-          <Spacer />
-          <Center height='auto'>
-            <Divider
-              orientation='vertical'
-              border={'1px solid black'}
-            />
-          </Center>
           <Spacer />
           <FormLabel
             fontWeight={800}
