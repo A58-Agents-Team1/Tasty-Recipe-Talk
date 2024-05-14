@@ -176,8 +176,25 @@ export default function Login() {
   };
 
   return (
-    <Box width={{ base: '90%', md: '30%' }}>
-      <Heading textAlign={'center'}>Login</Heading>
+    <Box
+      width={{ base: '90%', md: '30%' }}
+      textAlign={'center'}
+      p={4}
+      border='2px'
+      borderRadius='md'
+      borderColor='gray.800'
+      background={'yellow.300'}
+    >
+      <Heading
+        textAlign={'center'}
+        p={2}
+        border='2px'
+        borderRadius='md'
+        borderColor='gray.800'
+        background={'yellow.100'}
+      >
+        Login
+      </Heading>
       <br />
       {userNameOrEmail ? (
         <>
@@ -287,11 +304,21 @@ export default function Login() {
       </FormLabel>
       <Flex direction='column' alignItems='center'>
         {userNameOrEmail ? (
-          <Button onClick={loginWithEmail} width='100%' colorScheme='green'>
+          <Button
+            mb={2}
+            onClick={loginWithEmail}
+            width='100%'
+            colorScheme='green'
+          >
             Login Email
           </Button>
         ) : (
-          <Button onClick={loginWithUserName} width='100%' colorScheme='green'>
+          <Button
+            mb={2}
+            onClick={loginWithUserName}
+            width='100%'
+            colorScheme='green'
+          >
             Login User
           </Button>
         )}

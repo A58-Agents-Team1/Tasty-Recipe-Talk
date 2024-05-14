@@ -185,14 +185,25 @@ export default function Register() {
   };
 
   return (
-    <Box width={{ base: '90%', md: '30%' }}>
-      <Heading textAlign={'center'}>Register</Heading>
-      <Box
-        display='grid'
-        gridTemplateColumns='repeat(1, 1fr)'
-        gap={4}
-        p={4}
+    <Box
+      width={{ base: '90%', md: '30%' }}
+      p={4}
+      border='2px'
+      borderRadius='md'
+      borderColor='gray.800'
+      background={'yellow.300'}
+    >
+      <Heading
+        textAlign={'center'}
+        p={2}
+        border='2px'
+        borderRadius='md'
+        borderColor='gray.800'
+        background={'yellow.100'}
       >
+        Register
+      </Heading>
+      <Box display='grid' gridTemplateColumns='repeat(1, 1fr)' gap={4} p={4}>
         <FormControl isRequired>
           <FormLabel htmlFor='firstName'>First Name:</FormLabel>
           <Input
@@ -326,32 +337,15 @@ export default function Register() {
         </FormControl>
         <br />
       </Box>
-      <Flex
-        justify='center'
-        align='center'
-        gap={4}
-      ></Flex>
+      <Flex justify='center' align='center' gap={4}></Flex>
 
-      <Flex
-        direction='column'
-        alignItems='center'
-      >
-        <Button
-          colorScheme='orange'
-          width='92%'
-          onClick={register}
-        >
+      <Flex direction='column' alignItems='center'>
+        <Button colorScheme='orange' width='92%' onClick={register} mb={2}>
           Register
         </Button>
-        <Flex
-          alignItems='center'
-          style={{ fontSize: '19px' }}
-        >
+        <Flex alignItems='center' style={{ fontSize: '19px' }}>
           <Text marginRight={2}>Have an account?</Text>
-          <NavLink
-            to='/login'
-            style={{ fontWeight: 'bold' }}
-          >
+          <NavLink to='/login' style={{ fontWeight: 'bold' }}>
             Login
           </NavLink>
         </Flex>
