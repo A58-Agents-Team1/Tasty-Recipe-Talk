@@ -47,6 +47,7 @@ export default function Home() {
         w='100%'
         shadow={'2xl'}
         p={'1rem '}
+        border={'2px solid black'}
       >
         <Image
           border='2px solid'
@@ -90,9 +91,16 @@ export default function Home() {
         <Text>Here you can see the four most liked and four latest posts!</Text>
       </Box>
 
-      <Divider border={'2px solid'} borderRadius={'10px'} m={'20px'} />
+      <Divider
+        border={'2px solid'}
+        borderRadius={'10px'}
+        m={'20px'}
+      />
       <Heading>The most liked recipes</Heading>
-      <Grid templateColumns={'repeat(2, 1fr)'} gap={'2'}>
+      <Grid
+        templateColumns={'repeat(2, 1fr)'}
+        gap={'2'}
+      >
         {posts &&
           posts
             .toSorted((a, b) => b.likedBy.length - a.likedBy.length)
@@ -103,9 +111,16 @@ export default function Home() {
               </GridItem>
             ))}
       </Grid>
-      <Divider border={'2px solid'} borderRadius={'10px'} m={'20px'} />
+      <Divider
+        border={'2px solid'}
+        borderRadius={'10px'}
+        m={'20px'}
+      />
       <Heading>Latest recipes</Heading>
-      <Grid templateColumns={'repeat(2, 1fr)'} gap={'2'}>
+      <Grid
+        templateColumns={'repeat(2, 1fr)'}
+        gap={'2'}
+      >
         {posts
           ? posts
               .sort((a, b) => {
