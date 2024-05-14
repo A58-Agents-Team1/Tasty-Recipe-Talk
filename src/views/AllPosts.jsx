@@ -162,7 +162,7 @@ export default function AllPosts() {
               <Post key={post.id} post={post} />
             ))}
         </>
-      ) : (
+      ) : searchParams === '' ? (
         <Flex
           flexDirection='column'
           alignItems='center'
@@ -192,6 +192,18 @@ export default function AllPosts() {
             </NavLink>
           </Flex>
         </Flex>
+      ) : (
+        <Text
+          fontSize={24}
+          textAlign='center'
+          p='4'
+          border='2px solid'
+          borderRadius='md'
+          borderColor='gray.800'
+          background='yellow.100'
+        >
+          It seems there are no results matching your search criteria.
+        </Text>
       )}
     </Box>
   );
