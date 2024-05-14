@@ -1,4 +1,4 @@
-import { Box, Divider, Heading, Text } from '@chakra-ui/react';
+import { Box, Heading, Text } from '@chakra-ui/react';
 import { useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppContext } from '../context/AppContext';
@@ -29,20 +29,39 @@ export default function BlockedAccounts() {
       border='2px'
       borderRadius='md'
       borderColor='gray.800'
-      background={'yellow.200'}
+      background={'yellow.300'}
     >
-      <Heading align={'center'} mb={2}>
-        Blocked People
+      <Heading
+        p={4}
+        mb={2}
+        color={'black'}
+        textAlign={'center'}
+        size='md'
+        border='2px'
+        borderRadius='md'
+        borderColor='gray.800'
+        background={'yellow.100'}
+      >
+        Keep your community safe by managing blocked Accounts.
       </Heading>
       <>
         {allBlockedUsers ? (
           allBlockedUsers.map((user) => (
             <Box key={user.uid} fontWeight={'bold'} fontSize={'lg'}>
-              <Divider border={'1px solid'} m={2} />
-              <Text>First Name: {user.firstName}</Text>
-              <Text>Last Name: {user.lastName}</Text>
-              <Text>Username: {user.handle}</Text>
-              <Text>Email: {user.email}</Text>
+              <Box
+                p={4}
+                m={3}
+                color={'black'}
+                border='2px'
+                borderRadius='md'
+                borderColor='gray.800'
+                background={'yellow.100'}
+              >
+                <Text>First Name: {user.firstName}</Text>
+                <Text>Last Name: {user.lastName}</Text>
+                <Text>Username: {user.handle}</Text>
+                <Text>Email: {user.email}</Text>
+              </Box>
             </Box>
           ))
         ) : (

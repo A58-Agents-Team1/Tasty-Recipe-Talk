@@ -14,8 +14,24 @@ export default function MyPosts() {
   }, [posts]);
 
   return (
-    <Box w={'100%'}>
-      <Heading textAlign={'center'}>My recipes: </Heading>
+    <Box
+      w={'100%'}
+      p={4}
+      border='2px'
+      borderRadius='md'
+      borderColor='gray.800'
+      background={'yellow.300'}
+    >
+      <Heading
+        textAlign={'center'}
+        p={4}
+        border='2px'
+        borderRadius='md'
+        borderColor='gray.800'
+        background={'yellow.100'}
+      >
+        Your kitchen, your rules! Browse through your recipes anytime.
+      </Heading>
       <br />
       {posts.filter((post) => post.author === userData?.handle).length !== 0 ? ( // Filter the posts by author
         <>

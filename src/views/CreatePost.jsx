@@ -113,9 +113,18 @@ export const CreatePost = () => {
       border='2px'
       borderRadius='md'
       borderColor='gray.800'
-      background={'yellow.200'}
+      background={'yellow.300'}
     >
-      <Heading mb={4}>Create a recipe!</Heading>
+      <Heading
+        p={4}
+        mb={4}
+        border='2px'
+        borderRadius='md'
+        borderColor='gray.800'
+        background={'yellow.100'}
+      >
+        Let`s add your recipe to our culinary collection
+      </Heading>
       <Input
         mb={4}
         placeholder='Title'
@@ -131,6 +140,7 @@ export const CreatePost = () => {
         onChange={(e) => updatePost(e.target.value, 'content')}
       />
       <Textarea
+        h={'200px'}
         placeholder='Recipe'
         value={post.recipe}
         backgroundColor={'white'}

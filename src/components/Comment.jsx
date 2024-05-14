@@ -106,19 +106,37 @@ export default function Comment({
   }, [comments]);
 
   return (
-    <Card>
+    <Card
+      border='2px'
+      borderRadius='md'
+      borderColor='gray.800'
+      background={'yellow.100'}
+    >
       <CardHeader>
         <Flex justify='space-between' align='center'>
           <Heading size='md'>Comments</Heading>
           <Menu>
-            <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+            <MenuButton
+              border={'2px solid'}
+              colorScheme='cyan'
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
+            >
               Filter
             </MenuButton>
-            <MenuList>
-              <MenuItem onClick={() => setSortBy('createdOn')}>
+            <MenuList backgroundColor={'yellow.200'} border={'2px solid'}>
+              <MenuItem
+                _hover={{ backgroundColor: 'yellow.100' }}
+                backgroundColor={'yellow.200'}
+                onClick={() => setSortBy('createdOn')}
+              >
                 Created On
               </MenuItem>
-              <MenuItem onClick={() => setSortBy('lastEdited')}>
+              <MenuItem
+                _hover={{ backgroundColor: 'yellow.100' }}
+                backgroundColor={'yellow.200'}
+                onClick={() => setSortBy('lastEdited')}
+              >
                 Last Edit
               </MenuItem>
             </MenuList>
@@ -177,6 +195,7 @@ export default function Comment({
                             dislikeFunc(postId, comment.id, userData?.handle)
                           }
                           style={{ marginRight: '10px' }}
+                          colorScheme='red'
                         >
                           Dislike
                         </Button>
@@ -186,6 +205,7 @@ export default function Comment({
                             likeFunc(postId, comment.id, userData?.handle)
                           }
                           style={{ marginRight: '10px' }}
+                          colorScheme='green'
                         >
                           Like
                         </Button>
@@ -193,15 +213,19 @@ export default function Comment({
 
                       {editToggle && prevComment === comment.content ? (
                         <Input
+                          m={3}
                           value={newComment}
                           onChange={(e) => setNewComment(e.target.value)}
+                          border={'2px solid'}
+                          backgroundColor={'gray.100'}
                         />
                       ) : (
                         <Text
                           pt='2'
                           fontSize='lg'
-                          border={'1px solid'}
+                          border={'3px dotted'}
                           borderRadius={'md'}
+                          backgroundColor={'yellow.200'}
                           p={2}
                           m={3}
                         >
@@ -215,6 +239,7 @@ export default function Comment({
                           {editToggle && prevComment === comment.content ? (
                             <Box mt={2}>
                               <Button
+                                colorScheme='green'
                                 mx={2}
                                 onClick={() =>
                                   handleEditComment(
@@ -226,7 +251,10 @@ export default function Comment({
                               >
                                 Edit
                               </Button>
-                              <Button onClick={() => handleCancelComment()}>
+                              <Button
+                                colorScheme='red'
+                                onClick={() => handleCancelComment()}
+                              >
                                 Cancel
                               </Button>
                             </Box>
@@ -297,4 +325,5 @@ Comment.propTypes = {
   setDeleteToggle: PropTypes.func.isRequired,
   setComments: PropTypes.func.isRequired,
   setEditPostState: PropTypes.func.isRequired,
+  setRefresh: PropTypes.func.isRequired,
 };

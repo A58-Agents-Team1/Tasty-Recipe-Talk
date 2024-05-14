@@ -95,15 +95,31 @@ export default function FindUser() {
       border='2px'
       borderRadius='md'
       borderColor='gray.800'
-      background={'yellow.200'}
+      background={'yellow.300'}
     >
       <Flex direction='column'>
+        <Heading
+          fontSize={'lg'}
+          p={4}
+          mb={2}
+          border='2px'
+          borderRadius='md'
+          borderColor='gray.800'
+          background={'yellow.100'}
+        >
+          Looking for a specific user? Find user accounts here.
+        </Heading>
         <Flex
           align='top'
           justify='space-between'
           mb={5}
           w={'100%'}
           direction='column'
+          p={4}
+          border='2px'
+          borderRadius='md'
+          borderColor='gray.800'
+          background={'yellow.100'}
         >
           <Flex align='top' mb={5}>
             <Avatar
@@ -122,7 +138,7 @@ export default function FindUser() {
               <Text fontSize='m'>email : {userData?.email}</Text>
             </Box>
           </Flex>
-          <Tabs variant='enclosed' color={'black'}>
+          <Tabs variant='enclosed' color={'black'} align='center'>
             <TabList borderColor='black'>
               <Tab
                 _selected={{
@@ -162,6 +178,7 @@ export default function FindUser() {
         </Flex>
         <FormLabel htmlFor='search'>Find User by {activeBar}: </FormLabel>{' '}
         <Input
+          mb={2}
           type='text'
           value={search}
           placeholder={`Enter ${activeBar}`}

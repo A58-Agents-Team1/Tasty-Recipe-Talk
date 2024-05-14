@@ -90,14 +90,16 @@ export default function FullPost({ post }) {
         overflow='hidden'
         variant='outline'
         mt={3}
-        border={'1px solid'}
-        borderColor={'gray.400'}
+        border='2px'
+        borderRadius='md'
+        borderColor='gray.800'
+        background={'yellow.100'}
         shadow={{ base: 'md', sm: 'xl' }}
         w={'100%'}
       >
         <Image
           objectFit='cover'
-          maxW={{ base: '100%', sm: '200px' }}
+          maxW={{ base: '100%', sm: '300px' }}
           src={url}
           alt='Card image'
         />
@@ -117,6 +119,7 @@ export default function FullPost({ post }) {
                 p={2}
                 mb={4}
                 w={'100%'}
+                backgroundColor={'yellow.200'}
               >
                 <Heading size='md'>{`${post.title}`}</Heading>
                 <Text py='2'>{`${post.content}`}</Text>
@@ -189,17 +192,26 @@ export default function FullPost({ post }) {
                 )}
                 <Spacer />
                 {post?.likedBy.includes(userData?.handle) ? (
-                  <Button onClick={dislike} style={{ marginRight: '10px' }}>
+                  <Button
+                    colorScheme='red'
+                    onClick={dislike}
+                    style={{ marginRight: '10px' }}
+                  >
                     Dislike
                   </Button>
                 ) : (
-                  <Button onClick={like} style={{ marginRight: '10px' }}>
+                  <Button
+                    colorScheme='green'
+                    onClick={like}
+                    style={{ marginRight: '10px' }}
+                  >
                     Like
                   </Button>
                 )}
                 {!userData.isBlocked && (
                   <Button
                     marginRight='10px'
+                    colorScheme='green'
                     onClick={() => {
                       setPostButtonClicked(!postButtonClicked);
                     }}
@@ -212,6 +224,7 @@ export default function FullPost({ post }) {
                     id='isChecked'
                     _selected={{ bg: 'green.500', color: 'white' }}
                     style={{ marginRight: '10px' }}
+                    colorScheme='green'
                     onClick={() => setEditEnable(!editEnable)}
                   >
                     Edit Post
@@ -220,6 +233,7 @@ export default function FullPost({ post }) {
                 <Button
                   style={{ marginRight: '10px' }}
                   onClick={() => navigate(-1)}
+                  colorScheme='green'
                 >
                   Back
                 </Button>
@@ -252,7 +266,7 @@ export default function FullPost({ post }) {
                 Finish Editing
               </Button>
               <Button
-                colorScheme='green'
+                colorScheme='red'
                 id='isChecked'
                 _selected={{ bg: 'green.500', color: 'white' }}
                 style={{ margin: '10px' }}

@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { ref, onValue } from 'firebase/database';
 import { db } from '../config/firebase-config';
 import FullPost from '../components/FullPost';
-import { Heading } from '@chakra-ui/react';
+import { Flex, Heading } from '@chakra-ui/react';
 
 export default function FullViewRecipe() {
   const [post, setPost] = useState(null);
@@ -23,9 +23,25 @@ export default function FullViewRecipe() {
   }, [id]);
 
   return (
-    <div>
-      <Heading align='center'>Full Post Review</Heading>
+    <Flex
+      p={4}
+      direction='column'
+      border='2px'
+      borderRadius='md'
+      borderColor='gray.800'
+      background={'yellow.300'}
+    >
+      <Heading
+        p={2}
+        align='center'
+        border='2px'
+        borderRadius='md'
+        borderColor='gray.800'
+        background={'yellow.100'}
+      >
+        Full Post Review
+      </Heading>
       {post && <FullPost post={post} />}
-    </div>
+    </Flex>
   );
 }

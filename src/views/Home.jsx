@@ -12,7 +12,6 @@ import { useEffect, useState } from 'react';
 import { getAllPosts } from '../services/posts.service';
 import Post from '../components/Post';
 import logo from '/logo.png';
-import background from '/background.jpg';
 
 export default function Home() {
   const [posts, setPosts] = useState([]);
@@ -33,7 +32,7 @@ export default function Home() {
       padding={'20px'}
       borderRadius={'10px'}
       boxShadow={'2xl'}
-      backgroundImage={`url(${background})`}
+      backgroundColor={'yellow.300'}
       backgroundSize={'cover'}
       backgroundPosition={'center'}
       backgroundRepeat={'no-repeat'}
@@ -67,10 +66,14 @@ export default function Home() {
         Welcome to Tasty Recipe Talk
       </Heading>
       <Box
-        color={'#555'}
+        p={4}
+        color={'black'}
         fontSize={'18px'}
-        marginBottom={'10px'}
         textAlign={'center'}
+        border='2px'
+        borderRadius='md'
+        borderColor='gray.800'
+        background={'yellow.100'}
       >
         <Text>
           On this Forum, you can find and share your favorite recipes!
@@ -84,7 +87,7 @@ export default function Home() {
           Join discussions, ask questions, and discover new recipes from food
           enthusiasts around the world.
         </Text>
-        <Text>Here you can see the four most liked and four latest posts:</Text>
+        <Text>Here you can see the four most liked and four latest posts!</Text>
       </Box>
 
       <Divider border={'2px solid'} borderRadius={'10px'} m={'20px'} />
@@ -105,7 +108,13 @@ export default function Home() {
       <Grid templateColumns={'repeat(2, 1fr)'} gap={'2'}>
         {posts
           ? posts
-              .toSorted((a, b) => b.createdOn.length - a.createdOn.length)
+              .sort((a, b) => {
+                const keyA = new Date(a['createdOn']);
+                const keyB = new Date(b['createdOn']);
+                if (keyA < keyB) return 1;
+                if (keyA > keyB) return -1;
+                return 0;
+              })
               .slice(0, 4)
               .map((post) => (
                 <GridItem key={post.id}>

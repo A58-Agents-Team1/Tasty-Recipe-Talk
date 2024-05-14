@@ -49,6 +49,10 @@ export default function Post({ post }) {
         variant='outline'
         mt={3}
         shadow={{ base: 'md', sm: 'xl' }}
+        border='2px'
+        borderRadius='md'
+        borderColor='gray.800'
+        backgroundColor={'yellow.100'}
       >
         <Image
           objectFit='cover'
@@ -95,11 +99,18 @@ export default function Post({ post }) {
                 )}
                 <Spacer />
                 {post?.likedBy.includes(userData?.handle) ? (
-                  <Button onClick={dislike}>Dislike</Button>
+                  <Button colorScheme='red' onClick={dislike}>
+                    Dislike
+                  </Button>
                 ) : (
-                  <Button onClick={like}>Like</Button>
+                  <Button colorScheme='green' onClick={like}>
+                    Like
+                  </Button>
                 )}
-                <Button onClick={() => navigate(`/posts/${post.id}`)}>
+                <Button
+                  colorScheme='green'
+                  onClick={() => navigate(`/posts/${post.id}`)}
+                >
                   View Recipe
                 </Button>
               </ButtonGroup>

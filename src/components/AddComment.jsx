@@ -29,8 +29,9 @@ export default function AddComment({ postId, setPostButtonClicked }) {
       m={2}
       border='2px solid'
       borderRadius='2xl'
-      borderColor='gray.400'
+      borderColor='black'
       templateColumns='repeat(1,2fr)'
+      backgroundColor={'yellow.200'}
     >
       <FormControl>
         <GridItem>
@@ -41,16 +42,23 @@ export default function AddComment({ postId, setPostButtonClicked }) {
             value={comment}
             placeholder='Add a comment'
             onChange={(e) => setComment(e.target.value)}
+            border={'2px'}
+            borderColor={'black'}
+            backgroundColor={'white'}
           />
         </GridItem>
         <GridItem>
           <Flex>
             <Spacer />
 
-            <Button onClick={handleComment} mt={2} mx={2}>
+            <Button colorScheme={'green'} onClick={handleComment} mt={2} mx={2}>
               Add Comment
             </Button>
-            <Button onClick={() => setPostButtonClicked(false)} mt={2}>
+            <Button
+              colorScheme='red'
+              onClick={() => setPostButtonClicked(false)}
+              mt={2}
+            >
               Cancel
             </Button>
           </Flex>

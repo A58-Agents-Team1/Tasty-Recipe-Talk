@@ -17,7 +17,7 @@ export default function About() {
         textAlign='center'
         mb={4}
         p={4}
-        backgroundColor={'yellow.200'}
+        backgroundColor={'yellow.300'}
         border={'2px solid'}
         borderRadius={'md'}
       >
@@ -47,7 +47,7 @@ export default function About() {
         alignItems='flex-start'
         justifyContent='center'
         mb={4}
-        backgroundColor={'yellow.200'}
+        backgroundColor={'yellow.300'}
         border={'2px solid'}
         borderRadius={'md'}
       >

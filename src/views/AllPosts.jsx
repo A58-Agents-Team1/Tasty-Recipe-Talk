@@ -9,7 +9,6 @@ import {
   Flex,
   FormLabel,
   Input,
-  Spacer,
   Tab,
   TabList,
   Tabs,
@@ -53,73 +52,93 @@ export default function AllPosts() {
   }, [sortBy]);
 
   return (
-    <Box w={'100%'}>
+    <Box
+      w={'100%'}
+      p={4}
+      border='2px'
+      borderRadius='md'
+      borderColor='gray.800'
+      background={'yellow.300'}
+    >
       <Flex my={5} align={'center'} justify={'center'}>
-        <Tabs variant='enclosed' color={'gray.100'} align='center'>
-          <TabList align='center'>
-            <Box
-              as='label'
-              alignSelf={'center'}
-              fontWeight={800}
-              fontSize={30}
-              mx='3'
-            >
-              Sort by:
-            </Box>
-            <Tab
-              _selected={{
-                color: 'gray.100',
-                textColor: 'black',
-                bg: 'yellow.100',
-              }}
-              onClick={() => setSortBy('createdOn')}
-            >
-              Created
-            </Tab>
-            <Tab
-              _selected={{
-                color: 'gray.100',
-                textColor: 'black',
-                bg: 'yellow.100',
-              }}
-              onClick={() => setSortBy('likedBy')}
-            >
-              Likes
-            </Tab>
-            <Tab
-              _selected={{
-                color: 'gray.100',
-                textColor: 'black',
-                bg: 'yellow.100',
-              }}
-              onClick={() => setSortBy('comments')}
-            >
-              Comments
-            </Tab>
-          </TabList>
-        </Tabs>
-        <Spacer />
-        <FormLabel
-          fontWeight={800}
-          fontSize={30}
-          color={'gray.100'}
-          htmlFor='search'
+        <Flex
+          p={4}
+          border='2px'
+          borderRadius='md'
+          borderColor='gray.800'
+          background={'yellow.100'}
+          justifyContent='space-between'
         >
-          Search:{' '}
-        </FormLabel>
-        <Input
-          title='Search for a recipe'
-          type='text'
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          name='search'
-          id='search'
-          placeholder='Search for a recipe'
-          backgroundColor='gray.100'
-          fontWeight={800}
-          fontSize={24}
-          w={'40%'}
-        />
+          <Tabs variant='enclosed' color={'black'} align='center'>
+            <TabList align='center' borderColor={'black'}>
+              <Box
+                as='label'
+                alignSelf={'center'}
+                fontWeight={800}
+                fontSize={30}
+                mx='3'
+              >
+                Sort by:
+              </Box>
+              <Tab
+                _selected={{
+                  color: 'gray.100',
+                  textColor: 'black',
+                  bg: 'yellow.300',
+                  borderColor: 'gray.800',
+                }}
+                onClick={() => setSortBy('createdOn')}
+              >
+                Created
+              </Tab>
+              <Tab
+                _selected={{
+                  color: 'gray.100',
+                  textColor: 'black',
+                  bg: 'yellow.300',
+                  borderColor: 'gray.800',
+                }}
+                onClick={() => setSortBy('likedBy')}
+              >
+                Likes
+              </Tab>
+              <Tab
+                _selected={{
+                  color: 'gray.100',
+                  textColor: 'black',
+                  bg: 'yellow.300',
+                  borderColor: 'gray.800',
+                }}
+                onClick={() => setSortBy('comments')}
+              >
+                Comments
+              </Tab>
+            </TabList>
+          </Tabs>
+          <FormLabel
+            fontWeight={800}
+            fontSize={30}
+            color={'black'}
+            htmlFor='search'
+          >
+            Search:{' '}
+          </FormLabel>
+          <Input
+            type='text'
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            name='search'
+            id='search'
+            placeholder='Search for a recipe by title'
+            backgroundColor='gray.200'
+            fontWeight={800}
+            fontSize={24}
+            w={'40%'}
+            border='2px'
+            borderRadius='md'
+            borderColor='gray.800'
+          />
+        </Flex>
       </Flex>
       {posts.length !== 0 ? (
         <>

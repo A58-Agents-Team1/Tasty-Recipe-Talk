@@ -102,7 +102,7 @@ const Profile = () => {
           border='2px'
           borderRadius='md'
           borderColor='gray.800'
-          background={'yellow.200'}
+          background={'yellow.300'}
         >
           <Heading
             p={4}
@@ -111,11 +111,11 @@ const Profile = () => {
             border='2px'
             borderRadius='md'
             borderColor='gray.800'
-            background={'yellow.400'}
+            background={'yellow.100'}
             mb={4}
           >
-            Hello {userData?.handle}, here you can find all information about
-            your account.
+            Greetings, {userData?.handle}! Explore all the details about your
+            account here.
           </Heading>
 
           <Flex
@@ -126,11 +126,7 @@ const Profile = () => {
             borderColor='gray.800'
             background={'yellow.100'}
           >
-            <Box
-              borderRadius='full'
-              p='1'
-              backgroundColor={'black'}
-            >
+            <Box borderRadius='full' p='1' backgroundColor={'black'}>
               {profilePhotoUrl ? (
                 <Avatar
                   title='Profile Photo'
@@ -165,11 +161,7 @@ const Profile = () => {
             >
               <Flex flexDirection={'column'}>
                 {userData?.isBlocked && (
-                  <Text
-                    color='red'
-                    fontWeight='bold'
-                    fontSize={24}
-                  >
+                  <Text color='red' fontWeight='bold' fontSize={24}>
                     Your account is blocked !!!
                   </Text>
                 )}
@@ -177,10 +169,7 @@ const Profile = () => {
                 <Text>Email: {userData?.email}</Text>
                 <Text>First Name: {userData?.firstName}</Text>
                 <Text>Last Name: {userData?.lastName}</Text>
-                <Flex
-                  alignItems='center'
-                  mt={4}
-                >
+                <Flex alignItems='center' mt={4}>
                   <Button
                     mt={2}
                     mr={2}
@@ -213,13 +202,9 @@ const Profile = () => {
           border='2px'
           borderRadius='md'
           borderColor='gray.800'
-          background={'yellow.200'}
+          background={'yellow.300'}
         >
-          <Flex
-            align='center'
-            justify='center'
-            direction='column'
-          >
+          <Flex align='center' justify='center' direction='column'>
             <Heading
               p={4}
               mb={4}
@@ -228,10 +213,10 @@ const Profile = () => {
               border='2px'
               borderRadius='md'
               borderColor='gray.800'
-              background={'yellow.400'}
+              background={'yellow.100'}
             >
-              Hello {userData?.handle}, here you can edit information about your
-              account.
+              Greetings, {userData?.handle}! Ready to make updates? Edit your
+              account details here.
             </Heading>
             <Flex
               p={4}
@@ -241,11 +226,7 @@ const Profile = () => {
               borderColor='gray.800'
               background={'yellow.100'}
             >
-              <Box
-                borderRadius='full'
-                p='1'
-                backgroundColor={'black'}
-              >
+              <Box borderRadius='full' p='1' backgroundColor={'black'}>
                 {profilePhotoUrl ? (
                   <Avatar
                     title='Profile Photo'
@@ -322,10 +303,7 @@ const Profile = () => {
                   gap={2}
                   mt={4}
                 >
-                  <Button
-                    colorScheme='green'
-                    onClick={() => editProfile()}
-                  >
+                  <Button colorScheme='green' onClick={() => editProfile()}>
                     Edit
                   </Button>
                   <Button
@@ -349,7 +327,7 @@ const Profile = () => {
           border='2px'
           borderRadius='md'
           borderColor='gray.800'
-          background={'yellow.200'}
+          background={'yellow.300'}
         >
           <Heading
             p={4}
@@ -359,10 +337,10 @@ const Profile = () => {
             border='2px'
             borderRadius='md'
             borderColor='gray.800'
-            background={'yellow.400'}
+            background={'yellow.100'}
           >
-            Hello {userData?.handle}, here you can add or change your profile
-            photo for your account.
+            Greetings, {userData?.handle}! Ready to give your profile a
+            makeover? Upload or change your profile photo here.
           </Heading>
           {formPictureToggle && (
             <Flex
@@ -372,7 +350,7 @@ const Profile = () => {
               border='2px'
               borderRadius='md'
               borderColor='gray.800'
-              background={'yellow.1 00'}
+              background={'yellow.100'}
               p={4}
             >
               <Flex flexDirection={'column'}>
@@ -385,10 +363,7 @@ const Profile = () => {
                     borderRadius={'lg'}
                   />
                 ) : (
-                  <Skeleton
-                    height='250px'
-                    width='auto'
-                  />
+                  <Skeleton height='250px' width='auto' />
                 )}
                 {!imageUpload && (
                   <Input
