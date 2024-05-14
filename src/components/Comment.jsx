@@ -18,12 +18,17 @@ import {
   Stack,
   StackDivider,
   Text,
+  Tooltip,
 } from '@chakra-ui/react';
 import PropTypes from 'prop-types';
 import { useContext, useEffect, useState } from 'react';
 import { AppContext } from '../context/AppContext';
 import { ChevronDownIcon, EditIcon } from '@chakra-ui/icons';
-import { updateComment } from '../services/posts.service';
+import {
+  dislikeComment,
+  likeComment,
+  updateComment,
+} from '../services/posts.service';
 import { CanDelete } from '../hoc/Authenticated';
 import { AlertDialogExample } from './Alerts';
 import { formatDate } from '../helper/format-date';
@@ -35,6 +40,7 @@ export default function Comment({
   setEditPostState,
   postId,
   setDeleteToggle,
+  setRefresh,
 }) {
   const { userData } = useContext(AppContext);
   const [newComment, setNewComment] = useState('');
@@ -42,6 +48,16 @@ export default function Comment({
   const [editToggle, setEditToggle] = useState(false);
   const [authorPhotos, setAuthorPhotos] = useState({});
   const [sortBy, setSortBy] = useState('createdOn');
+
+  const likeFunc = async (post, commentId, username) => {
+    await likeComment(post, commentId, username);
+    setRefresh((prev) => !prev);
+  };
+
+  const dislikeFunc = async (post, commentId, username) => {
+    await dislikeComment(post, commentId, username);
+    setRefresh((prev) => !prev);
+  };
 
   const handleEditToggle = (content) => {
     setEditToggle(!editToggle);
@@ -140,6 +156,40 @@ export default function Comment({
                           {comment.author ? comment.author : <Spinner />}
                         </Text>
                       </Heading>
+
+                      {comment?.likedBy &&
+                      Object.keys(comment?.likedBy).length > 0 ? (
+                        <Tooltip
+                          label={`Likes: ${Object.keys(comment.likedBy)}`}
+                          placement='top'
+                        >
+                          <Text m={2}>{`Likes: ${
+                            Object.keys(comment.likedBy).length
+                          }`}</Text>
+                        </Tooltip>
+                      ) : (
+                        <Text m={2}>No likes yet</Text>
+                      )}
+                      {comment.likedBy &&
+                      Object.keys(comment.likedBy)[0] === userData?.handle ? (
+                        <Button
+                          onClick={() =>
+                            dislikeFunc(postId, comment.id, userData?.handle)
+                          }
+                          style={{ marginRight: '10px' }}
+                        >
+                          Dislike
+                        </Button>
+                      ) : (
+                        <Button
+                          onClick={() =>
+                            likeFunc(postId, comment.id, userData?.handle)
+                          }
+                          style={{ marginRight: '10px' }}
+                        >
+                          Like
+                        </Button>
+                      )}
 
                       {editToggle && prevComment === comment.content ? (
                         <Input
