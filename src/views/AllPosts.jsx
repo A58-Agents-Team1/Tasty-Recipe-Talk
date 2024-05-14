@@ -6,9 +6,12 @@ import { db } from '../config/firebase-config';
 import { getAllPosts } from '../services/posts.service';
 import {
   Box,
+  Center,
+  Divider,
   Flex,
   FormLabel,
   Input,
+  Spacer,
   Tab,
   TabList,
   Tabs,
@@ -60,7 +63,11 @@ export default function AllPosts() {
       borderColor='gray.800'
       background={'yellow.300'}
     >
-      <Flex my={5} align={'center'} justify={'center'}>
+      <Flex
+        my={5}
+        align={'center'}
+        justify={'center'}
+      >
         <Flex
           p={4}
           border='2px'
@@ -68,9 +75,17 @@ export default function AllPosts() {
           borderColor='gray.800'
           background={'yellow.100'}
           justifyContent='space-between'
+          width={'100%'}
         >
-          <Tabs variant='enclosed' color={'black'} align='center'>
-            <TabList align='center' borderColor={'black'}>
+          <Tabs
+            variant='enclosed'
+            color={'black'}
+            align='center'
+          >
+            <TabList
+              align='center'
+              borderColor={'black'}
+            >
               <Box
                 as='label'
                 alignSelf={'center'}
@@ -115,6 +130,14 @@ export default function AllPosts() {
               </Tab>
             </TabList>
           </Tabs>
+          <Spacer />
+          <Center height='auto'>
+            <Divider
+              orientation='vertical'
+              border={'1px solid black'}
+            />
+          </Center>
+          <Spacer />
           <FormLabel
             fontWeight={800}
             fontSize={30}
@@ -159,7 +182,10 @@ export default function AllPosts() {
               return 0;
             })
             .map((post) => (
-              <Post key={post.id} post={post} />
+              <Post
+                key={post.id}
+                post={post}
+              />
             ))}
         </>
       ) : searchParams === '' ? (
@@ -174,14 +200,21 @@ export default function AllPosts() {
           boxShadow='lg'
           mb='4'
         >
-          <Text fontSize={24} mb={2} align={'center'}>
+          <Text
+            fontSize={24}
+            mb={2}
+            align={'center'}
+          >
             Looks like your culinary adventure is just getting started,{' '}
             <strong>{userData?.handle}</strong>! Why not share your delicious
             recipe and kickstart a flavorful journey for others to follow?
           </Text>
 
           <Flex alignItems='center'>
-            <Text fontSize={16} marginRight={2}>
+            <Text
+              fontSize={16}
+              marginRight={2}
+            >
               Here you can create your first post:
             </Text>
             <NavLink
