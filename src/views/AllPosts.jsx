@@ -72,9 +72,9 @@ export default function AllPosts() {
                 textColor: 'black',
                 bg: 'yellow.100',
               }}
-              onClick={() => setSortBy('comments')}
+              onClick={() => setSortBy('createdOn')}
             >
-              Comments
+              Created
             </Tab>
             <Tab
               _selected={{
@@ -92,9 +92,9 @@ export default function AllPosts() {
                 textColor: 'black',
                 bg: 'yellow.100',
               }}
-              onClick={() => setSortBy('createdOn')}
+              onClick={() => setSortBy('comments')}
             >
-              Created
+              Comments
             </Tab>
           </TabList>
         </Tabs>
@@ -126,6 +126,13 @@ export default function AllPosts() {
           {posts
             .filter((post) => post[sortBy] !== undefined)
             .sort((a, b) => {
+              if (sortBy === 'createdOn') {
+                const keyA = new Date(a[sortBy]);
+                const keyB = new Date(b[sortBy]);
+                if (keyA < keyB) return 1;
+                if (keyA > keyB) return -1;
+                return 0;
+              }
               const keyA = Object.values(a[sortBy]).length;
               const keyB = Object.values(b[sortBy]).length;
               if (keyA < keyB) return 1;

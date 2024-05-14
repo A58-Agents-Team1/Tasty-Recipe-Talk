@@ -87,7 +87,7 @@ export default function Post({ post }) {
             {userData && (
               <ButtonGroup spacing={2} flex={1} alignItems='center'>
                 {post.likedBy.length > 0 ? (
-                  <Tooltip label={`Likes: ${post.likedBy}`} placement='top'>
+                  <Tooltip label={`Likes: ${post.likedBy}`} placement='right'>
                     <Text m={2}>{`Likes: ${post.likedBy.length}`}</Text>
                   </Tooltip>
                 ) : (
