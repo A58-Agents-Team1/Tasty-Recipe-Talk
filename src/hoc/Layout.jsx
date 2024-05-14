@@ -20,13 +20,13 @@ export default function Layout({ children }) {
       <NavBar />
       <Flex
         justify='center'
-        borderColor='gray.600'
-        borderRadius='md'
         bgGradient={'linear(to-r,green.400, green.700, green.500)'}
         p='1rem'
         my='1rem'
         mx='2rem'
         shadow='2xl'
+        border={'2px solid black'}
+        borderRadius='md'
         minH={{ base: '80vh', md: '100%' }}
       >
         {children}

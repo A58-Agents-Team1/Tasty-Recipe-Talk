@@ -22,9 +22,8 @@ export default function Footer() {
       height={{ base: '10vh', md: '10vh' }}
       justify='space-evenly'
       alignItems='center'
-      borderBottom='1px solid'
-      borderColor='green.600'
-      borderRadius='lg'
+      border={'2px solid black'}
+      borderRadius='md'
       shadow='2xl'
       bgGradient={'linear(to-r,green.400, green.700, green.500)'}
       color={'white'}

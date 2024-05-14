@@ -47,15 +47,14 @@ export default function NavBar() {
       as='nav'
       justify='space-between'
       alignItems='center'
-      borderBottom='1px solid'
-      borderColor='green.600'
-      borderRadius='lg'
       p='1rem'
       my='1rem'
       mx='2rem'
       shadow='2xl'
       bgGradient={'linear(to-r,green.400, green.700, green.500)'}
       color={'white'}
+      border={'2px solid black'}
+      borderRadius='md'
     >
       <Heading>
         <NavLink to='/giphy-kitchen'>
@@ -129,7 +128,10 @@ export default function NavBar() {
                 <MenuButton title='Profile Settings'>
                   <SettingsIcon />
                 </MenuButton>
-                <MenuList color='white' bg='green.600'>
+                <MenuList
+                  color='white'
+                  bg='green.600'
+                >
                   <MenuItem
                     bg='green.600'
                     as={NavLink}
@@ -170,7 +172,11 @@ export default function NavBar() {
                       Blocked Account
                     </MenuItem>
                   )}
-                  <MenuItem bg='green.600' color={'red'} onClick={logout}>
+                  <MenuItem
+                    bg='green.600'
+                    color={'red'}
+                    onClick={logout}
+                  >
                     Logout
                   </MenuItem>
                 </MenuList>
