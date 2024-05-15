@@ -88,7 +88,7 @@ const Profile = () => {
         });
       });
     }
-  }, [userData?.handle, navigate, imageUpload]);
+  }, [userData?.handle, navigate, imageUpload, editEnable]);
 
   return (
     <div>
