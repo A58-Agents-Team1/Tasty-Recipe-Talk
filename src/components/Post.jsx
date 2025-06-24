@@ -55,6 +55,7 @@ export default function Post({ post }) {
         borderRadius='md'
         borderColor='gray.800'
         backgroundColor={'yellow.100'}
+        height='340px'
       >
         <Image
           objectFit='cover'
